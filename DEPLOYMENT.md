@@ -40,6 +40,10 @@ Deploy the `server` directory of the application.
 | `JWT_SECRET` | Secret key used to sign JWTs | A secure random string (e.g., `openssl rand -hex 32` output) |
 | `JWT_EXPIRES_IN` | Token duration | `7d` |
 | `CLIENT_URL` | The URL where the frontend is hosted | `https://your-lms-frontend.vercel.app` |
+| `AUTO_SEED_PRODUCTION_DATA` | Automatically seed demo courses when production DB is empty | `true` (default) |
+
+> [!NOTE]
+> The backend now checks for missing course data during production startup and seeds the database automatically. Set `AUTO_SEED_PRODUCTION_DATA=false` only if you do not want this behavior.
 
 ---
 

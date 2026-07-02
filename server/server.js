@@ -4,6 +4,7 @@ const http = require('http');
 const { Server } = require('socket.io');
 const app = require('./app');
 const connectDB = require('./config/db');
+const seedProduction = require('./scripts/seed-prod');
 
 // ── Register all Mongoose models ──────────────────────────────────────────────
 require('./models/User');
@@ -70,6 +71,15 @@ module.exports = { io };
 
 const startServer = async () => {
   await connectDB();
+
+  if (process.env.NODE_ENV === 'production' && process.env.AUTO_SEED_PRODUCTION_DATA !== 'false') {
+    try {
+      await seedProduction();
+      console.log('🌱 Production data seed check complete');
+    } catch (error) {
+      console.error('❌ Production seeding failed:', error);
+    }
+  }
 
   httpServer.listen(PORT, () => {
     console.log(`🚀 Server running on http://localhost:${PORT}`);

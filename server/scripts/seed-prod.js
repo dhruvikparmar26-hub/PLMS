@@ -6,15 +6,20 @@ const Lesson = require('../models/Lesson');
 const Quiz = require('../models/Quiz');
 
 const seedProduction = async () => {
+  let connectedHere = false;
+
   try {
-    await mongoose.connect(process.env.MONGO_URI);
-    console.log('✅ Connected to MongoDB Atlas');
+    if (mongoose.connection.readyState === 0) {
+      await mongoose.connect(process.env.MONGO_URI);
+      connectedHere = true;
+      console.log('✅ Connected to MongoDB Atlas');
+    }
 
     // Check if database already has courses
     const existingCourses = await Course.countDocuments();
     if (existingCourses >= 15) {
       console.log(`⚠ Database already has ${existingCourses} courses. Skipping seeding.`);
-      process.exit(0);
+      return { seeded: false, existingCourses };
     }
     console.log(`📊 Database has ${existingCourses} courses. Adding more to reach minimum 15...`);
 
@@ -351,11 +356,21 @@ const seedProduction = async () => {
     console.log(`   - Total lessons: ${coursesData.reduce((sum, c) => sum + c.lessons.length, 0)}`);
     console.log(`   - Total quizzes: ${coursesData.filter(c => c.hasQuiz).length}`);
 
-    process.exit(0);
+    return { seeded: true, createdCourses: coursesData.length };
   } catch (error) {
     console.error('❌ Error seeding production:', error);
-    process.exit(1);
+    throw error;
+  } finally {
+    if (connectedHere) {
+      await mongoose.disconnect();
+    }
   }
 };
 
-seedProduction();
+if (require.main === module) {
+  seedProduction()
+    .then(() => process.exit(0))
+    .catch(() => process.exit(1));
+}
+
+module.exports = seedProduction;
