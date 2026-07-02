@@ -1,5 +1,16 @@
 import axios from 'axios';
 
+export const getApiBaseUrl = () => {
+  const rawBaseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+  const trimmedBaseUrl = rawBaseUrl.replace(/\/+$/, '');
+
+  if (trimmedBaseUrl.endsWith('/api')) {
+    return trimmedBaseUrl;
+  }
+
+  return `${trimmedBaseUrl}/api`;
+};
+
 /**
  * Pre-configured Axios instance for API calls.
  * - baseURL points to the Express backend
@@ -7,7 +18,7 @@ import axios from 'axios';
  * - Response interceptor redirects to /login on 401 (session expired)
  */
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
+  baseURL: getApiBaseUrl(),
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',

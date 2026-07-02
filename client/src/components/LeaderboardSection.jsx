@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import api from '../api';
+import api, { getApiBaseUrl } from '../api';
 import { io } from 'socket.io-client';
 
 export default function LeaderboardSection({ user, onOptInChange }) {
@@ -16,7 +16,7 @@ export default function LeaderboardSection({ user, onOptInChange }) {
       fetchLeaderboard();
 
       // Establish Socket connection
-      const socketUrl = (import.meta.env.VITE_API_URL || 'http://localhost:5000/api').replace('/api', '');
+      const socketUrl = getApiBaseUrl().replace(/\/api$/, '');
       const socket = io(socketUrl, { withCredentials: true });
 
       // Join the room for the selected category

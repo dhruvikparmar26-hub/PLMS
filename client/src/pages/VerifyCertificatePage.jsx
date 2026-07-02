@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { getLabel } from '../utils/labelMap';
+import { getApiBaseUrl } from '../api';
 
 export default function VerifyCertificatePage() {
   const { code } = useParams();
@@ -17,7 +18,7 @@ export default function VerifyCertificatePage() {
     try {
       setLoading(true);
       setError('');
-      const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
+      const baseUrl = getApiBaseUrl();
       const res = await axios.get(`${baseUrl}/certificates/verify/${code}`);
       setResult(res.data);
     } catch (err) {

@@ -63,6 +63,9 @@ Deploy the `client` directory of the application.
 | :--- | :--- | :--- |
 | `VITE_API_URL` | URL of the deployed Express backend | `https://your-lms-backend.onrender.com/api` |
 
+> [!NOTE]
+> The frontend now normalizes this value automatically. If you save only the Render root URL, the client will append `/api` for you.
+
 ---
 
 ## 4. Production Security Headers & Cookies
