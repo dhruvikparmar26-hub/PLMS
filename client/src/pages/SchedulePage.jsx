@@ -38,11 +38,14 @@ const SchedulePage = () => {
       setLoading(true);
       const weekStartStr = getStartOfWeek(currentWeek).toISOString();
       const res = await api.get(`/study-sessions/week?weekStart=${weekStartStr}`);
-      setSessions(res.data.sessions);
+      setSessions(res.data.sessions || []);
       setWeekStart(new Date(res.data.weekStart));
       setWeekEnd(new Date(res.data.weekEnd));
     } catch (error) {
       console.error('Failed to load sessions:', error);
+      setSessions([]);
+      setWeekStart(getStartOfWeek(currentWeek));
+      setWeekEnd(new Date(getStartOfWeek(currentWeek).getTime() + 6 * 24 * 60 * 60 * 1000));
     } finally {
       setLoading(false);
     }
@@ -51,9 +54,10 @@ const SchedulePage = () => {
   const loadAvailableCourses = async () => {
     try {
       const res = await api.get('/study-sessions/courses');
-      setCourses(res.data.courses);
+      setCourses(res.data.courses || []);
     } catch (error) {
       console.error('Failed to load courses:', error);
+      setCourses([]);
     }
   };
 

@@ -59,8 +59,11 @@ const SignupPage = () => {
       setSuccess(true);
       setTimeout(() => navigate('/login'), 1500);
     } catch (err) {
+      console.error('Signup error:', err);
       const message =
-        err.response?.data?.message || 'Something went wrong. Please try again.';
+        err.response?.data?.message || 
+        err.message || 
+        'Something went wrong. Please try again.';
       setServerError(message);
     } finally {
       setIsSubmitting(false);

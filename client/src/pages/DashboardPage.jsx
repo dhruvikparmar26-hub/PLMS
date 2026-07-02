@@ -33,16 +33,72 @@ const DashboardPage = () => {
       try {
         setLoadingData(true);
         setError('');
-        const [enrollmentsRes, recsRes, achievementsRes, sessionsRes] = await Promise.all([
-          api.get('/enrollments/me'),
-          api.get('/adaptive/learning-path'),
-          api.get('/achievements/user'),
-          api.get('/study-sessions/today'),
+        
+        // Fetch each endpoint independently so partial failures don't block all data
+        const fetchEnrollments = async () => {
+          try {
+            const res = await api.get('/enrollments/me');
+            const data = res.data.enrollments || [];
+            localStorage.setItem('dashboard_enrollments', JSON.stringify(data));
+            return data;
+          } catch (err) {
+            console.error('Failed to fetch enrollments:', err);
+            // Return cached data if available
+            const cached = localStorage.getItem('dashboard_enrollments');
+            return cached ? JSON.parse(cached) : [];
+          }
+        };
+        
+        const fetchRecommendations = async () => {
+          try {
+            const res = await api.get('/adaptive/learning-path');
+            const data = res.data.courses || [];
+            localStorage.setItem('dashboard_recommendations', JSON.stringify(data));
+            return data;
+          } catch (err) {
+            console.error('Failed to fetch recommendations:', err);
+            const cached = localStorage.getItem('dashboard_recommendations');
+            return cached ? JSON.parse(cached) : [];
+          }
+        };
+        
+        const fetchAchievements = async () => {
+          try {
+            const res = await api.get('/achievements/user');
+            const data = res.data.data || { earned: [], locked: [] };
+            localStorage.setItem('dashboard_achievements', JSON.stringify(data));
+            return data;
+          } catch (err) {
+            console.error('Failed to fetch achievements:', err);
+            const cached = localStorage.getItem('dashboard_achievements');
+            return cached ? JSON.parse(cached) : { earned: [], locked: [] };
+          }
+        };
+        
+        const fetchSessions = async () => {
+          try {
+            const res = await api.get('/study-sessions/today');
+            const data = res.data.sessions || [];
+            localStorage.setItem('dashboard_sessions', JSON.stringify(data));
+            return data;
+          } catch (err) {
+            console.error('Failed to fetch sessions:', err);
+            const cached = localStorage.getItem('dashboard_sessions');
+            return cached ? JSON.parse(cached) : [];
+          }
+        };
+        
+        const [enrollmentsData, recsData, achievementsData, sessionsData] = await Promise.all([
+          fetchEnrollments(),
+          fetchRecommendations(),
+          fetchAchievements(),
+          fetchSessions(),
         ]);
-        setEnrollments(enrollmentsRes.data.enrollments || []);
-        setRecommendations(recsRes.data.courses || []);
-        setAchievements(achievementsRes.data.data || { earned: [], locked: [] });
-        setTodaySessions(sessionsRes.data.sessions || []);
+        
+        setEnrollments(enrollmentsData);
+        setRecommendations(recsData);
+        setAchievements(achievementsData);
+        setTodaySessions(sessionsData);
       } catch (err) {
         setError('Failed to load dashboard data.');
         console.error(err);
