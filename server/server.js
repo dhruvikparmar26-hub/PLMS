@@ -23,6 +23,7 @@ require('./models/Flashcard');
 require('./models/Bookmark');
 require('./models/QAPost');
 require('./models/Certificate');
+require('./models/StudySession');
 
 const PORT = process.env.PORT || 5000;
 

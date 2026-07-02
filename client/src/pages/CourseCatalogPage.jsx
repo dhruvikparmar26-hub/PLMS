@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import api from '../api';
 import CourseRating from '../components/CourseRating';
+import { getLabel } from '../utils/labelMap';
 
 const CourseCatalogPage = () => {
   const { user, logout } = useAuth();
@@ -183,7 +184,7 @@ const CourseCatalogPage = () => {
           background: 'var(--bg-surface)', display: 'flex', alignItems: 'center',
           justifyContent: 'space-between', padding: '0 24px', flexShrink: 0,
         }}>
-          <span className="tech-header">CATALOG / COURSES_INDEX</span>
+          <span className="tech-header">CATALOG / {getLabel('COURSES_INDEX')}</span>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <span className="font-mono md:hidden" style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--accent-primary)' }}>PLMS</span>
             <button onClick={handleLogout} className="btn-secondary"
@@ -262,7 +263,7 @@ const CourseCatalogPage = () => {
                       padding: 0, fontWeight: 700
                     }}
                   >
-                    RESET_FILTERS [✕]
+                    {getLabel('RESET_FILTERS')} [✕]
                   </button>
                 </div>
               )}
@@ -285,12 +286,12 @@ const CourseCatalogPage = () => {
                   borderTopColor: 'transparent', borderRadius: '50%', margin: '0 auto',
                   animation: 'spin 1s linear infinite'
                 }} />
-                <p className="font-mono" style={{ color: 'var(--text-muted)', fontSize: '0.75rem' }}>FETCHING_MODULE_MANIFESTS...</p>
+                <p className="font-mono" style={{ color: 'var(--text-muted)', fontSize: '0.75rem' }}>{getLabel('FETCHING_MODULE_MANIFESTS')}</p>
               </div>
             ) : courses.length === 0 ? (
               <div className="bento-cell bento-cell--empty" style={{ minHeight: '200px', borderStyle: 'dashed' }}>
                 <span className="font-mono" style={{ fontSize: '1.5rem', display: 'block', color: 'var(--text-muted)', marginBottom: '16px' }}>
-                  [EMPTY_SET]
+                  [{getLabel('EMPTY_SET')}]
                 </span>
                 <p className="font-display" style={{ fontWeight: 600, color: 'var(--text-secondary)' }}>No courses matching query</p>
                 <p className="font-mono" style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '8px', marginBottom: '24px' }}>
@@ -325,7 +326,7 @@ const CourseCatalogPage = () => {
                               />
                             ) : (
                               <div className="font-mono" style={{ fontSize: '0.625rem', color: 'var(--text-muted)', letterSpacing: '0.1em' }}>
-                                [WIREFRAME_PREVIEW]
+                                [{getLabel('WIREFRAME_PREVIEW')}]
                               </div>
                             )}
                             <div style={{
@@ -369,9 +370,9 @@ const CourseCatalogPage = () => {
                         }}>
                           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
                             <div style={{ minWidth: 0 }}>
-                              <span className="font-mono" style={{ fontSize: '0.5625rem', color: 'var(--text-muted)', display: 'block' }}>INSTRUCTOR_REF</span>
+                              <span className="font-mono" style={{ fontSize: '0.5625rem', color: 'var(--text-muted)', display: 'block' }}>{getLabel('INSTRUCTOR_REF')}</span>
                               <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary)', display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                                {course.instructor?.name || 'SYSTEM_GEN'}
+                                {course.instructor?.name || 'System'}
                               </span>
                             </div>
                             <Link
@@ -382,7 +383,7 @@ const CourseCatalogPage = () => {
                                 textDecoration: 'none', display: 'inline-block'
                               }}
                             >
-                              OPEN_SPEC
+                              {getLabel('OPEN_SPEC')}
                             </Link>
                           </div>
                           <CourseRating courseId={course._id} />

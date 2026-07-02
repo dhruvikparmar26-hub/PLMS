@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import api from '../api';
 import { useAuth } from '../contexts/AuthContext';
+import { getLabel } from '../utils/labelMap';
 
 export default function LessonQASection({ lessonId, courseId }) {
   const { user } = useAuth();
@@ -128,7 +129,7 @@ export default function LessonQASection({ lessonId, courseId }) {
 
       {/* Posts list */}
       {loading ? (
-        <div style={{ color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', fontSize: '0.75rem' }}>LOADING_THREADS...</div>
+        <div style={{ color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', fontSize: '0.75rem' }}>{getLabel('LOADING_THREADS')}</div>
       ) : posts.length === 0 ? (
         <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem', textAlign: 'center', padding: '24px 0' }}>
           No posts yet. Be the first to ask!

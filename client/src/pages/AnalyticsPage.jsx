@@ -179,7 +179,7 @@ export default function AnalyticsPage() {
           background: 'var(--bg-surface)', display: 'flex', alignItems: 'center',
           justifyContent: 'space-between', padding: '0 24px', flexShrink: 0,
         }}>
-          <span className="tech-header">ANALYTICS // REPORT_DASHBOARD</span>
+          <span className="tech-header">ANALYTICS // REPORT DASHBOARD</span>
           {isInstructorOrAdmin && (
             <div style={{ display: 'flex', gap: '8px' }}>
               <button
@@ -222,46 +222,46 @@ export default function AnalyticsPage() {
           {activeTab === 'student' && studentData && (
             <>
               {/* Top Stats Cards */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '12px' }}>
                 <div className="blueprint-card" style={{ padding: '20px' }}>
-                  <span className="font-mono" style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>TOTAL_LEARNING_TIME</span>
+                  <span className="font-mono" style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>Total Learning Time</span>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginTop: '6px' }}>
                     <span style={{ fontSize: '1.75rem', fontWeight: 700, color: 'var(--text-primary)' }}>
                       {studentData.weeklyTimeSpent?.reduce((acc, curr) => acc + (curr.minutes || 0), 0) || 0}
                     </span>
-                    <span className="font-mono" style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>MINS</span>
+                    <span className="font-mono" style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>mins recorded</span>
                   </div>
                 </div>
 
                 <div className="blueprint-card" style={{ padding: '20px' }}>
-                  <span className="font-mono" style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>QUIZZES_ATTEMPTED</span>
+                  <span className="font-mono" style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>Quizzes Attempted</span>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginTop: '6px' }}>
                     <span style={{ fontSize: '1.75rem', fontWeight: 700, color: 'var(--text-primary)' }}>
                       {studentData.quizScoreTrend?.length || 0}
                     </span>
-                    <span className="font-mono" style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>ATTEMPTS</span>
+                    <span className="font-mono" style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>total attempts</span>
                   </div>
                 </div>
 
                 <div className="blueprint-card" style={{ padding: '20px' }}>
-                  <span className="font-mono" style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>AVERAGE_QUIZ_SCORE</span>
+                  <span className="font-mono" style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>Average Quiz Score</span>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginTop: '6px' }}>
                     <span style={{ fontSize: '1.75rem', fontWeight: 700, color: 'var(--accent-primary)' }}>
                       {studentData.quizScoreTrend?.length > 0
                         ? Math.round(studentData.quizScoreTrend.reduce((acc, curr) => acc + (curr.score || 0), 0) / studentData.quizScoreTrend.length)
                         : 0}
                     </span>
-                    <span className="font-mono" style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>%</span>
+                    <span className="font-mono" style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>across all quizzes</span>
                   </div>
                 </div>
               </div>
 
               {/* Time Spent Chart */}
-              <div className="blueprint-card" style={{ padding: '24px' }}>
-                <h3 className="font-mono" style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', margin: '0 0 16px' }}>
-                  // WEEKLY_STUDY_TIME
+              <div className="blueprint-card" style={{ padding: '16px' }}>
+                <h3 className="font-mono" style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', margin: '0 0 12px' }}>
+                  // Weekly Study Time
                 </h3>
-                <div style={{ width: '100%', height: 300 }}>
+                <div style={{ width: '100%', height: '200px' }}>
                   <ResponsiveContainer>
                     <BarChart data={studentData.weeklyTimeSpent}>
                       <CartesianGrid stroke="var(--border-default)" strokeDasharray="3 3" />
@@ -275,12 +275,12 @@ export default function AnalyticsPage() {
               </div>
 
               {/* Category Breakdown */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr', lg: 'repeat(2, 1fr)', gap: '20px' }}>
-                <div className="blueprint-card" style={{ padding: '24px' }}>
-                  <h3 className="font-mono" style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', margin: '0 0 16px' }}>
-                    // COMPLETION_BY_CATEGORY
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '16px' }}>
+                <div className="blueprint-card" style={{ padding: '16px' }}>
+                  <h3 className="font-mono" style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', margin: '0 0 12px' }}>
+                    // Completion by Category
                   </h3>
-                  <div style={{ width: '100%', height: 260 }}>
+                  <div style={{ width: '100%', height: '200px' }}>
                     <ResponsiveContainer>
                       <BarChart data={studentData.completionByCategory} layout="vertical">
                         <CartesianGrid stroke="var(--border-default)" strokeDasharray="3 3" />
@@ -294,11 +294,11 @@ export default function AnalyticsPage() {
                 </div>
 
                 {/* Quiz score trend */}
-                <div className="blueprint-card" style={{ padding: '24px' }}>
-                  <h3 className="font-mono" style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', margin: '0 0 16px' }}>
-                    // QUIZ_PERFORMANCE_TREND
+                <div className="blueprint-card" style={{ padding: '16px' }}>
+                  <h3 className="font-mono" style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', margin: '0 0 12px' }}>
+                    // Quiz Performance Trend
                   </h3>
-                  <div style={{ width: '100%', height: 260 }}>
+                  <div style={{ width: '100%', height: '200px' }}>
                     <ResponsiveContainer>
                       <LineChart data={studentData.quizScoreTrend}>
                         <CartesianGrid stroke="var(--border-default)" strokeDasharray="3 3" />
@@ -320,7 +320,7 @@ export default function AnalyticsPage() {
               {/* Top Stats Cards */}
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px' }}>
                 <div className="blueprint-card" style={{ padding: '20px' }}>
-                  <span className="font-mono" style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>ACTIVE_COURSES</span>
+                  <span className="font-mono" style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>Active Courses</span>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginTop: '6px' }}>
                     <span style={{ fontSize: '1.75rem', fontWeight: 700, color: 'var(--text-primary)' }}>
                       {instructorData.totalCourses || 0}
@@ -329,7 +329,7 @@ export default function AnalyticsPage() {
                 </div>
 
                 <div className="blueprint-card" style={{ padding: '20px' }}>
-                  <span className="font-mono" style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>UNIQUE_STUDENTS</span>
+                  <span className="font-mono" style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>Unique Students</span>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginTop: '6px' }}>
                     <span style={{ fontSize: '1.75rem', fontWeight: 700, color: 'var(--accent-primary)' }}>
                       {instructorData.totalStudents || 0}
@@ -338,7 +338,7 @@ export default function AnalyticsPage() {
                 </div>
 
                 <div className="blueprint-card" style={{ padding: '20px' }}>
-                  <span className="font-mono" style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>POTENTIAL_DROP_OFFS</span>
+                  <span className="font-mono" style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>Potential Drop-offs</span>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginTop: '6px' }}>
                     <span style={{ fontSize: '1.75rem', fontWeight: 700, color: 'var(--danger)' }}>
                       {instructorData.inactiveStudents?.length || 0}
@@ -350,17 +350,17 @@ export default function AnalyticsPage() {
               {/* Course detailed table */}
               <div className="blueprint-card" style={{ padding: '24px' }}>
                 <h3 className="font-mono" style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', margin: '0 0 16px' }}>
-                  // COURSE_ENGAGEMENT_REGISTRY
+                  // Course Engagement Registry
                 </h3>
                 <div style={{ overflowX: 'auto' }}>
                   <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '600px' }}>
                     <thead>
                       <tr style={{ borderBottom: '1px solid var(--border-default)', fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--text-muted)' }}>
-                        <th style={{ padding: '12px 8px' }}>COURSE_TITLE</th>
-                        <th style={{ padding: '12px 8px' }}>ENROLLED</th>
-                        <th style={{ padding: '12px 8px' }}>AVG_PROGRESS</th>
-                        <th style={{ padding: '12px 8px' }}>COMPLETIONS</th>
-                        <th style={{ padding: '12px 8px' }}>QUIZ_AVG</th>
+                        <th style={{ padding: '12px 8px' }}>Course Title</th>
+                        <th style={{ padding: '12px 8px' }}>Enrolled</th>
+                        <th style={{ padding: '12px 8px' }}>Avg Progress</th>
+                        <th style={{ padding: '12px 8px' }}>Completions</th>
+                        <th style={{ padding: '12px 8px' }}>Quiz Avg</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -383,7 +383,7 @@ export default function AnalyticsPage() {
                 {/* Drop-off chart */}
                 <div className="blueprint-card" style={{ padding: '24px' }}>
                   <h3 className="font-mono" style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', margin: '0 0 16px' }}>
-                    // student_progress_distributions
+                    // Student Progress Distributions
                   </h3>
                   <div style={{ width: '100%', height: 260 }}>
                     <ResponsiveContainer>
@@ -405,7 +405,7 @@ export default function AnalyticsPage() {
                 {/* Inactive students list */}
                 <div className="blueprint-card" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                   <h3 className="font-mono" style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', margin: 0 }}>
-                    // inactive_students_alert
+                    // Inactive Students Alert
                   </h3>
                   <p style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', margin: 0 }}>
                     Students with no registered activity logs in the last 14 days.

@@ -19,6 +19,7 @@ const activityLogSchema = new mongoose.Schema(
         'login',
         'logout',
         'review_completed',
+        'study_session_completed',
       ],
     },
     metadata: {

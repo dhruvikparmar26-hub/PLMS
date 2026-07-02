@@ -67,6 +67,7 @@ app.use('/api/flashcards', require('./routes/flashcards'));
 app.use('/api/bookmarks', require('./routes/bookmarks'));
 app.use('/api/qa', require('./routes/qa'));
 app.use('/api/certificates', require('./routes/certificates'));
+app.use('/api/study-sessions', require('./routes/studySessions'));
 
 // --------------- 404 Handler ---------------
 app.use((req, res) => {

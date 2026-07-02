@@ -4,6 +4,7 @@ import { useAuth } from '../contexts/AuthContext';
 import api from '../api';
 import NoteEditor from '../components/NoteEditor';
 import LessonQASection from '../components/LessonQASection';
+import { getLabel } from '../utils/labelMap';
 
 const LessonViewerPage = () => {
   const { id } = useParams(); // lesson ID
@@ -157,7 +158,7 @@ const LessonViewerPage = () => {
           borderTopColor: 'transparent', borderRadius: '50%',
           animation: 'spin 1s linear infinite'
         }} />
-        <p className="font-mono text-xs" style={{ color: 'var(--text-muted)' }}>STREAMING_CONTENT_BUFFER...</p>
+        <p className="font-mono text-xs" style={{ color: 'var(--text-muted)' }}>{getLabel('STREAMING_CONTENT_BUFFER')}</p>
       </div>
     );
   }
@@ -190,7 +191,7 @@ const LessonViewerPage = () => {
               textDecoration: 'none', fontWeight: 700
             }}
           >
-            &lt; RETURN_TO_SPEC
+            &lt; {getLabel('RETURN_TO_SPEC')}
           </Link>
 
           {course && (
@@ -199,7 +200,7 @@ const LessonViewerPage = () => {
                 {course.title}
               </h2>
               <span className="font-mono" style={{ fontSize: '0.5625rem', color: 'var(--text-muted)' }}>
-                INSTRUCTOR_REF: {course.instructor?.name || 'SYSTEM_GEN'}
+                {getLabel('INSTRUCTOR_REF')}: {course.instructor?.name || 'System'}
               </span>
             </div>
           )}
@@ -208,7 +209,7 @@ const LessonViewerPage = () => {
           {enrollment && (
             <div className="blueprint-card" style={{ padding: '12px 16px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.6875rem', fontFamily: 'var(--font-mono)', marginBottom: '4px' }}>
-                <span style={{ color: 'var(--text-secondary)' }}>MODULE_PROGRESS</span>
+                <span style={{ color: 'var(--text-secondary)' }}>{getLabel('MODULE_PROGRESS')}</span>
                 <span style={{ color: 'var(--accent-primary)', fontWeight: 700 }}>{enrollment.progressPercent}%</span>
               </div>
               <div className="progress-track">
@@ -265,7 +266,7 @@ const LessonViewerPage = () => {
           {quizzes.length > 0 && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', paddingTop: '16px', borderTop: '1px solid var(--border-default)' }}>
               <span className="font-mono" style={{ fontSize: '0.5625rem', fontWeight: 700, color: 'var(--accent-secondary)' }}>
-                EVALUATION_BATTERIES
+                {getLabel('EVALUATION_BATTERIES')}
               </span>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
                 {quizzes.map((quiz) => (
@@ -320,7 +321,7 @@ const LessonViewerPage = () => {
           background: 'var(--bg-surface)', display: 'flex', alignItems: 'center',
           justifyContent: 'space-between', padding: '0 24px', flexShrink: 0,
         }}>
-          <span className="tech-header">LESSON / STREAM_VIEWER</span>
+          <span className="tech-header">LESSON / {getLabel('LESSON_STREAM_VIEWER')}</span>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <button
               onClick={handleToggleBookmark}
@@ -439,7 +440,7 @@ const LessonViewerPage = () => {
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: '16px' }}>
               <div>
                 <span className="font-mono text-muted" style={{ fontSize: '0.625rem', display: 'block' }}>
-                  ORDER_INDEX: {lesson.order}
+                  {getLabel('ORDER_INDEX')}: {lesson.order}
                 </span>
                 <h1 style={{ fontSize: '1.5rem', fontWeight: 700, margin: '2px 0 0 0' }}>
                   {lesson.title}
@@ -458,7 +459,7 @@ const LessonViewerPage = () => {
                     className="btn-primary"
                     style={{ padding: '8px 20px', fontSize: '0.8125rem' }}
                   >
-                    {completeLoading ? 'COMPLETING...' : 'MARK_AS_COMPLETE'}
+                    {completeLoading ? getLabel('COMPLETING') : getLabel('MARK_AS_COMPLETE')}
                   </button>
                 )}
               </div>
@@ -467,7 +468,7 @@ const LessonViewerPage = () => {
             {/* Lesson Content Text */}
             <section className="blueprint-card" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
               <h2 className="font-mono" style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', borderBottom: '1px solid var(--border-default)', paddingBottom: '8px', margin: 0 }}>
-                // LESSON_NOTES
+                // {getLabel('LESSON_NOTES')}
               </h2>
               <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', lineHeight: '1.6', whiteSpace: 'pre-line', margin: 0 }}>
                 {lesson.content || 'No text materials provided for this lesson.'}
@@ -492,7 +493,7 @@ const LessonViewerPage = () => {
                   className="font-mono"
                   style={{ fontSize: '0.6875rem', color: 'var(--text-muted)', textDecoration: 'none', fontWeight: 700 }}
                 >
-                  &lt; BACK_TO_SYLLABUS
+                  &lt; {getLabel('BACK_TO_SYLLABUS')}
                 </Link>
               )}
 
@@ -502,7 +503,7 @@ const LessonViewerPage = () => {
                   className="btn-secondary"
                   style={{ textDecoration: 'none', fontSize: '0.75rem', padding: '8px 16px' }}
                 >
-                  NEXT_LESSON &gt;
+                  {getLabel('NEXT_LESSON')} &gt;
                 </Link>
               ) : (
                 quizzes.length > 0 && (
@@ -514,7 +515,7 @@ const LessonViewerPage = () => {
                       background: 'var(--accent-secondary)', color: 'var(--bg-canvas)'
                     }}
                   >
-                    RUN_FINAL_EVALUATION
+                    {getLabel('RUN_FINAL_EVALUATION')}
                   </Link>
                 )
               )}

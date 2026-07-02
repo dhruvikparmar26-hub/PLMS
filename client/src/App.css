@@ -1,1 +1,110 @@
 /* App-level styles — most styling handled by Tailwind utility classes */
+
+/* Bento Grid Responsive Breakpoints */
+.bento-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr;
+}
+
+/* Mobile: single column */
+@media (min-width: 375px) {
+  .bento-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Tablet: 2 columns */
+@media (min-width: 768px) {
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .bento-2x2 {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+  
+  .bento-2x1 {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+  
+  .bento-1x2 {
+    grid-column: span 1;
+    grid-row: span 2;
+  }
+  
+  .bento-1x1 {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+  
+  .bento-full {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Desktop: full bento layout */
+@media (min-width: 1024px) {
+  .bento-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .bento-2x2 {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+  
+  .bento-2x1 {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+  
+  .bento-1x2 {
+    grid-column: span 1;
+    grid-row: span 2;
+  }
+  
+  .bento-1x1 {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+  
+  .bento-full {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Mobile bento cell sizing */
+@media (max-width: 767px) {
+  .bento-cell {
+    grid-column: 1 / -1 !important;
+    grid-row: auto !important;
+  }
+}
+
+/* Course cards responsive layout */
+@media (max-width: 767px) {
+  .bento-cell.bento-2x1 {
+    flex-direction: column !important;
+  }
+  
+  .bento-cell.bento-2x1 > div > div[style*="aspectRatio"] {
+    aspect-ratio: 16/9 !important;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0 !important;
+  }
+}
+
+/* Touch targets - minimum 44x44px on mobile */
+@media (max-width: 767px) {
+  button,
+  a[role="button"],
+  input[type="submit"],
+  input[type="button"],
+  .btn-primary,
+  .btn-secondary {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}

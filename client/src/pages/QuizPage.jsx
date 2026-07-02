@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import api from '../api';
+import { getLabel } from '../utils/labelMap';
 
 const QuizPage = () => {
   const { id } = useParams(); // Quiz ID
@@ -243,7 +244,7 @@ const QuizPage = () => {
           borderTopColor: 'transparent', borderRadius: '50%',
           animation: 'spin 1s linear infinite'
         }} />
-        <p className="font-mono text-xs" style={{ color: 'var(--text-muted)' }}>RETRIEVING_EVALUATION_SPECS...</p>
+        <p className="font-mono text-xs" style={{ color: 'var(--text-muted)' }}>{getLabel('RETRIEVING_EVALUATION_SPECS')}</p>
       </div>
     );
   }
@@ -346,7 +347,7 @@ const QuizPage = () => {
           background: 'var(--bg-surface)', display: 'flex', alignItems: 'center',
           justifyContent: 'space-between', padding: '0 24px', flexShrink: 0,
         }}>
-          <span className="tech-header">EVALUATION / RUN_BATTERY</span>
+          <span className="tech-header">{getLabel('EVALUATION_RUN_BATTERY')}</span>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             {quiz.course && (
               <Link
@@ -354,7 +355,7 @@ const QuizPage = () => {
                 className="btn-secondary"
                 style={{ textDecoration: 'none', padding: '6px 12px', fontSize: '0.75rem' }}
               >
-                &lt; BACK_TO_SYLLABUS
+                &lt; {getLabel('BACK_TO_SYLLABUS')}
               </Link>
             )}
             <button onClick={handleLogout} className="btn-secondary"
@@ -399,7 +400,7 @@ const QuizPage = () => {
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <h3 className="font-display" style={{ margin: 0, fontSize: '1.25rem' }}>
-                    {attemptResult.passed ? 'EVALUATION_SUCCESSFUL' : 'EVALUATION_FAILED'}
+                    {attemptResult.passed ? getLabel('EVALUATION_SUCCESSFUL') : getLabel('EVALUATION_FAILED')}
                   </h3>
                   <span className="completion-stamp" style={{
                     color: attemptResult.passed ? 'var(--success)' : 'var(--danger)',
@@ -411,13 +412,13 @@ const QuizPage = () => {
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', borderTop: '1px solid var(--border-default)', paddingTop: '16px' }}>
                   <div>
-                    <span className="font-mono" style={{ fontSize: '0.625rem', color: 'var(--text-muted)' }}>SCORE_PCT</span>
+                    <span className="font-mono" style={{ fontSize: '0.625rem', color: 'var(--text-muted)' }}>{getLabel('SCORE_PCT')}</span>
                     <p style={{ fontSize: '1.75rem', fontWeight: 700, fontFamily: 'var(--font-display)', margin: '4px 0 0 0' }}>
                       {attemptResult.score}%
                     </p>
                   </div>
                   <div>
-                    <span className="font-mono" style={{ fontSize: '0.625rem', color: 'var(--text-muted)' }}>POINTS_EARNED</span>
+                    <span className="font-mono" style={{ fontSize: '0.625rem', color: 'var(--text-muted)' }}>{getLabel('POINTS_EARNED')}</span>
                     <p style={{ fontSize: '1.75rem', fontWeight: 700, fontFamily: 'var(--font-display)', color: 'var(--text-secondary)', margin: '4px 0 0 0' }}>
                       {attemptResult.earnedPoints} <span style={{ fontSize: '1rem', fontWeight: 500, color: 'var(--text-muted)' }}>/ {attemptResult.totalPoints} pts</span>
                     </p>
@@ -431,7 +432,7 @@ const QuizPage = () => {
                       className="btn-primary"
                       style={{ fontSize: '0.75rem', padding: '8px 16px', background: 'var(--danger)', color: 'var(--text-primary)' }}
                     >
-                      INITIALIZE_RETRY
+                      {getLabel('INITIALIZE_RETRY')}
                     </button>
                   </div>
                 )}
@@ -441,7 +442,7 @@ const QuizPage = () => {
             {/* Mode Selector Card (only shown before starting) */}
             {!quizStarted && !attemptResult && (
               <div className="blueprint-card" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                <h3 className="font-display" style={{ fontSize: '1rem', margin: 0 }}>EVALUATION_PARAMETER_SELECTION</h3>
+                <h3 className="font-display" style={{ fontSize: '1rem', margin: 0 }}>{getLabel('EVALUATION_PARAMETER_SELECTION')}</h3>
                 <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', margin: 0 }}>
                   Select the style of evaluation. Adaptive mode adjusts difficulty in real time based on your running answer streak, helping isolate your exact skill baseline.
                 </p>
@@ -459,7 +460,7 @@ const QuizPage = () => {
                     }}
                   />
                   <label htmlFor="adaptiveModeCheckbox" style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--accent-primary)', cursor: 'pointer' }}>
-                    ACTIVATE_ADAPTIVE_ENGINE
+                    {getLabel('ACTIVATE_ADAPTIVE_ENGINE')}
                   </label>
                 </div>
                 <button
@@ -467,7 +468,7 @@ const QuizPage = () => {
                   className="btn-primary"
                   style={{ width: '100%', padding: '12px', fontSize: '0.85rem' }}
                 >
-                  START_EVALUATION
+                  {getLabel('START_EVALUATION')}
                 </button>
               </div>
             )}
@@ -478,7 +479,7 @@ const QuizPage = () => {
                 {/* Adaptive Status HUD */}
                 <div className="blueprint-card" style={{ padding: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(0,0,0,0.15)' }}>
                   <div>
-                    <span className="font-mono" style={{ fontSize: '0.625rem', color: 'var(--text-muted)' }}>CURRENT_DIFFICULTY</span>
+                    <span className="font-mono" style={{ fontSize: '0.625rem', color: 'var(--text-muted)' }}>{getLabel('CURRENT_DIFFICULTY')}</span>
                     <p className="font-mono" style={{
                       fontSize: '0.9rem',
                       fontWeight: 700,
@@ -490,15 +491,15 @@ const QuizPage = () => {
                     </p>
                   </div>
                   <div>
-                    <span className="font-mono" style={{ fontSize: '0.625rem', color: 'var(--text-muted)' }}>STREAK_STATE</span>
+                    <span className="font-mono" style={{ fontSize: '0.625rem', color: 'var(--text-muted)' }}>{getLabel('STREAK_STATE')}</span>
                     <p className="font-mono" style={{ fontSize: '0.9rem', fontWeight: 700, margin: '2px 0 0 0', color: 'var(--text-primary)' }}>
                       C: {adaptiveState.consecutiveCorrect} | W: {adaptiveState.consecutiveWrong}
                     </p>
                   </div>
                   <div>
-                    <span className="font-mono" style={{ fontSize: '0.625rem', color: 'var(--text-muted)' }}>TOTAL_ANSWERED</span>
+                    <span className="font-mono" style={{ fontSize: '0.625rem', color: 'var(--text-muted)' }}>{getLabel('TOTAL_ANSWERED')}</span>
                     <p className="font-mono" style={{ fontSize: '0.9rem', fontWeight: 700, margin: '2px 0 0 0', color: 'var(--accent-primary)' }}>
-                      {answeredQuestions.length} CARDS
+                      {answeredQuestions.length} {getLabel('CARDS')}
                     </p>
                   </div>
                 </div>
@@ -508,10 +509,10 @@ const QuizPage = () => {
                   <div className="blueprint-card" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <span className="font-mono" style={{ fontSize: '0.6875rem', color: 'var(--text-muted)', fontWeight: 700 }}>
-                        ADAPTIVE_TARGET_{String(answeredQuestions.length + 1).padStart(2, '0')}
+                        {getLabel('ADAPTIVE_TARGET')} {String(answeredQuestions.length + 1).padStart(2, '0')}
                       </span>
                       <span className="font-mono" style={{ fontSize: '0.625rem', color: 'var(--text-secondary)', background: 'rgba(0,0,0,0.2)', padding: '2px 8px', borderRadius: 'var(--radius-sm)' }}>
-                        WEIGHT: {currentAdaptiveQuestion.points || 10} PTS
+                        {getLabel('WEIGHT')}: {currentAdaptiveQuestion.points || 10} pts
                       </span>
                     </div>
 
@@ -602,7 +603,7 @@ const QuizPage = () => {
                         color: gradedResult.isCorrect ? 'var(--success)' : 'var(--danger)',
                         fontFamily: 'var(--font-mono)'
                       }}>
-                        {gradedResult.isCorrect ? '✓ CORRECT_VAL: NEXT DIFFICULTY STATE COMMITTED.' : '✗ INCORRECT_VAL: DIFFICULTY SCALING FACTOR REDUCED.'}
+                        {gradedResult.isCorrect ? `✓ ${getLabel('CORRECT_VAL')}: NEXT DIFFICULTY STATE COMMITTED.` : `✗ ${getLabel('INCORRECT_VAL')}: DIFFICULTY SCALING FACTOR REDUCED.`}
                       </div>
                     )}
 
@@ -616,7 +617,7 @@ const QuizPage = () => {
                           className="btn-primary"
                           style={{ padding: '10px 24px', fontSize: '0.8rem' }}
                         >
-                          {submitLoading ? 'VERIFYING...' : 'SUBMIT_VAL'}
+                          {submitLoading ? 'VERIFYING...' : getLabel('SUBMIT_VAL')}
                         </button>
                       ) : (
                         <div style={{ display: 'flex', gap: '12px' }}>
@@ -627,7 +628,7 @@ const QuizPage = () => {
                               className="btn-primary"
                               style={{ padding: '10px 24px', fontSize: '0.8rem' }}
                             >
-                              NEXT_CARD
+                              {getLabel('NEXT_CARD')}
                             </button>
                           )}
                           {(adaptiveFinished || answeredQuestions.length >= 3) && (
@@ -637,7 +638,7 @@ const QuizPage = () => {
                               className="btn-primary"
                               style={{ padding: '10px 24px', fontSize: '0.8rem', backgroundColor: 'var(--success)', borderColor: 'var(--success)', color: 'var(--bg-canvas)' }}
                             >
-                              FINISH_EVALUATION
+                              Finish Quiz
                             </button>
                           )}
                         </div>

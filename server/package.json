@@ -8,6 +8,7 @@
     "dev:memory": "node scripts/start-with-mongo.js",
     "start": "node server.js",
     "seed": "node scripts/seed.js",
+    "seed:prod": "node scripts/seed-prod.js",
     "test": "jest --runInBand --detectOpenHandles --forceExit"
   },
   "dependencies": {

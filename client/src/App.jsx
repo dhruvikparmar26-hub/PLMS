@@ -17,6 +17,7 @@ import AnalyticsPage from './pages/AnalyticsPage';
 import LearningLogPage from './pages/LearningLogPage';
 import CertificatePage from './pages/CertificatePage';
 import VerifyCertificatePage from './pages/VerifyCertificatePage';
+import SchedulePage from './pages/SchedulePage';
 
 /**
  * App — Root component.
@@ -101,6 +102,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <AnalyticsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/schedule"
+            element={
+              <ProtectedRoute>
+                <SchedulePage />
               </ProtectedRoute>
             }
           />

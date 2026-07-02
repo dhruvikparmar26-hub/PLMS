@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
+import { getLabel } from '../utils/labelMap';
 
 export default function VerifyCertificatePage() {
   const { code } = useParams();
@@ -44,7 +45,7 @@ export default function VerifyCertificatePage() {
 
       {loading ? (
         <div style={{ color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', fontSize: '0.85rem' }}>
-          VERIFYING_CODE: {code}...
+          {getLabel('VERIFYING_CODE_DISPLAY')}: {code}...
         </div>
       ) : result?.valid ? (
         <div

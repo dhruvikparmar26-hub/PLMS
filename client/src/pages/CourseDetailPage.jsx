@@ -126,7 +126,7 @@ const CourseDetailPage = () => {
           borderTopColor: 'transparent', borderRadius: '50%',
           animation: 'spin 1s linear infinite'
         }} />
-        <p className="font-mono text-xs" style={{ color: 'var(--text-muted)' }}>RETRIEVING_MODULE_MANIFEST...</p>
+        <p className="font-mono text-xs" style={{ color: 'var(--text-muted)' }}>{getLabel('RETRIEVING_MODULE_MANIFEST')}</p>
       </div>
     );
   }
@@ -134,7 +134,7 @@ const CourseDetailPage = () => {
   if (!course) {
     return (
       <div className="min-h-screen bg-slate-950 text-white flex items-center justify-center flex-col gap-4">
-        <p className="font-mono text-sm" style={{ color: 'var(--danger)' }}>ERROR: COURSE_NOT_FOUND</p>
+        <p className="font-mono text-sm" style={{ color: 'var(--danger)' }}>ERROR: {getLabel('COURSE_NOT_FOUND')}</p>
         <Link to="/courses" className="btn-secondary" style={{ textDecoration: 'none' }}>
           &lt; Return to Catalog
         </Link>
@@ -252,7 +252,7 @@ const CourseDetailPage = () => {
           background: 'var(--bg-surface)', display: 'flex', alignItems: 'center',
           justifyContent: 'space-between', padding: '0 24px', flexShrink: 0,
         }}>
-          <span className="tech-header">CATALOG / COURSE_SPECIFICATION</span>
+          <span className="tech-header">CATALOG / {getLabel('COURSE_SPECIFICATION')}</span>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <span className="font-mono md:hidden" style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--accent-primary)' }}>PLMS</span>
             <button onClick={handleLogout} className="btn-secondary"
@@ -313,7 +313,7 @@ const CourseDetailPage = () => {
                 </h1>
 
                 <p className="font-mono" style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-                  INSTRUCTOR: <span style={{ color: 'var(--text-primary)' }}>{course.instructor?.name || 'SYSTEM_GEN'}</span> ({course.instructor?.email})
+                  {getLabel('INSTRUCTOR')}: <span style={{ color: 'var(--text-primary)' }}>{course.instructor?.name || 'System'}</span> ({course.instructor?.email})
                 </p>
 
                 {/* Enrollment Actions / Tech metrics */}
@@ -322,7 +322,7 @@ const CourseDetailPage = () => {
                     <div className="blueprint-card animate-pulse-glow" style={{ padding: '16px', background: 'rgba(0,240,255,0.02)', display: 'flex', flexDirection: 'column', smDirection: 'row', gap: '16px', alignItems: 'stretch', smItems: 'center', border: '1px solid rgba(0,240,255,0.15)' }}>
                       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.6875rem', fontFamily: 'var(--font-mono)' }}>
-                          <span style={{ color: 'var(--text-secondary)' }}>MODULE_PROGRESS</span>
+                          <span style={{ color: 'var(--text-secondary)' }}>{getLabel('MODULE_PROGRESS')}</span>
                           <span style={{ color: 'var(--accent-primary)', fontWeight: 700 }}>{enrollment.progressPercent}%</span>
                         </div>
                         <div className="progress-track">
@@ -349,7 +349,7 @@ const CourseDetailPage = () => {
                       className="btn-primary"
                       style={{ fontSize: '0.8125rem', padding: '10px 20px' }}
                     >
-                      {enrollLoading ? 'PROVISIONING_ENROLLMENT...' : 'INITIALIZE_ENROLLMENT'}
+                      {enrollLoading ? getLabel('PROVISIONING_ENROLLMENT') : getLabel('INITIALIZE_ENROLLMENT')}
                     </button>
                   )}
                 </div>
@@ -369,7 +369,7 @@ const CourseDetailPage = () => {
             {/* Course Ratings */}
             <section className="blueprint-card" style={{ padding: '20px' }}>
               <h2 className="font-mono" style={{ fontSize: '0.8125rem', letterSpacing: '0.05em', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '12px' }}>
-                // STUDENT_RATINGS
+                // {getLabel('STUDENT_RATINGS')}
               </h2>
               <CourseRating 
                 courseId={course._id} 
@@ -382,7 +382,7 @@ const CourseDetailPage = () => {
             {enrollment && paceForecast && (
               <section className="blueprint-card" style={{ padding: '20px' }}>
                 <h2 className="font-mono" style={{ fontSize: '0.8125rem', letterSpacing: '0.05em', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '12px' }}>
-                  // PACE_FORECAST
+                  // {getLabel('PACE_FORECAST')}
                 </h2>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -432,7 +432,7 @@ const CourseDetailPage = () => {
             {/* Syllabus/Modules structure */}
             <section style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <h2 className="font-mono" style={{ fontSize: '0.8125rem', letterSpacing: '0.05em', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
-                // COURSE_SYLLABUS_INDEX
+                // {getLabel('COURSE_SYLLABUS_INDEX')}
               </h2>
 
               {course.modules && course.modules.length > 0 ? (
@@ -523,7 +523,7 @@ const CourseDetailPage = () => {
             {enrollment && (
               <section style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <h2 className="font-mono" style={{ fontSize: '0.8125rem', letterSpacing: '0.05em', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
-                  // COURSE_EVALUATION_BATTERY
+                  // {getLabel('COURSE_EVALUATION_BATTERY')}
                 </h2>
                 {quizzes.length > 0 ? (
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '16px' }}>
@@ -538,7 +538,7 @@ const CourseDetailPage = () => {
                             {quiz.title}
                           </h4>
                           <span className="font-mono" style={{ fontSize: '0.625rem', color: 'var(--text-muted)' }}>
-                            MIN_PASS: <span style={{ color: 'var(--accent-secondary)' }}>{quiz.passingScore}%</span> | {quiz.questionCount} EVAL_POINTS
+                            {getLabel('MIN_PASS')}: <span style={{ color: 'var(--accent-secondary)' }}>{quiz.passingScore}%</span> | {quiz.questionCount} {getLabel('EVAL_POINTS')}
                           </span>
                         </div>
                         <Link
@@ -549,7 +549,7 @@ const CourseDetailPage = () => {
                             padding: '6px 12px', display: 'block'
                           }}
                         >
-                          RUN_EVALUATION
+                          {getLabel('RUN_EVALUATION')}
                         </Link>
                       </div>
                     ))}

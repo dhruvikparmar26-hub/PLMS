@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../api';
+import { getLabel } from '../utils/labelMap';
 
 const CourseEditorPage = () => {
   const { id } = useParams();
@@ -278,7 +279,7 @@ const CourseEditorPage = () => {
           borderTopColor: 'transparent', borderRadius: '50%',
           animation: 'spin 1s linear infinite'
         }} />
-        <p className="font-mono text-xs" style={{ color: 'var(--text-muted)' }}>LOADING_COURSE_DESIGNER...</p>
+        <p className="font-mono text-xs" style={{ color: 'var(--text-muted)' }}>{getLabel('LOADING_COURSE_DESIGNER')}</p>
       </div>
     );
   }
@@ -298,7 +299,7 @@ const CourseEditorPage = () => {
                 textDecoration: 'none', fontWeight: 700, background: 'none', border: 'none', cursor: 'pointer', padding: 0
               }}
             >
-              &lt; RETURN_TO_ANALYTICS
+              &lt; {getLabel('RETURN_TO_ANALYTICS')}
             </button>
             <h1 style={{ fontSize: '1.75rem', fontWeight: 700, margin: '6px 0 0 0' }}>
               Design Course: <span style={{ color: 'var(--accent-primary)' }}>{course?.title}</span>
@@ -309,7 +310,7 @@ const CourseEditorPage = () => {
             className="btn-secondary"
             style={{ fontSize: '0.75rem', padding: '8px 16px' }}
           >
-            PREVIEW_SPEC
+            {getLabel('PREVIEW_SPEC')}
           </button>
         </div>
 
@@ -341,13 +342,13 @@ const CourseEditorPage = () => {
             {/* Metadata Form */}
             <section className="blueprint-card" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <h2 className="font-mono" style={{ fontSize: '0.875rem', color: 'var(--text-muted)', textTransform: 'uppercase', margin: 0 }}>
-                // COURSE_SPECIFICATION_METADATA
+                // {getLabel('COURSE_SPECIFICATION_METADATA')}
               </h2>
 
               <form onSubmit={handleUpdateMetadata} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                   <div style={{ gridColumn: 'span 2' }}>
-                    <label className="font-mono" style={{ fontSize: '0.625rem', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>COURSE TITLE</label>
+                    <label className="font-mono" style={{ fontSize: '0.625rem', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>{getLabel('COURSE_TITLE')}</label>
                     <input
                       type="text"
                       required
@@ -406,7 +407,7 @@ const CourseEditorPage = () => {
 
                 <div style={{ marginTop: '8px' }}>
                   <button type="submit" className="btn-primary" style={{ fontSize: '0.8125rem', padding: '10px 20px' }}>
-                    SAVE_METADATA
+                    {getLabel('SAVE_METADATA')}
                   </button>
                 </div>
               </form>
@@ -415,7 +416,7 @@ const CourseEditorPage = () => {
             {/* Modules and Lessons */}
             <section className="blueprint-card" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '24px' }}>
               <h2 className="font-mono" style={{ fontSize: '0.875rem', color: 'var(--text-muted)', textTransform: 'uppercase', margin: 0 }}>
-                // CURRICULUM_MODULE_INDEX
+                // {getLabel('CURRICULUM_MODULE_INDEX')}
               </h2>
 
               {/* List Modules */}
@@ -437,7 +438,7 @@ const CourseEditorPage = () => {
                           fontSize: '0.6875rem', fontWeight: 700, cursor: 'pointer', padding: 0
                         }}
                       >
-                        [+ ADD_LESSON]
+                        [+ {getLabel('ADD_LESSON')}]
                       </button>
                     </div>
 
@@ -499,7 +500,7 @@ const CourseEditorPage = () => {
                   className="btn-secondary"
                   style={{ fontSize: '0.75rem', padding: '10px 20px', whiteSpace: 'nowrap' }}
                 >
-                  ADD_MODULE
+                  {getLabel('ADD_MODULE')}
                 </button>
               </form>
             </section>
@@ -510,12 +511,12 @@ const CourseEditorPage = () => {
           <div className="lg:col-span-1">
             <section className="blueprint-card" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px', position: 'sticky', top: '24px' }}>
               <h2 className="font-mono" style={{ fontSize: '0.875rem', color: 'var(--text-muted)', textTransform: 'uppercase', margin: 0 }}>
-                // EVALUATION_QUIZ_SETUP
+                // {getLabel('EVALUATION_QUIZ_SETUP')}
               </h2>
 
               <form onSubmit={handleSaveQuiz} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <div>
-                  <label className="font-mono" style={{ fontSize: '0.625rem', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>QUIZ TITLE</label>
+                  <label className="font-mono" style={{ fontSize: '0.625rem', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>{getLabel('QUIZ_TITLE')}</label>
                   <input
                     type="text"
                     required
@@ -569,7 +570,7 @@ const CourseEditorPage = () => {
                         </button>
 
                         <div>
-                          <label className="font-mono" style={{ fontSize: '0.5625rem', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>QUESTION_PROMPT_{qIdx + 1}</label>
+                          <label className="font-mono" style={{ fontSize: '0.5625rem', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>{getLabel('QUESTION_PROMPT')} {qIdx + 1}</label>
                           <input
                             type="text"
                             required
@@ -616,7 +617,7 @@ const CourseEditorPage = () => {
                   className="btn-primary"
                   style={{ width: '100%', padding: '12px', fontSize: '0.8125rem', background: 'var(--accent-secondary)', color: 'var(--bg-canvas)' }}
                 >
-                  SAVE_QUIZ_SPEC
+                  {getLabel('SAVE_QUIZ_SPEC')}
                 </button>
               </form>
             </section>
@@ -696,7 +697,7 @@ const CourseEditorPage = () => {
                   className="btn-primary"
                   style={{ width: '100%', padding: '12px', fontSize: '0.875rem' }}
                 >
-                  {lessonForm._id ? 'UPDATE_LESSON' : 'PROVISION_LESSON'}
+                  {lessonForm._id ? getLabel('UPDATE_LESSON') : getLabel('PROVISION_LESSON')}
                 </button>
               </form>
             </div>

@@ -47,6 +47,9 @@ function NotesTab() {
       {notes.length === 0 ? (
         <div className="blueprint-card" style={{ padding: '40px', textAlign: 'center', borderStyle: 'dashed' }}>
           <p style={{ color: 'var(--text-secondary)' }}>No notes yet. Take notes while viewing lessons.</p>
+          <Link to="/courses" className="btn-primary" style={{ display: 'inline-block', marginTop: '16px', fontSize: '0.875rem', padding: '8px 20px', textDecoration: 'none' }}>
+            Browse courses
+          </Link>
         </div>
       ) : (
         notes.map((note) => (
@@ -256,6 +259,9 @@ function FlashcardsTab() {
       {flashcards.length === 0 ? (
         <div className="blueprint-card" style={{ padding: '40px', textAlign: 'center', borderStyle: 'dashed' }}>
           <p style={{ color: 'var(--text-secondary)' }}>No flashcards yet. Create your first one above!</p>
+          <p className="font-mono" style={{ color: 'var(--text-muted)', fontSize: '0.75rem', marginTop: '12px' }}>
+            Tip: you can also generate flashcards from your lesson notes
+          </p>
         </div>
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '12px' }}>
@@ -302,6 +308,9 @@ function BookmarksTab() {
       {bookmarks.length === 0 ? (
         <div className="blueprint-card" style={{ padding: '40px', textAlign: 'center', borderStyle: 'dashed' }}>
           <p style={{ color: 'var(--text-secondary)' }}>No bookmarks yet. Bookmark lessons to save them here.</p>
+          <Link to="/courses" className="btn-primary" style={{ display: 'inline-block', marginTop: '16px', fontSize: '0.875rem', padding: '8px 20px', textDecoration: 'none' }}>
+            Browse courses
+          </Link>
         </div>
       ) : (
         bookmarks.map((bm) => (
@@ -345,21 +354,95 @@ function BookmarksTab() {
 
 function CertificatesTab() {
   const [certificates, setCertificates] = useState([]);
+  const [enrollments, setEnrollments] = useState([]);
+  const [recommendedCourses, setRecommendedCourses] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.get('/certificates').then((res) => {
-      setCertificates(res.data.certificates || []);
-    }).catch(console.error).finally(() => setLoading(false));
+    const fetchData = async () => {
+      try {
+        const [certsRes, enrollmentsRes, recsRes] = await Promise.all([
+          api.get('/certificates'),
+          api.get('/enrollments/me'),
+          api.get('/adaptive/learning-path'),
+        ]);
+        setCertificates(certsRes.data.certificates || []);
+        setEnrollments(enrollmentsRes.data.enrollments || []);
+        setRecommendedCourses(recsRes.data.courses || []);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
   }, []);
 
   if (loading) return <div style={{ color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', fontSize: '0.8rem' }}>LOADING_CERTIFICATES...</div>;
+
+  // Get 3 nearest-to-complete enrolled courses (highest progress, not 100%)
+  const nearCompleteCourses = enrollments
+    .filter(e => e.progressPercent < 100)
+    .sort((a, b) => b.progressPercent - a.progressPercent)
+    .slice(0, 3);
+
+  // If no enrollments, use recommended beginner courses
+  const suggestionCourses = nearCompleteCourses.length > 0 
+    ? nearCompleteCourses.map(e => e.course)
+    : recommendedCourses.slice(0, 3);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
       {certificates.length === 0 ? (
         <div className="blueprint-card" style={{ padding: '40px', textAlign: 'center', borderStyle: 'dashed' }}>
           <p style={{ color: 'var(--text-secondary)' }}>No certificates yet. Complete a course to earn your first one!</p>
+          <Link to="/courses" className="btn-primary" style={{ display: 'inline-block', marginTop: '16px', fontSize: '0.875rem', padding: '8px 20px', textDecoration: 'none' }}>
+            Browse courses
+          </Link>
+          
+          {suggestionCourses.length > 0 && (
+            <div style={{ marginTop: '32px', textAlign: 'left' }}>
+              <p className="font-mono" style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '12px' }}>
+                {nearCompleteCourses.length > 0 ? 'NEAR TO COMPLETE:' : 'RECOMMENDED FOR YOU:'}
+              </p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                {suggestionCourses.map((course, idx) => (
+                  <Link 
+                    key={course._id || idx}
+                    to={`/courses/${course._id}`}
+                    className="blueprint-card"
+                    style={{ 
+                      padding: '12px 16px', 
+                      display: 'flex', 
+                      justifyContent: 'space-between', 
+                      alignItems: 'center',
+                      textDecoration: 'none',
+                      background: 'var(--bg-canvas)',
+                    }}
+                  >
+                    <div style={{ flex: 1 }}>
+                      <p style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)', margin: 0 }}>
+                        {course.title}
+                      </p>
+                      <p className="font-mono" style={{ fontSize: '0.6875rem', color: 'var(--text-muted)', marginTop: '4px' }}>
+                        {course.category} · {course.difficulty}
+                      </p>
+                    </div>
+                    {nearCompleteCourses.length > 0 && (
+                      <span className="font-mono" style={{ 
+                        fontSize: '0.75rem', 
+                        color: 'var(--accent-primary)', 
+                        fontWeight: 700,
+                        marginLeft: '12px'
+                      }}>
+                        {enrollments.find(e => e.course._id === course._id)?.progressPercent || 0}%
+                      </span>
+                    )}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       ) : (
         certificates.map((cert) => (
@@ -438,9 +521,9 @@ export default function LearningLogPage() {
         </div>
 
         {/* Tab bar */}
-        <div style={{ display: 'flex', gap: '8px', marginBottom: '24px', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: '8px', marginBottom: '24px', overflowX: 'auto', paddingBottom: '4px', WebkitOverflowScrolling: 'touch' }}>
           {tabs.map((tab) => (
-            <TabButton key={tab.id} active={activeTab === tab.id} onClick={() => setActiveTab(tab.id)}>
+            <TabButton key={tab.id} active={activeTab === tab.id} onClick={() => setActiveTab(tab.id)} style={{ flexShrink: 0, minHeight: '44px', minWidth: '44px' }}>
               {tab.label}
             </TabButton>
           ))}

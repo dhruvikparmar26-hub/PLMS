@@ -51,12 +51,25 @@ const getDynamicLearningPath = async (req, res, next) => {
     const preferences = req.user.learningPreferences || [];
 
     // Get all courses not enrolled in
-    const courses = await Course.find({
-      _id: { $nin: enrolledCourseIds },
-      category: preferences.length > 0 ? { $in: preferences } : { $exists: true },
-    })
-      .select('title category difficulty description modules thumbnail')
-      .lean();
+    let courses;
+    if (preferences.length > 0) {
+      // User has preferences - filter by them
+      courses = await Course.find({
+        _id: { $nin: enrolledCourseIds },
+        category: { $in: preferences },
+      })
+        .select('title category difficulty description modules thumbnail')
+        .lean();
+    } else {
+      // No preferences - get beginner courses as defaults
+      courses = await Course.find({
+        _id: { $nin: enrolledCourseIds },
+        difficulty: 'beginner',
+      })
+        .select('title category difficulty description modules thumbnail')
+        .limit(3)
+        .lean();
+    }
 
     // Score each course based on multiple factors
     const scoredCourses = courses.map((course) => {

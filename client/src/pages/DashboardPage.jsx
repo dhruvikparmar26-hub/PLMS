@@ -16,8 +16,10 @@ const DashboardPage = () => {
   const [enrollments, setEnrollments] = useState([]);
   const [recommendations, setRecommendations] = useState([]);
   const [achievements, setAchievements] = useState({ earned: [], locked: [] });
+  const [todaySessions, setTodaySessions] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
   const [error, setError] = useState('');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     if (user && (!user.learningPreferences || user.learningPreferences.length === 0)) {
@@ -31,14 +33,16 @@ const DashboardPage = () => {
       try {
         setLoadingData(true);
         setError('');
-        const [enrollmentsRes, recsRes, achievementsRes] = await Promise.all([
+        const [enrollmentsRes, recsRes, achievementsRes, sessionsRes] = await Promise.all([
           api.get('/enrollments/me'),
           api.get('/adaptive/learning-path'),
           api.get('/achievements/user'),
+          api.get('/study-sessions/today'),
         ]);
         setEnrollments(enrollmentsRes.data.enrollments || []);
         setRecommendations(recsRes.data.courses || []);
         setAchievements(achievementsRes.data.data || { earned: [], locked: [] });
+        setTodaySessions(sessionsRes.data.sessions || []);
       } catch (err) {
         setError('Failed to load dashboard data.');
         console.error(err);
@@ -77,8 +81,104 @@ const DashboardPage = () => {
   return (
     <div className="min-h-screen flex" style={{ background: 'var(--bg-canvas)' }}>
 
-      {/* ============ Sidebar with notebook spine ============ */}
-      <aside className="w-60 hidden md:flex flex-col justify-between sidebar-spine"
+      {/* Mobile Menu Overlay */}
+      {mobileMenuOpen && (
+        <div 
+          onClick={() => setMobileMenuOpen(false)}
+          style={{
+            position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+            background: 'rgba(0,0,0,0.5)', zIndex: 999,
+          }}
+        />
+      )}
+
+      {/* Mobile Sidebar */}
+      <aside 
+        className={`md:hidden fixed left-0 top-0 bottom-0 z-[1000] transition-transform duration-300 ${
+          mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+        style={{ background: 'var(--bg-surface)', padding: '24px', width: '280px', display: 'flex', flexDirection: 'column' }}
+      >
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div>
+              <span className="font-display" style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--accent-primary)', letterSpacing: '-0.02em' }}>
+                Momentum
+              </span>
+              <span className="font-mono" style={{ fontSize: '0.5625rem', color: 'var(--text-muted)', display: 'block', letterSpacing: '0.1em' }}>
+                EST. 2026
+              </span>
+            </div>
+            <button 
+              onClick={() => setMobileMenuOpen(false)}
+              style={{ background: 'none', border: 'none', fontSize: '1.5rem', color: 'var(--text-muted)', cursor: 'pointer', padding: '8px', minWidth: '44px', minHeight: '44px' }}
+            >
+              ✕
+            </button>
+          </div>
+
+          {/* Nav */}
+          <nav style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            {[
+              { label: 'Overview', path: '/dashboard', active: true },
+              { label: 'Schedule', path: '/schedule' },
+              { label: 'Library', path: '/courses' },
+              { label: 'Certificates', path: '/learning-log' },
+              { label: 'Support', path: '/onboarding' },
+            ].map((item) => (
+              <Link 
+                key={item.path} 
+                to={item.path}
+                onClick={() => setMobileMenuOpen(false)}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: '10px',
+                  padding: '12px', borderRadius: 'var(--radius-md)',
+                  fontSize: '0.875rem', fontWeight: 600,
+                  fontFamily: 'var(--font-display)',
+                  background: item.active ? 'rgba(242, 176, 86, 0.06)' : 'transparent',
+                  color: item.active ? 'var(--accent-primary)' : 'var(--text-secondary)',
+                  border: item.active ? '1px solid rgba(242, 176, 86, 0.15)' : '1px solid transparent',
+                  transition: 'all var(--transition-fast)',
+                  textDecoration: 'none',
+                  minHeight: '44px',
+                }}
+              >
+                {item.label}
+              </Link>
+            ))}
+            {(user?.role === 'instructor' || user?.role === 'admin') && (
+              <Link 
+                to="/instructor"
+                onClick={() => setMobileMenuOpen(false)}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: '10px',
+                  padding: '12px', borderRadius: 'var(--radius-md)',
+                  fontSize: '0.875rem', fontWeight: 600,
+                  fontFamily: 'var(--font-display)',
+                  color: 'var(--text-secondary)',
+                  border: '1px solid transparent',
+                  transition: 'all var(--transition-fast)',
+                  textDecoration: 'none',
+                  minHeight: '44px',
+                }}
+              >
+                Instructor Hub
+              </Link>
+            )}
+          </nav>
+
+          <button 
+            onClick={handleLogout}
+            className="btn-secondary"
+            style={{ padding: '12px', fontSize: '0.875rem', minHeight: '44px' }}
+          >
+            Sign out
+          </button>
+        </div>
+      </aside>
+
+      {/* Desktop Sidebar */}
+      <aside className="hidden md:flex flex-col justify-between sidebar-spine w-60"
              style={{ background: 'var(--bg-surface)', padding: '24px', flexShrink: 0 }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
           <div>
@@ -94,7 +194,7 @@ const DashboardPage = () => {
           <nav style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
             {[
               { label: 'Overview', path: '/dashboard', active: true },
-              { label: 'Schedule', path: '/analytics' },
+              { label: 'Schedule', path: '/schedule' },
               { label: 'Library', path: '/courses' },
               { label: 'Certificates', path: '/learning-log' },
               { label: 'Support', path: '/onboarding' },
@@ -176,14 +276,27 @@ const DashboardPage = () => {
         <header style={{
           height: '56px', borderBottom: '1px solid var(--border-default)',
           background: 'var(--bg-surface)', display: 'flex', alignItems: 'center',
-          justifyContent: 'space-between', padding: '0 24px', flexShrink: 0,
+          justifyContent: 'space-between', padding: '0 16px', flexShrink: 0,
         }}>
-          <span className="tech-header">DASHBOARD / LEARNING_LOG</span>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <span className="font-mono md:hidden" style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--accent-primary)' }}>Momentum</span>
+            <button
+              onClick={() => setMobileMenuOpen(true)}
+              className="md:hidden"
+              style={{ 
+                background: 'none', border: 'none', fontSize: '1.5rem', 
+                color: 'var(--text-primary)', cursor: 'pointer', 
+                padding: '8px', minWidth: '44px', minHeight: '44px' 
+              }}
+            >
+              ☰
+            </button>
+            <span className="tech-header hidden sm:block">DASHBOARD / LEARNING_LOG</span>
+            <span className="tech-header sm:hidden">DASHBOARD</span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <ProgressReport />
             <NotificationCenter />
-            <button onClick={handleLogout} className="btn-secondary"
+            <button onClick={handleLogout} className="btn-secondary hidden md:block"
                     style={{ padding: '6px 16px', fontSize: '0.75rem' }}>
               Sign out
             </button>
@@ -191,7 +304,7 @@ const DashboardPage = () => {
         </header>
 
         {/* Content */}
-        <main style={{ flex: 1, overflowY: 'auto', padding: '24px', maxWidth: '1200px', width: '100%', margin: '0 auto' }}>
+        <main style={{ flex: 1, overflowY: 'auto', padding: '16px', maxWidth: '1200px', width: '100%', margin: '0 auto' }}>
           <div className="animate-fade-in-up" style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
 
             {error && (
@@ -347,6 +460,59 @@ const DashboardPage = () => {
                     </div>
                   </div>
 
+                  {/* Today's Schedule — full-width */}
+                  <div className="bento-cell bento-full" style={{ padding: 'var(--space-lg)' }}>
+                    <div className="bento-section-header">
+                      <h2>Today's Schedule</h2>
+                      <Link to="/schedule" className="font-mono"
+                            style={{ fontSize: '0.6875rem', fontWeight: 700, letterSpacing: '0.06em' }}>
+                        Full schedule →
+                      </Link>
+                    </div>
+
+                    {todaySessions.length === 0 ? (
+                      <div style={{
+                        padding: '24px', textAlign: 'center',
+                        border: '1px dashed var(--border-default)', borderRadius: 'var(--radius-md)',
+                      }}>
+                        <p style={{ color: 'var(--text-secondary)', fontWeight: 500 }}>Nothing scheduled today</p>
+                        <Link to="/schedule" className="font-mono"
+                              style={{ color: 'var(--accent-primary)', fontSize: '0.75rem', marginTop: '8px', display: 'inline-block' }}>
+                          Add a session →
+                        </Link>
+                      </div>
+                    ) : (
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '12px' }}>
+                        {todaySessions.map(session => (
+                          <div key={session._id} className="blueprint-card" style={{
+                            padding: '12px',
+                            background: session.status === 'completed' ? 'rgba(52,211,153,0.08)' : 'rgba(0,240,255,0.05)',
+                            border: session.status === 'completed' ? '1px solid var(--success)' : '1px solid var(--border-default)',
+                          }}>
+                            <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '4px' }}>
+                              {session.title}
+                            </div>
+                            <div className="font-mono" style={{ fontSize: '0.625rem', color: 'var(--text-muted)', marginBottom: '4px' }}>
+                              {new Date(session.scheduledDate).toLocaleTimeString('en-US', {
+                                hour: 'numeric',
+                                minute: '2-digit',
+                                hour12: true,
+                              })} · {session.duration}m
+                            </div>
+                            <div style={{ fontSize: '0.6875rem', color: 'var(--text-secondary)' }}>
+                              {session.course?.title}
+                            </div>
+                            {session.status === 'completed' && (
+                              <span className="font-mono" style={{ fontSize: '0.5625rem', color: 'var(--success)', fontWeight: 700, display: 'block', marginTop: '8px' }}>
+                                ✓ Completed
+                              </span>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
                   {/* Achievements — 2×2 */}
                   <div className="bento-cell bento-2x2" style={{ display: 'flex', flexDirection: 'column' }}>
                     <div className="bento-section-header">
@@ -395,9 +561,9 @@ const DashboardPage = () => {
 
                   {recommendations.length === 0 ? (
                     <div className="bento-cell bento-cell--empty bento-full" style={{ minHeight: '120px' }}>
-                      <p style={{ color: 'var(--text-secondary)' }}>No matches right now.</p>
+                      <p style={{ color: 'var(--text-secondary)' }}>Loading recommendations...</p>
                       <p className="font-mono" style={{ color: 'var(--text-muted)', fontSize: '0.75rem', marginTop: '8px' }}>
-                        Update your interests in Preferences to get fresh results.
+                        Browse the course catalog to get started.
                       </p>
                     </div>
                   ) : (

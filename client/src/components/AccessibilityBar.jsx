@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import api from '../api';
 import { useAuth } from '../contexts/AuthContext';
+import { getLabel } from '../utils/labelMap';
 
 const FONT_SIZES = [
   { label: 'S', value: 'small' },
@@ -71,7 +72,7 @@ export default function AccessibilityBar() {
 
           {/* Font size */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--text-muted)' }}>FONT_SIZE</span>
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--text-muted)' }}>{getLabel('FONT_SIZE')}</span>
             <div style={{ display: 'flex', gap: '6px' }}>
               {FONT_SIZES.map(({ label, value }) => (
                 <button
@@ -93,9 +94,9 @@ export default function AccessibilityBar() {
 
           {/* Toggle switches */}
           {[
-            { key: 'highContrast', label: 'HIGH_CONTRAST' },
-            { key: 'dyslexicFont', label: 'DYSLEXIC_FONT' },
-            { key: 'reduceMotion', label: 'REDUCE_MOTION' },
+            { key: 'highContrast', label: getLabel('HIGH_CONTRAST') },
+            { key: 'dyslexicFont', label: getLabel('DYSLEXIC_FONT') },
+            { key: 'reduceMotion', label: getLabel('REDUCE_MOTION') },
           ].map(({ key, label }) => (
             <div key={key} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--text-muted)' }}>{label}</span>

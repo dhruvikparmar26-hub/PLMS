@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import api from '../api';
+import { getLabel } from '../utils/labelMap';
 
 const InstructorDashboardPage = () => {
   const { user, logout } = useAuth();
@@ -113,7 +114,7 @@ const InstructorDashboardPage = () => {
           borderTopColor: 'transparent', borderRadius: '50%',
           animation: 'spin 1s linear infinite'
         }} />
-        <p className="font-mono text-xs" style={{ color: 'var(--text-muted)' }}>INITIALIZING_INSTRUCTOR_PORTAL...</p>
+        <p className="font-mono text-xs" style={{ color: 'var(--text-muted)' }}>{getLabel('INITIALIZING_INSTRUCTOR_PORTAL')}</p>
       </div>
     );
   }
@@ -186,7 +187,7 @@ const InstructorDashboardPage = () => {
           background: 'var(--bg-surface)', display: 'flex', alignItems: 'center',
           justifyContent: 'space-between', padding: '0 24px', flexShrink: 0,
         }}>
-          <span className="tech-header">INSTRUCTOR / ANALYTICS_BOARD</span>
+          <span className="tech-header">INSTRUCTOR / {getLabel('ANALYTICS_BOARD')}</span>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <button
               onClick={() => setShowCreateModal(true)}
@@ -226,10 +227,10 @@ const InstructorDashboardPage = () => {
             {/* Stats Grid */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '16px' }}>
               {[
-                { label: 'COURSES_ACTIVE', value: stats.totalCourses, color: 'var(--accent-primary)' },
-                { label: 'STUDENTS_ENROLLED', value: stats.totalStudents, color: 'var(--text-primary)' },
-                { label: 'AVG_PROGRESS_PCT', value: `${stats.averageProgress}%`, color: 'var(--success)' },
-                { label: 'QUIZ_PASS_RATE', value: `${stats.quizPassRate}%`, color: 'var(--accent-secondary)' },
+                { label: getLabel('COURSES_ACTIVE'), value: stats.totalCourses, color: 'var(--accent-primary)' },
+                { label: getLabel('STUDENTS_ENROLLED'), value: stats.totalStudents, color: 'var(--text-primary)' },
+                { label: getLabel('AVG_PROGRESS_PCT'), value: `${stats.averageProgress}%`, color: 'var(--success)' },
+                { label: getLabel('QUIZ_PASS_RATE'), value: `${stats.quizPassRate}%`, color: 'var(--accent-secondary)' },
               ].map((stat) => (
                 <div key={stat.label} className="blueprint-card" style={{ padding: '20px' }}>
                   <span className="font-mono" style={{ fontSize: '0.625rem', color: 'var(--text-muted)' }}>{stat.label}</span>
@@ -243,7 +244,7 @@ const InstructorDashboardPage = () => {
             {/* Course Breakdown Table */}
             <section style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <h2 className="font-mono" style={{ fontSize: '0.8125rem', letterSpacing: '0.05em', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
-                // COURSE_REGISTRY_METRICS
+                // {getLabel('COURSE_REGISTRY_METRICS')}
               </h2>
 
               {courseBreakdown.length === 0 ? (
@@ -319,12 +320,12 @@ const InstructorDashboardPage = () => {
             {/* Recent Student Activities */}
             <section style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <h2 className="font-mono" style={{ fontSize: '0.8125rem', letterSpacing: '0.05em', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
-                // TELEMETRY_STREAM_LOG
+                // {getLabel('TELEMETRY_STREAM_LOG')}
               </h2>
 
               {recentActivities.length === 0 ? (
                 <div className="blueprint-card" style={{ padding: '20px', textAlign: 'center' }}>
-                  <p className="font-mono text-muted" style={{ fontSize: '0.75rem', margin: 0 }}>[TELEMETRY_LOG_IS_EMPTY]</p>
+                  <p className="font-mono text-muted" style={{ fontSize: '0.75rem', margin: 0 }}>[{getLabel('TELEMETRY_LOG_IS_EMPTY')}]</p>
                 </div>
               ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -450,7 +451,7 @@ const InstructorDashboardPage = () => {
                 className="btn-primary"
                 style={{ width: '100%', padding: '12px', fontSize: '0.875rem' }}
               >
-                {createLoading ? 'PROVISIONING...' : 'PROVISION_COURSE_SPEC'}
+                {createLoading ? getLabel('PROVISIONING') : getLabel('PROVISION_COURSE_SPEC')}
               </button>
             </form>
           </div>
