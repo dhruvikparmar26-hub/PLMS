@@ -1,0 +1,574 @@
+@import "tailwindcss";
+
+/* ============================================================
+   PLMS — Technical Blueprint Design System
+   ============================================================
+   Color tokens, typography, animations, grid background,
+   and component-level base styles for the "Engineering Notebook"
+   visual identity.
+   ============================================================ */
+
+:root {
+  /* ---- Color Palette (Stitch Momentum Style) ---- */
+  --bg-canvas:       #14182B;
+  --bg-surface:      #1E2440;
+  --bg-elevated:     #283054;
+  --text-primary:    #F1EFE8;
+  --text-secondary:  #A8ADB9;
+  --text-muted:      #636979;
+  --accent-primary:  #F2B056;
+  --accent-secondary:#242D52;
+  --border-default:  #2A3258;
+  --border-active:   #F2B056;
+  --danger:          #E8745C;
+  --success:         #6FCF97;
+
+  /* ---- Typography (Momentum Style) ---- */
+  --font-display: 'Plus Jakarta Sans', sans-serif;
+  --font-body:    'Hanken Grotesk', sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+
+  /* ---- Spacing scale ---- */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 40px;
+  --space-2xl: 64px;
+
+  /* ---- Radius (Stitch UI Primitives) ---- */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  /* ---- Transition ---- */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+}
+
+/* ============================================================
+   Global Resets & Base
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ============================================================
+   Blueprint Grid Background
+   ============================================================
+   Subtle engineering graph-paper pattern. Only renders on
+   screens wider than 768px to keep mobile clean.
+   ============================================================ */
+@media (min-width: 768px) {
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      radial-gradient(circle, var(--border-default) 1px, transparent 1px);
+    background-size: 32px 32px;
+    opacity: 0.35;
+  }
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================================
+   Typography
+   ============================================================ */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+h1 { font-size: clamp(1.75rem, 4vw, 2.25rem); }
+h2 { font-size: clamp(1.25rem, 3vw, 1.5rem); }
+h3 { font-size: 1.125rem; }
+
+p, span, label, li {
+  font-family: var(--font-body);
+}
+
+code, .mono {
+  font-family: var(--font-mono);
+}
+
+a {
+  color: var(--accent-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+a:hover { color: #66F7FF; }
+
+/* ============================================================
+   Focus States (Accessibility)
+   ============================================================ */
+:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ============================================================
+   Custom Scrollbar
+   ============================================================ */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-canvas); }
+::-webkit-scrollbar-thumb {
+  background: var(--border-default);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* ============================================================
+   Selection
+   ============================================================ */
+::selection {
+  background: rgba(242, 176, 86, 0.2);
+  color: var(--text-primary);
+}
+
+/* ============================================================
+   Animations — prefers-reduced-motion respected
+   ============================================================ */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes stampIn {
+  0%   { opacity: 0; transform: scale(1.8) rotate(-8deg); }
+  60%  { opacity: 1; transform: scale(0.95) rotate(1deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(242, 176, 86, 0.15); }
+  50%      { box-shadow: 0 0 20px 4px rgba(242, 176, 86, 0.08); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s ease both;
+}
+
+.animate-stamp-in {
+  animation: stampIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+/* Delay utilities */
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+
+/* Respect user preference */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================================
+   Blueprint Components — reusable class patterns
+   ============================================================ */
+
+/* The Notebook Margin Line — a left-side vertical accent */
+.notebook-margin {
+  border-left: 3px solid var(--accent-primary);
+  padding-left: var(--space-lg);
+}
+
+/* Blueprint card — soft deep elevation, no hairline borders */
+.blueprint-card {
+  background: var(--bg-surface);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5),
+              0 1px 1px rgba(255, 255, 255, 0.05) inset;
+  transition: border-color var(--transition-base),
+              box-shadow var(--transition-base),
+              transform var(--transition-base);
+}
+.blueprint-card:hover {
+  border-color: rgba(242, 176, 86, 0.15);
+  box-shadow: 0 0 24px rgba(242, 176, 86, 0.12),
+              0 16px 40px -10px rgba(0, 0, 0, 0.6);
+  transform: translateY(-4px);
+}
+
+/* Technical header block — like a document config header */
+.tech-header {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Monospace badge */
+.mono-badge {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  padding: 2px 10px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  display: inline-block;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* The Completion Stamp */
+.completion-stamp {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--accent-primary);
+  border: 2px solid var(--accent-primary);
+  padding: 4px 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  display: inline-block;
+}
+
+.completion-stamp--amber {
+  color: var(--accent-secondary);
+  border-color: var(--accent-secondary);
+}
+
+/* Progress bar — highlighter-stroke style */
+.progress-track {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--accent-primary);
+  border-radius: 4px;
+  transition: width 0.6s ease;
+  box-shadow: 0 0 10px rgba(242, 176, 86, 0.4);
+}
+
+/* Button primary */
+.btn-primary {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 10px 24px;
+  background: var(--accent-primary);
+  color: var(--bg-canvas);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  letter-spacing: 0.02em;
+}
+.btn-primary:hover {
+  background: #FFC473;
+  box-shadow: 0 0 16px rgba(242, 176, 86, 0.25);
+}
+.btn-primary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Button secondary */
+.btn-secondary {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 10px 24px;
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.btn-secondary:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+/* Input field */
+.input-field {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  padding: 12px 16px;
+  background: var(--bg-canvas);
+  color: var(--text-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+.input-field::placeholder {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+.input-field:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 2px rgba(242, 176, 86, 0.1);
+}
+.input-field.error {
+  border-color: var(--danger);
+}
+
+/* Select field */
+select.input-field {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23788D91' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+
+/* ============================================================
+   Sidebar spine — the vertical notebook rule
+   ============================================================ */
+.sidebar-spine {
+  border-right: 3px solid var(--accent-primary);
+}
+
+/* ============================================================
+   Bento Grid System
+   ============================================================
+   Reusable asymmetric grid with standard cell sizes:
+   1×1 (stat/quick-action), 2×1 (wide feature), 1×2 (tall),
+   2×2 (hero). Desktop = 4-col, Tablet = 2-col, Mobile = 1-col.
+   ============================================================ */
+
+/* Container — 4-column base grid */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: minmax(140px, auto);
+  gap: var(--space-md);
+  align-items: start;
+}
+
+/* Shared cell treatment */
+.bento-cell {
+  background: var(--bg-surface);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  transition: border-color var(--transition-base),
+              box-shadow var(--transition-base),
+              transform var(--transition-base);
+  position: relative;
+  overflow: hidden;
+  min-width: 0;
+  box-shadow: 0 12px 36px -12px rgba(0, 0, 0, 0.6),
+              0 1px 1px rgba(255, 255, 255, 0.04) inset;
+}
+.bento-cell:hover,
+.bento-cell:focus-within {
+  border-color: rgba(242, 176, 86, 0.2);
+  box-shadow: 0 0 30px rgba(242, 176, 86, 0.15),
+              0 20px 48px -12px rgba(0, 0, 0, 0.7);
+  transform: translateY(-4px);
+}
+
+/* ---- Size classes ---- */
+.bento-1x1 { grid-column: span 1; grid-row: span 1; }
+.bento-2x1 { grid-column: span 2; grid-row: span 1; }
+.bento-1x2 { grid-column: span 1; grid-row: span 2; }
+.bento-2x2 { grid-column: span 2; grid-row: span 2; }
+.bento-full { grid-column: 1 / -1; grid-row: span 1; }
+
+/* ---- Dashed empty-state variant ---- */
+.bento-cell--empty {
+  border-style: dashed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.bento-cell--empty:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* ---- Hero cell gradient accent ---- */
+.bento-cell--hero {
+  background: linear-gradient(
+    145deg,
+    rgba(242, 176, 86, 0.06) 0%,
+    var(--bg-surface) 40%
+  );
+}
+
+/* ---- Stat cell with large number ---- */
+.bento-stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  font-family: var(--font-display);
+  line-height: 1;
+  margin-top: var(--space-sm);
+}
+.bento-stat-label {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ---- Section header inside a full-width cell ---- */
+.bento-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-md);
+}
+
+/* ---- Responsive breakpoints ---- */
+
+/* Tablet: collapse to 2 columns */
+@media (max-width: 1024px) {
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  /* 2×2 spans full width on tablet */
+  .bento-2x2 { grid-column: 1 / -1; }
+  /* full-width stays full-width */
+  .bento-full { grid-column: 1 / -1; }
+}
+
+/* Mobile: single column, all spans reset */
+@media (max-width: 640px) {
+  .bento-grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+  }
+  .bento-1x1,
+  .bento-2x1,
+  .bento-1x2,
+  .bento-2x2,
+  .bento-full {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+  .bento-cell {
+    padding: var(--space-md);
+  }
+}
+
+/* ============================================================
+   Utility classes
+   ============================================================ */
+.text-accent  { color: var(--accent-primary); }
+.text-amber   { color: var(--accent-secondary); }
+.text-danger  { color: var(--danger); }
+.text-success { color: var(--success); }
+.text-muted   { color: var(--text-muted); }
+.text-secondary { color: var(--text-secondary); }
+
+.bg-canvas  { background-color: var(--bg-canvas); }
+.bg-surface { background-color: var(--bg-surface); }
+.bg-elevated { background-color: var(--bg-elevated); }
+
+.font-display { font-family: var(--font-display); }
+.font-mono    { font-family: var(--font-mono); }
+
+.border-default { border-color: var(--border-default); }
+
+/* ============================================================
+   Accessibility Modifiers
+   Applied via data-attributes set by AuthContext.applyAccessibility
+   ============================================================ */
+
+/* High Contrast mode */
+[data-high-contrast="true"] {
+  --bg-canvas:      #000000;
+  --bg-surface:     #0D0D0D;
+  --bg-elevated:    #1A1A1A;
+  --text-primary:   #FFFFFF;
+  --text-secondary: #CCCCCC;
+  --text-muted:     #999999;
+  --border-default: #444444;
+  --accent-primary: #FFD494;
+}
+
+/* Dyslexic-friendly font */
+[data-dyslexic="true"] {
+  --font-display: 'Arial', sans-serif;
+  --font-body:    'Arial', sans-serif;
+  --font-mono:    'Courier New', monospace;
+  letter-spacing: 0.05em;
+  line-height: 1.8;
+  word-spacing: 0.1em;
+}
+
+/* Reduce motion */
+[data-reduce-motion="true"] * {
+  animation: none !important;
+  transition-duration: 1ms !important;
+}
+
+/* Dynamic font size via CSS variable */
+:root {
+  --user-font-size: 16px;
+}
+body {
+  font-size: var(--user-font-size);
+}
+
+/* Print styles for certificates */
+@media print {
+  header, aside, footer, .btn-primary, .btn-secondary, nav {
+    display: none !important;
+  }
+  #certificate-print {
+    max-width: 100% !important;
+    box-shadow: none !important;
+    border: 2px solid #000 !important;
+  }
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+}

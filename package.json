@@ -1,0 +1,23 @@
+{
+  "name": "plms",
+  "version": "1.0.0",
+  "description": "Personalized Learning Management System — MERN Stack",
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
+    "build": "npm run build --prefix client",
+    "start": "npm run start --prefix server",
+    "server": "npm run dev --prefix server",
+    "client": "npm run dev --prefix client",
+    "install-all": "npm install && cd server && npm install && cd ../client && npm install"
+  },
+  "keywords": [
+    "lms",
+    "mern",
+    "learning"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "playwright": "^1.61.1"
+  }
+}
