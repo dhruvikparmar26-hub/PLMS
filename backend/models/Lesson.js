@@ -54,6 +54,12 @@ const lessonSchema = new mongoose.Schema(
       ref: 'Course',
       required: [true, 'Course reference is required'],
     },
+    concepts: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Concept',
+      },
+    ],
   },
   {
     timestamps: true,

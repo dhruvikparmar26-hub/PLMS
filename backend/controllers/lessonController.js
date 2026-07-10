@@ -71,6 +71,12 @@ const completeLesson = async (req, res, next) => {
       await User.findByIdAndUpdate(userId, { $inc: { xp: 10 } });
       await checkAndAwardAchievements(userId);
 
+      // Update Concept Mastery
+      if (lesson.concepts && lesson.concepts.length > 0) {
+        const { updateConceptMastery } = require('../utils/masteryUpdater');
+        await updateConceptMastery(userId, lesson.concepts, 1.0);
+      }
+
       // Emit socket event for real-time leaderboard update
       const io = req.app?.get('io');
       if (io && lesson.course?.category) {

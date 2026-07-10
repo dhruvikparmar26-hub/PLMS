@@ -30,8 +30,8 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response && error.response.status === 401) {
-      // Only redirect if we're not already on the login page
-      if (window.location.pathname !== '/login') {
+      // Only redirect if we're not already on login or the public home/dashboard page
+      if (window.location.pathname !== '/login' && window.location.pathname !== '/') {
         window.location.href = '/login';
       }
     }

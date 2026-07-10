@@ -21,12 +21,12 @@ To use a cloud-hosted MongoDB instance in production:
 
 ## 2. Backend Deployment (Render or Railway)
 
-Deploy the `server` directory of the application.
+Deploy the `backend` directory of the application.
 
 ### Recommended Steps:
 1. Push your code to GitHub.
 2. In [Render](https://render.com) or [Railway](https://railway.app), create a new **Web Service** and link it to your GitHub repository.
-3. Set the **Root Directory** to `server`.
+3. Set the **Root Directory** to `backend`.
 4. Set the **Build Command** to `npm install`.
 5. Set the **Start Command** to `npm start`.
 
@@ -49,11 +49,11 @@ Deploy the `server` directory of the application.
 
 ## 3. Frontend Deployment (Vercel or Netlify)
 
-Deploy the `client` directory of the application.
+Deploy the `frontend` directory of the application.
 
 ### Recommended Steps:
 1. In [Vercel](https://vercel.com) or [Netlify](https://www.netlify.com), create a new project and import your repository.
-2. Set the **Root Directory** to `client`.
+2. Set the **Root Directory** to `frontend`.
 3. Set the **Build Command** to `npm run build`.
 4. Set the **Output Directory** to `dist`.
 

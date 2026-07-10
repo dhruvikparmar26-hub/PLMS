@@ -10,24 +10,24 @@ Personalized LMS is a MERN stack learning platform with authentication, course a
 
 ## Project Structure
 
-- `client/` - React frontend
-- `server/` - Express API and MongoDB models
+- `frontend/` - React frontend
+- `backend/` - Express API and MongoDB models
 - `DEPLOYMENT.md` - deployment notes
 - `personalized-lms-mern-blueprint.md` - implementation blueprint
 
 ## Setup
 
-1. Install dependencies for the root, client, and server packages.
-2. Create the required `.env` file for the server.
+1. Install dependencies for the root, frontend, and backend packages.
+2. Create the required `.env` file for the backend.
 3. Start the frontend and backend in development mode.
 
 Useful commands:
 
 - `npm run dev` - run the root concurrent dev command
-- `npm run dev --prefix server` - start the backend only
-- `npm run dev --prefix client` - start the frontend only
-- `npm start --prefix server` - start the backend in production mode
-- `npm run build --prefix client` - build the frontend for production
+- `npm run dev --prefix backend` - start the backend only
+- `npm run dev --prefix frontend` - start the frontend only
+- `npm start --prefix backend` - start the backend in production mode
+- `npm run build --prefix frontend` - build the frontend for production
 
 ## Environment Variables
 

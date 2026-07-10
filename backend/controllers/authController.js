@@ -2,6 +2,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 const User = require('../models/User');
+const Otp = require('../models/Otp');
+const { seedGuestData } = require('../utils/guestSeeder');
 
 /**
  * Helper — sign JWT and set as httpOnly cookie.
@@ -72,6 +74,15 @@ const signup = async (req, res, next) => {
       email,
       password: hashedPassword,
     });
+
+    // Seed guest user details if email matches guest address
+    if (email === 'ananya@learnova.com') {
+      try {
+        await seedGuestData(user);
+      } catch (err) {
+        console.error('Failed to seed guest data:', err);
+      }
+    }
 
     // 6. Respond 201 with user data (password excluded by select: false)
     res.status(201).json({
@@ -175,4 +186,129 @@ const logout = (req, res) => {
   });
 };
 
-module.exports = { signup, login, getMe, logout };
+/**
+ * @desc    Generate and Send OTP to email
+ * @route   POST /api/auth/send-otp
+ * @access  Public
+ */
+const sendOtp = async (req, res, next) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        success: false,
+        message: 'Validation failed',
+        errors: errors.array(),
+      });
+    }
+
+    const email = req.body.email.toLowerCase().trim();
+
+    // Check if email already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(409).json({
+        success: false,
+        message: 'Email already in use.',
+      });
+    }
+
+    // Generate a 6-digit OTP
+    const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
+
+    // Store in database (overwrite previous OTPs for this email)
+    await Otp.deleteMany({ email });
+    await Otp.create({ email, otp: otpCode });
+
+    // Print to console beautifully for development testing
+    console.log('\n┌────────────────────────────────────────┐');
+    console.log('│           SECURE LAB AUTHENTICATION    │');
+    console.log('├────────────────────────────────────────┤');
+    console.log(`│ Email: ${email.padEnd(31)} │`);
+    console.log(`│ OTP Code: ${otpCode.padEnd(28)} │`);
+    console.log('│ Expires: 10 minutes                    │');
+    console.log('└────────────────────────────────────────┘\n');
+
+    // In development mode, we can send it in the response for a helper UI toast/tooltip
+    const responsePayload = {
+      success: true,
+      message: 'Verification OTP sent successfully.',
+    };
+
+    if (process.env.NODE_ENV !== 'production') {
+      responsePayload.devOtp = otpCode;
+    }
+
+    res.status(200).json(responsePayload);
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * @desc    Verify OTP and register new user (signup success + auto login)
+ * @route   POST /api/auth/verify-otp-signup
+ * @access  Public
+ */
+const verifyOtpAndSignup = async (req, res, next) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        success: false,
+        message: 'Validation failed',
+        errors: errors.array(),
+      });
+    }
+
+    const name = req.body.name.trim();
+    const email = req.body.email.toLowerCase().trim();
+    const password = req.body.password;
+    const otpCode = req.body.otp ? req.body.otp.trim() : '';
+
+    // 1. Verify OTP exists and is correct
+    const otpRecord = await Otp.findOne({ email }).sort({ createdAt: -1 });
+    if (!otpRecord) {
+      return res.status(400).json({
+        success: false,
+        message: 'No verification code found or code has expired. Please request a new one.',
+      });
+    }
+
+    if (otpRecord.otp !== otpCode) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid verification code. Please check and try again.',
+      });
+    }
+
+    // 2. Double check if email already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(409).json({
+        success: false,
+        message: 'Email already in use.',
+      });
+    }
+
+    // 3. Hash password
+    const hashedPassword = await bcrypt.hash(password, 12);
+
+    // 4. Create user
+    const user = await User.create({
+      name,
+      email,
+      password: hashedPassword,
+    });
+
+    // 5. Delete the OTP record since it's verified
+    await Otp.deleteMany({ email });
+
+    // 6. Sign JWT, set cookie, and automatically log in
+    signTokenAndSetCookie(user, 201, res);
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { signup, login, getMe, logout, sendOtp, verifyOtpAndSignup };

@@ -52,6 +52,12 @@ const quizSchema = new mongoose.Schema(
       enum: ['graded', 'practice'],
       default: 'graded',
     },
+    concepts: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Concept',
+      },
+    ],
   },
   {
     timestamps: true,

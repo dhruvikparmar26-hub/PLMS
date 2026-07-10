@@ -75,6 +75,18 @@ export const AuthProvider = ({ children }) => {
     return res.data;
   };
 
+  const sendOtp = async (email) => {
+    const res = await api.post('/auth/send-otp', { email });
+    return res.data;
+  };
+
+  const verifyOtpAndSignup = async (name, email, password, otp) => {
+    const res = await api.post('/auth/verify-otp-signup', { name, email, password, otp });
+    setUser(res.data.user);
+    applyAccessibility(res.data.user?.accessibility);
+    return res.data;
+  };
+
   const logout = async () => {
     await api.post('/auth/logout');
     setUser(null);
@@ -101,6 +113,8 @@ export const AuthProvider = ({ children }) => {
         loading,
         login,
         signup,
+        sendOtp,
+        verifyOtpAndSignup,
         logout,
         refreshUser,
       }}

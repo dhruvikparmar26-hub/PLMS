@@ -4,7 +4,7 @@ const path = require('path');
 
 const API_URL = 'http://localhost:5000/api';
 const BASE_URL = 'http://localhost:5173';
-const SCREENSHOT_DIR = path.join(__dirname, '../test-screenshots');
+const SCREENSHOT_DIR = path.join(__dirname, '../../test-screenshots');
 
 if (!fs.existsSync(SCREENSHOT_DIR)) {
   fs.mkdirSync(SCREENSHOT_DIR, { recursive: true });

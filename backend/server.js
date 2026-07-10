@@ -25,6 +25,9 @@ require('./models/Bookmark');
 require('./models/QAPost');
 require('./models/Certificate');
 require('./models/StudySession');
+require('./models/Otp');
+require('./models/Concept');
+require('./models/MasteryScore');
 
 const PORT = process.env.PORT || 5000;
 

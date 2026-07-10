@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import api from '../api';
 import { getLabel } from '../utils/labelMap';
+import DashboardLayout from '../components/layout/DashboardLayout';
 
 const InstructorDashboardPage = () => {
   const { user, logout } = useAuth();
@@ -120,90 +121,22 @@ const InstructorDashboardPage = () => {
   }
 
   return (
-    <div className="min-h-screen flex" style={{ background: 'var(--bg-canvas)' }}>
-      {/* ============ Sidebar with notebook spine ============ */}
-      <aside className="w-60 hidden md:flex flex-col justify-between sidebar-spine"
-             style={{ background: 'var(--bg-surface)', padding: '24px', flexShrink: 0 }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
-          {/* Logo */}
-          <div>
-            <span className="font-display" style={{ fontSize: '1.125rem', fontWeight: 700, color: 'var(--accent-primary)' }}>
-              PLMS
-            </span>
-            <span className="font-mono" style={{ fontSize: '0.5625rem', color: 'var(--text-muted)', display: 'block', letterSpacing: '0.1em' }}>
-              INSTRUCTOR LAB PORTAL
-            </span>
-          </div>
-
-          {/* Navigation Links */}
-          <nav style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-            <button
-              onClick={() => navigate('/dashboard')}
-              className="btn-secondary"
-              style={{
-                width: '100%', fontSize: '0.75rem', padding: '8px 12px',
-                textAlign: 'left', display: 'block'
-              }}
-            >
-              &lt; Student Dashboard
-            </button>
-            <button
-              className="btn-primary"
-              style={{
-                width: '100%', fontSize: '0.75rem', padding: '8px 12px',
-                textAlign: 'left', display: 'block', pointerEvents: 'none'
-              }}
-            >
-              Instructor Analytics
-            </button>
-          </nav>
-        </div>
-
-        {/* User Card */}
-        <div style={{
-          padding: '12px', border: '1px solid var(--border-default)',
-          borderRadius: 'var(--radius-md)', display: 'flex', alignItems: 'center', gap: '10px',
-        }}>
-          <div style={{
-            width: '32px', height: '32px', borderRadius: '50%',
-            background: 'var(--accent-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center',
-            color: 'var(--bg-canvas)', fontWeight: 700, fontSize: '0.8125rem',
-            fontFamily: 'var(--font-display)',
-          }}>
-            {user?.name?.charAt(0).toUpperCase()}
-          </div>
-          <div style={{ minWidth: 0, flex: 1 }}>
-            <p style={{ fontSize: '0.8125rem', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user?.name}</p>
-            <p className="font-mono" style={{ fontSize: '0.625rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>{user?.role}</p>
-          </div>
-        </div>
-      </aside>
-
-      {/* Main Content */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+    <DashboardLayout>
+      <div style={{ width: '100%' }}>
         {/* Top Header */}
-        <header style={{
-          height: '56px', borderBottom: '1px solid var(--border-default)',
-          background: 'var(--bg-surface)', display: 'flex', alignItems: 'center',
-          justifyContent: 'space-between', padding: '0 24px', flexShrink: 0,
-        }}>
-          <span className="tech-header">INSTRUCTOR / {getLabel('ANALYTICS_BOARD')}</span>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <button
-              onClick={() => setShowCreateModal(true)}
-              className="btn-primary"
-              style={{ padding: '6px 16px', fontSize: '0.75rem' }}
-            >
-              + Create Course
-            </button>
-            <button onClick={handleLogout} className="btn-secondary"
-                    style={{ padding: '6px 16px', fontSize: '0.75rem' }}>
-              Sign out
-            </button>
-          </div>
-        </header>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--border-default)', paddingBottom: '16px', marginBottom: '24px' }}>
+          <h1 className="dashboard-greeting-title">Instructor Hub</h1>
+          <button
+            onClick={() => setShowCreateModal(true)}
+            className="btn-primary"
+            style={{ padding: '6px 16px', fontSize: '0.75rem', minHeight: '36px' }}
+          >
+            + Create Course
+          </button>
+        </div>
 
-        <main style={{ flex: 1, overflowY: 'auto', padding: '32px 24px', maxWidth: '1100px', width: '100%', margin: '0 auto' }}>
+        {/* Content */}
+        <div>
           <div className="animate-fade-in-up" style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
             
             {error && (
@@ -360,7 +293,7 @@ const InstructorDashboardPage = () => {
               )}
             </section>
           </div>
-        </main>
+        </div>
       </div>
 
       {/* Modal for Creating Course */}
@@ -457,7 +390,7 @@ const InstructorDashboardPage = () => {
           </div>
         </div>
       )}
-    </div>
+    </DashboardLayout>
   );
 };
 

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const PlacementQuiz = require('./models/PlacementQuiz');
-require('dotenv').config();
+const PlacementQuiz = require('../models/PlacementQuiz');
+require('dotenv').config({ path: require('path').resolve(__dirname, '../../.env') });
 
 const placementQuizzes = [
   {

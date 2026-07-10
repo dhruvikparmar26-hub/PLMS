@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import api from '../api';
+import DashboardLayout from '../components/layout/DashboardLayout';
 
 // ── Sub-components ──────────────────────────────────────────────────
 
@@ -495,23 +496,8 @@ export default function LearningLogPage() {
   ];
 
   return (
-    <div style={{ minHeight: '100vh', background: 'var(--bg-canvas)' }}>
-      {/* Header */}
-      <header style={{
-        height: '56px', borderBottom: '1px solid var(--border-default)',
-        background: 'var(--bg-surface)', display: 'flex', alignItems: 'center',
-        justifyContent: 'space-between', padding: '0 24px', flexShrink: 0,
-      }}>
-        <Link to="/dashboard" className="font-mono" style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textDecoration: 'none' }}>
-          ← DASHBOARD
-        </Link>
-        <span className="tech-header">LEARNING_LOG</span>
-        <span className="font-mono" style={{ fontSize: '0.75rem', color: 'var(--accent-primary)', fontWeight: 700 }}>
-          {user?.name}
-        </span>
-      </header>
-
-      <main style={{ maxWidth: '900px', margin: '0 auto', padding: '40px 24px' }} className="animate-fade-in-up">
+    <DashboardLayout>
+      <div style={{ maxWidth: '900px', margin: '0 auto', padding: '16px 24px', width: '100%' }} className="animate-fade-in-up">
         {/* Title */}
         <div className="notebook-margin" style={{ marginBottom: '32px' }}>
           <h1>Learning Log</h1>
@@ -523,7 +509,7 @@ export default function LearningLogPage() {
         {/* Tab bar */}
         <div style={{ display: 'flex', gap: '8px', marginBottom: '24px', overflowX: 'auto', paddingBottom: '4px', WebkitOverflowScrolling: 'touch' }}>
           {tabs.map((tab) => (
-            <TabButton key={tab.id} active={activeTab === tab.id} onClick={() => setActiveTab(tab.id)} style={{ flexShrink: 0, minHeight: '44px', minWidth: '44px' }}>
+            <TabButton key={tab.id} active={activeTab === tab.id} onClick={() => setActiveTab(tab.id)}>
               {tab.label}
             </TabButton>
           ))}
@@ -534,7 +520,7 @@ export default function LearningLogPage() {
         {activeTab === 'flashcards' && <FlashcardsTab />}
         {activeTab === 'bookmarks' && <BookmarksTab />}
         {activeTab === 'certificates' && <CertificatesTab />}
-      </main>
-    </div>
+      </div>
+    </DashboardLayout>
   );
 }

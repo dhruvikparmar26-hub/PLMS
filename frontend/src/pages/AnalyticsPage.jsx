@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import api from '../api';
+import DashboardLayout from '../components/layout/DashboardLayout';
 import {
   LineChart,
   Line,
@@ -77,109 +78,11 @@ export default function AnalyticsPage() {
   const COLORS = ['#00F0FF', '#FFA03A', '#34D399', '#FF4D6A', '#a78bfa'];
 
   return (
-    <div className="min-h-screen flex" style={{ background: 'var(--bg-canvas)' }}>
-      {/* Sidebar */}
-      <aside className="w-60 hidden md:flex flex-col justify-between sidebar-spine"
-             style={{ background: 'var(--bg-surface)', padding: '24px', flexShrink: 0 }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
-          <div>
-            <span className="font-display" style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--accent-primary)', letterSpacing: '-0.02em' }}>
-              Momentum
-            </span>
-            <span className="font-mono" style={{ fontSize: '0.5625rem', color: 'var(--text-muted)', display: 'block', letterSpacing: '0.1em' }}>
-              EST. 2026
-            </span>
-          </div>
-
-          {/* Nav */}
-          <nav style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-            {[
-              { label: 'Overview', path: '/dashboard' },
-              { label: 'Schedule', path: '/analytics', active: true },
-              { label: 'Library', path: '/courses' },
-              { label: 'Certificates', path: '/learning-log' },
-              { label: 'Support', path: '/onboarding' },
-            ].map((item) => (
-              <Link key={item.path} to={item.path}
-                style={{
-                  display: 'flex', alignItems: 'center', gap: '10px',
-                  padding: '10px 12px', borderRadius: 'var(--radius-md)',
-                  fontSize: '0.8125rem', fontWeight: 600,
-                  fontFamily: 'var(--font-display)',
-                  background: item.active ? 'rgba(242, 176, 86, 0.06)' : 'transparent',
-                  color: item.active ? 'var(--accent-primary)' : 'var(--text-secondary)',
-                  border: item.active ? '1px solid rgba(242, 176, 86, 0.15)' : '1px solid transparent',
-                  transition: 'all var(--transition-fast)',
-                  textDecoration: 'none',
-                }}>
-                {item.label}
-              </Link>
-            ))}
-            {isInstructorOrAdmin && (
-              <Link to="/instructor"
-                style={{
-                  display: 'flex', alignItems: 'center', gap: '10px',
-                  padding: '10px 12px', borderRadius: 'var(--radius-md)',
-                  fontSize: '0.8125rem', fontWeight: 600,
-                  fontFamily: 'var(--font-display)',
-                  color: 'var(--text-secondary)',
-                  border: '1px solid transparent',
-                  transition: 'all var(--transition-fast)',
-                  textDecoration: 'none',
-                }}>
-                Instructor Hub
-              </Link>
-            )}
-          </nav>
-
-          {/* New Study Session CTA */}
-          <button
-            onClick={() => navigate('/courses')}
-            className="btn-primary"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '8px',
-              fontSize: '0.8125rem',
-              padding: '10px 16px',
-              fontWeight: 700,
-              boxShadow: '0 4px 12px rgba(242, 176, 86, 0.15)'
-            }}
-          >
-            + New Study Session
-          </button>
-        </div>
-
-        {/* User card */}
-        <div style={{
-          padding: '12px', border: '1px solid var(--border-default)',
-          borderRadius: 'var(--radius-md)', display: 'flex', alignItems: 'center', gap: '10px',
-        }}>
-          <div style={{
-            width: '32px', height: '32px', borderRadius: '50%',
-            background: 'var(--accent-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center',
-            color: 'var(--bg-canvas)', fontWeight: 700, fontSize: '0.8125rem',
-            fontFamily: 'var(--font-display)',
-          }}>
-            {user?.name?.charAt(0).toUpperCase()}
-          </div>
-          <div style={{ minWidth: 0, flex: 1 }}>
-            <p style={{ fontSize: '0.8125rem', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user?.name}</p>
-            <p className="font-mono" style={{ fontSize: '0.625rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>{user?.role}</p>
-          </div>
-        </div>
-      </aside>
-
-      {/* Main Content Area */}
-      <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflowY: 'auto', minWidth: 0 }}>
-        {/* Top Header */}
-        <header style={{
-          height: '56px', borderBottom: '1px solid var(--border-default)',
-          background: 'var(--bg-surface)', display: 'flex', alignItems: 'center',
-          justifyContent: 'space-between', padding: '0 24px', flexShrink: 0,
-        }}>
-          <span className="tech-header">ANALYTICS // REPORT DASHBOARD</span>
+    <DashboardLayout>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '32px', width: '100%' }}>
+        {/* Analytics Top Control Header */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--border-default)', paddingBottom: '16px' }}>
+          <h1 className="dashboard-greeting-title">My Insights</h1>
           {isInstructorOrAdmin && (
             <div style={{ display: 'flex', gap: '8px' }}>
               <button
@@ -208,9 +111,7 @@ export default function AnalyticsPage() {
               </button>
             </div>
           )}
-        </header>
-
-        <div style={{ padding: '32px', display: 'flex', flexDirection: 'column', gap: '32px', maxWidth: '1200px', width: '100%', margin: '0 auto' }}>
+        </div>
           
           {error && (
             <div className="blueprint-card" style={{ padding: '16px', borderColor: 'var(--danger)', color: 'var(--danger)', fontFamily: 'var(--font-mono)', fontSize: '0.8rem' }}>
@@ -437,8 +338,7 @@ export default function AnalyticsPage() {
             </>
           )}
 
-        </div>
-      </main>
-    </div>
+      </div>
+    </DashboardLayout>
   );
 }

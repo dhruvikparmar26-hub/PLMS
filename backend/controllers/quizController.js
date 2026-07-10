@@ -165,6 +165,12 @@ const attemptQuiz = async (req, res, next) => {
     const xpAwarded = 5 + (passed ? 10 : 0);
     await User.findByIdAndUpdate(userId, { $inc: { xp: xpAwarded } });
 
+    // Update Concept Mastery
+    if (quiz.concepts && quiz.concepts.length > 0) {
+      const { updateConceptMastery } = require('../utils/masteryUpdater');
+      await updateConceptMastery(userId, quiz.concepts, scorePercent / 100);
+    }
+
     // Emit socket event for real-time leaderboard update
     const io = req.app?.get('io');
     if (io && quiz.course?.category) {

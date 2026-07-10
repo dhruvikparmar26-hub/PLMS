@@ -4,10 +4,10 @@ const path = require('path');
 const mongoose = require('mongoose');
 
 const BASE_URL = 'http://localhost:5173';
-const SCREENSHOT_DIR = path.join(__dirname, '../screenshots');
+const SCREENSHOT_DIR = path.join(__dirname, '../../screenshots');
 
 // Load environment variables
-require('dotenv').config({ path: path.join(__dirname, '../.env') });
+require('dotenv').config({ path: path.join(__dirname, '../../.env') });
 
 // Create screenshots directory if it doesn't exist
 if (!fs.existsSync(SCREENSHOT_DIR)) {
@@ -24,10 +24,10 @@ async function getIdsFromDB() {
   try {
     await mongoose.connect(process.env.MONGO_URI);
     
-    const Course = require('./models/Course');
-    const Lesson = require('./models/Lesson');
-    const Quiz = require('./models/Quiz');
-    const Certificate = require('./models/Certificate');
+    const Course = require('../models/Course');
+    const Lesson = require('../models/Lesson');
+    const Quiz = require('../models/Quiz');
+    const Certificate = require('../models/Certificate');
     
     const course = await Course.findOne();
     const lesson = await Lesson.findOne();

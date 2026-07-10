@@ -1,11 +1,11 @@
-require('dotenv').config({ path: require('path').resolve(__dirname, '../.env') });
+require('dotenv').config({ path: require('path').resolve(__dirname, '../../.env') });
 const mongoose = require('mongoose');
-const User = require('./models/User');
-const Course = require('./models/Course');
-const Lesson = require('./models/Lesson');
-const Quiz = require('./models/Quiz');
-const Enrollment = require('./models/Enrollment');
-const Certificate = require('./models/Certificate');
+const User = require('../models/User');
+const Course = require('../models/Course');
+const Lesson = require('../models/Lesson');
+const Quiz = require('../models/Quiz');
+const Enrollment = require('../models/Enrollment');
+const Certificate = require('../models/Certificate');
 
 const seedData = async () => {
   try {

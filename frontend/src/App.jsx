@@ -19,6 +19,22 @@ import CertificatePage from './pages/CertificatePage';
 import VerifyCertificatePage from './pages/VerifyCertificatePage';
 import SchedulePage from './pages/SchedulePage';
 
+// New sidebar route pages
+import MasteryGraphPage from './pages/MasteryGraphPage';
+import ReviewQueuePage from './pages/ReviewQueuePage';
+import AdaptivePathPage from './pages/AdaptivePathPage';
+import FlashcardsPage from './pages/FlashcardsPage';
+import QuizzesPage from './pages/QuizzesPage';
+import CommunityPage from './pages/CommunityPage';
+import LiveSessionsPage from './pages/LiveSessionsPage';
+import StudyGroupsPage from './pages/StudyGroupsPage';
+import MentorMatchPage from './pages/MentorMatchPage';
+import AchievementsPage from './pages/AchievementsPage';
+import NotesPage from './pages/NotesPage';
+import BookmarksPage from './pages/BookmarksPage';
+import SettingsPage from './pages/SettingsPage';
+import LeaderboardPage from './pages/LeaderboardPage';
+
 /**
  * App — Root component.
  * AuthProvider wraps everything so all pages can access auth state.
@@ -29,18 +45,11 @@ function App() {
     <Router>
       <AuthProvider>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<DashboardPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
           
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute>
-                <DashboardPage />
-              </ProtectedRoute>
-            }
-          />
+          <Route path="/dashboard" element={<DashboardPage />} />
           <Route
             path="/onboarding"
             element={
@@ -113,11 +122,123 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route
+           <Route
             path="/learning-log"
             element={
               <ProtectedRoute>
                 <LearningLogPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/mastery-graph"
+            element={
+              <ProtectedRoute>
+                <MasteryGraphPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/review-queue"
+            element={
+              <ProtectedRoute>
+                <ReviewQueuePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/adaptive-path"
+            element={
+              <ProtectedRoute>
+                <AdaptivePathPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/flashcards"
+            element={
+              <ProtectedRoute>
+                <FlashcardsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/quizzes"
+            element={
+              <ProtectedRoute>
+                <QuizzesPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/community"
+            element={
+              <ProtectedRoute>
+                <CommunityPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/live-sessions"
+            element={
+              <ProtectedRoute>
+                <LiveSessionsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/study-groups"
+            element={
+              <ProtectedRoute>
+                <StudyGroupsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/mentor-match"
+            element={
+              <ProtectedRoute>
+                <MentorMatchPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/achievements"
+            element={
+              <ProtectedRoute>
+                <AchievementsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/notes"
+            element={
+              <ProtectedRoute>
+                <NotesPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/bookmarks"
+            element={
+              <ProtectedRoute>
+                <BookmarksPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <ProtectedRoute>
+                <SettingsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/leaderboard"
+            element={
+              <ProtectedRoute>
+                <LeaderboardPage />
               </ProtectedRoute>
             }
           />

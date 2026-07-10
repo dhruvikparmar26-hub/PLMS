@@ -1,7 +1,7 @@
 const express = require('express');
 const { body } = require('express-validator');
 const rateLimit = require('express-rate-limit');
-const { signup, login, getMe, logout } = require('../controllers/authController');
+const { signup, login, getMe, logout, sendOtp, verifyOtpAndSignup } = require('../controllers/authController');
 const { protect } = require('../middleware/auth');
 
 const router = express.Router();
@@ -18,6 +18,63 @@ const authLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
 });
+
+/**
+ * @route   POST /api/auth/send-otp
+ * @desc    Generate and send verification OTP
+ * @access  Public
+ */
+router.post(
+  '/send-otp',
+  authLimiter,
+  [
+    body('email')
+      .trim()
+      .notEmpty()
+      .withMessage('Email is required')
+      .isEmail()
+      .withMessage('Please provide a valid email address')
+      .normalizeEmail(),
+  ],
+  sendOtp
+);
+
+/**
+ * @route   POST /api/auth/verify-otp-signup
+ * @desc    Verify OTP and create user
+ * @access  Public
+ */
+router.post(
+  '/verify-otp-signup',
+  authLimiter,
+  [
+    body('name')
+      .trim()
+      .notEmpty()
+      .withMessage('Name is required')
+      .isLength({ max: 100 })
+      .withMessage('Name cannot exceed 100 characters'),
+    body('email')
+      .trim()
+      .notEmpty()
+      .withMessage('Email is required')
+      .isEmail()
+      .withMessage('Please provide a valid email address')
+      .normalizeEmail(),
+    body('password')
+      .notEmpty()
+      .withMessage('Password is required')
+      .isLength({ min: 8 })
+      .withMessage('Password must be at least 8 characters'),
+    body('otp')
+      .trim()
+      .notEmpty()
+      .withMessage('Verification code is required')
+      .isLength({ min: 6, max: 6 })
+      .withMessage('Verification code must be 6 digits'),
+  ],
+  verifyOtpAndSignup
+);
 
 /**
  * @route   POST /api/auth/signup

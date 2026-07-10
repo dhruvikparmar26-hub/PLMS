@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import api from '../api';
 import { getLabel } from '../utils/labelMap';
+import DashboardLayout from '../components/layout/DashboardLayout';
 
 const SchedulePage = () => {
   const { user, logout } = useAuth();
@@ -200,151 +201,11 @@ const SchedulePage = () => {
   const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
   return (
-    <div className="min-h-screen flex" style={{ background: 'var(--bg-canvas)' }}>
-
-      {/* Mobile Menu Overlay */}
-      {mobileMenuOpen && (
-        <div 
-          onClick={() => setMobileMenuOpen(false)}
-          style={{
-            position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
-            background: 'rgba(0,0,0,0.5)', zIndex: 999,
-          }}
-        />
-      )}
-
-      {/* Mobile Sidebar */}
-      <aside 
-        className={`md:hidden fixed left-0 top-0 bottom-0 z-[1000] transition-transform duration-300 ${
-          mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
-        style={{ background: 'var(--bg-surface)', padding: '24px', width: '280px', display: 'flex', flexDirection: 'column' }}
-      >
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div>
-              <span className="font-display" style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--accent-primary)', letterSpacing: '-0.02em' }}>
-                Momentum
-              </span>
-              <span className="font-mono" style={{ fontSize: '0.5625rem', color: 'var(--text-muted)', display: 'block', letterSpacing: '0.1em' }}>
-                EST. 2026
-              </span>
-            </div>
-            <button 
-              onClick={() => setMobileMenuOpen(false)}
-              style={{ background: 'none', border: 'none', fontSize: '1.5rem', color: 'var(--text-muted)', cursor: 'pointer', padding: '8px', minWidth: '44px', minHeight: '44px' }}
-            >
-              ✕
-            </button>
-          </div>
-
-          {/* Nav */}
-          <nav style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-            {[
-              { label: 'Overview', path: '/dashboard' },
-              { label: 'Schedule', path: '/schedule' },
-              { label: 'Library', path: '/courses' },
-              { label: 'Certificates', path: '/learning-log' },
-              { label: 'Support', path: '/onboarding' },
-            ].map((item) => (
-              <Link 
-                key={item.path} 
-                to={item.path}
-                onClick={() => setMobileMenuOpen(false)}
-                style={{
-                  display: 'flex', alignItems: 'center', gap: '10px',
-                  padding: '12px', borderRadius: 'var(--radius-md)',
-                  fontSize: '0.875rem', fontWeight: 600,
-                  fontFamily: 'var(--font-display)',
-                  background: item.path === '/schedule' ? 'rgba(0,240,255,0.08)' : 'transparent',
-                  color: item.path === '/schedule' ? 'var(--accent-primary)' : 'var(--text-secondary)',
-                  border: item.path === '/schedule' ? '1px solid rgba(0,240,255,0.2)' : '1px solid transparent',
-                  transition: 'all var(--transition-fast)',
-                  textDecoration: 'none',
-                  minHeight: '44px',
-                }}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-
-          <button 
-            onClick={handleLogout}
-            className="btn-secondary"
-            style={{ padding: '12px', fontSize: '0.875rem', minHeight: '44px' }}
-          >
-            Sign out
-          </button>
-        </div>
-      </aside>
-
-      {/* Desktop Sidebar */}
-      <aside className="hidden md:flex flex-col justify-between sidebar-spine w-60"
-             style={{ background: 'var(--bg-surface)', padding: '24px', flexShrink: 0 }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
-          <div>
-            <span className="font-display" style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--accent-primary)', letterSpacing: '-0.02em' }}>
-              Momentum
-            </span>
-            <span className="font-mono" style={{ fontSize: '0.5625rem', color: 'var(--text-muted)', display: 'block', letterSpacing: '0.1em' }}>
-              EST. 2026
-            </span>
-          </div>
-
-          <nav style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-            {[
-              { label: 'Overview', path: '/dashboard' },
-              { label: 'Schedule', path: '/schedule' },
-              { label: 'Library', path: '/courses' },
-              { label: 'Certificates', path: '/learning-log' },
-              { label: 'Support', path: '/onboarding' },
-            ].map((item) => (
-              <Link key={item.path} to={item.path}
-                style={{
-                  display: 'flex', alignItems: 'center', gap: '10px',
-                  padding: '10px 12px', borderRadius: 'var(--radius-md)',
-                  color: 'var(--text-secondary)', textDecoration: 'none',
-                  fontSize: '0.8125rem', fontWeight: 500,
-                  background: item.path === '/schedule' ? 'rgba(0,240,255,0.08)' : 'transparent',
-                  border: item.path === '/schedule' ? '1px solid rgba(0,240,255,0.2)' : '1px solid transparent',
-                }}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-        </div>
-
-        <button onClick={handleLogout} className="btn-secondary"
-                style={{ padding: '8px 16px', fontSize: '0.75rem' }}>
-          Sign out
-        </button>
-      </aside>
-
-      {/* Main Content */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
-        {/* Top Header */}
-        <header style={{
-          height: '56px', borderBottom: '1px solid var(--border-default)',
-          background: 'var(--bg-surface)', display: 'flex', alignItems: 'center',
-          justifyContent: 'space-between', padding: '0 16px', flexShrink: 0,
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <button
-              onClick={() => setMobileMenuOpen(true)}
-              className="md:hidden"
-              style={{ 
-                background: 'none', border: 'none', fontSize: '1.5rem', 
-                color: 'var(--text-primary)', cursor: 'pointer', 
-                padding: '8px', minWidth: '44px', minHeight: '44px' 
-              }}
-            >
-              ☰
-            </button>
-            <span className="tech-header hidden sm:block">SCHEDULE // WEEKLY_VIEW</span>
-            <span className="tech-header sm:hidden">SCHEDULE</span>
-          </div>
+    <DashboardLayout>
+      <div style={{ width: '100%' }}>
+        {/* Schedule Top Control Header */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--border-default)', paddingBottom: '16px', marginBottom: '24px' }}>
+          <h1 className="dashboard-greeting-title">Schedule</h1>
           <button
             onClick={handleOpenModal}
             className="btn-primary"
@@ -352,10 +213,10 @@ const SchedulePage = () => {
           >
             + New Study Session
           </button>
-        </header>
+        </div>
 
         {/* Content */}
-        <div style={{ padding: '32px 24px' }}>
+        <div>
           {/* Week Navigation */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -730,7 +591,7 @@ const SchedulePage = () => {
           </div>
         </div>
       )}
-    </div>
+    </DashboardLayout>
   );
 };
 
