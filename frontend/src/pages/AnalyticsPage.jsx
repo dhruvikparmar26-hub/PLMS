@@ -38,25 +38,39 @@ export default function AnalyticsPage() {
       setLoading(true);
       setError('');
       
-      // Fetch student analytics, enrollments, and quiz attempts in parallel
+      // Fetch student analytics, enrollments, and quiz attempts in parallel, catching errors individually
       const [sRes, enrollRes, quizRes] = await Promise.all([
-        api.get('/analytics'),
-        api.get('/enrollments/me'),
-        api.get('/quizzes/my-attempts')
+        api.get('/analytics').catch(err => {
+          console.error('Error fetching general analytics:', err);
+          return { data: { data: null } };
+        }),
+        api.get('/enrollments/me').catch(err => {
+          console.error('Error fetching enrollments:', err);
+          return { data: { enrollments: [] } };
+        }),
+        api.get('/quizzes/my-attempts').catch(err => {
+          console.error('Error fetching quiz attempts:', err);
+          return { data: { attempts: [] } };
+        })
       ]);
 
-      setStudentData(sRes.data.data);
+      const sData = sRes.data.data || { weeklyTimeSpent: [], completionByCategory: [], quizScoreTrend: [] };
+      setStudentData(sData);
       setEnrollments(enrollRes.data.enrollments || []);
       setQuizAttempts(quizRes.data.attempts || []);
 
       // If instructor/admin, fetch instructor analytics
       if (isInstructorOrAdmin) {
-        const iRes = await api.get('/instructor/analytics');
-        setInstructorData(iRes.data);
+        try {
+          const iRes = await api.get('/instructor/analytics');
+          setInstructorData(iRes.data);
+        } catch (err) {
+          console.error('Error fetching instructor analytics:', err);
+        }
       }
     } catch (err) {
       console.error(err);
-      setError('Failed to fetch analytics datasets.');
+      setError('Failed to load insights datasets.');
     } finally {
       setLoading(false);
     }
