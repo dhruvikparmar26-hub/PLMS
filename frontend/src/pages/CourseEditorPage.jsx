@@ -342,7 +342,7 @@ const CourseEditorPage = () => {
             {/* Metadata Form */}
             <section className="blueprint-card" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <h2 className="font-mono" style={{ fontSize: '0.875rem', color: 'var(--text-muted)', textTransform: 'uppercase', margin: 0 }}>
-                // {getLabel('COURSE_SPECIFICATION_METADATA')}
+                {getLabel('COURSE_SPECIFICATION_METADATA')}
               </h2>
 
               <form onSubmit={handleUpdateMetadata} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -416,7 +416,7 @@ const CourseEditorPage = () => {
             {/* Modules and Lessons */}
             <section className="blueprint-card" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '24px' }}>
               <h2 className="font-mono" style={{ fontSize: '0.875rem', color: 'var(--text-muted)', textTransform: 'uppercase', margin: 0 }}>
-                // {getLabel('CURRICULUM_MODULE_INDEX')}
+                {getLabel('CURRICULUM_MODULE_INDEX')}
               </h2>
 
               {/* List Modules */}
@@ -511,7 +511,7 @@ const CourseEditorPage = () => {
           <div className="lg:col-span-1">
             <section className="blueprint-card" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px', position: 'sticky', top: '24px' }}>
               <h2 className="font-mono" style={{ fontSize: '0.875rem', color: 'var(--text-muted)', textTransform: 'uppercase', margin: 0 }}>
-                // {getLabel('EVALUATION_QUIZ_SETUP')}
+                {getLabel('EVALUATION_QUIZ_SETUP')}
               </h2>
 
               <form onSubmit={handleSaveQuiz} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>

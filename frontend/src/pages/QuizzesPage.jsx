@@ -16,9 +16,12 @@ export default function QuizzesPage() {
       } catch (err) {
         console.error(err);
         setQuizzes([
-          { _id: '1', title: 'Data Structures Assessment', category: 'Web Development', questionsCount: 10, difficulty: 'intermediate' },
-          { _id: '2', title: 'React Performance Benchmarking', category: 'Design', questionsCount: 15, difficulty: 'advanced' },
-          { _id: '3', title: 'JavaScript Fundamentals Baseline', category: 'Web Development', questionsCount: 8, difficulty: 'beginner' },
+          { _id: '1', title: 'React for Beginners: Build Dynamic Web Apps', category: 'Web Development', questionsCount: 5, difficulty: 'beginner' },
+          { _id: '2', title: 'Advanced Node.js and Microservices Architecture', category: 'Web Development', questionsCount: 5, difficulty: 'advanced' },
+          { _id: '3', title: 'Introduction to Python and Data Science', category: 'Data Science', questionsCount: 5, difficulty: 'beginner' },
+          { _id: '4', title: 'Modern UI/UX Design Fundamentals', category: 'Design', questionsCount: 5, difficulty: 'beginner' },
+          { _id: '5', title: 'Growth Marketing and SEO Strategy', category: 'Marketing', questionsCount: 5, difficulty: 'intermediate' },
+          { _id: '6', title: 'Mastering Machine Learning with TensorFlow', category: 'Data Science', questionsCount: 5, difficulty: 'advanced' },
         ]);
       } finally {
         setLoading(false);

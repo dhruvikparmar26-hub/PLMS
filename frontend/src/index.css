@@ -1778,15 +1778,16 @@ input:-webkit-autofill:active {
 .sidebar-nav {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
   flex: 1;
   overflow-y: auto;
+  padding-right: 2px;
 }
 
 .sidebar-group {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 3px;
 }
 
 .sidebar-group-label {
@@ -1796,8 +1797,9 @@ input:-webkit-autofill:active {
   color: var(--text-muted);
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  padding: 4px 12px;
-  margin-bottom: 2px;
+  padding: 4px 12px 6px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 .sidebar-link {
@@ -1970,20 +1972,7 @@ input:-webkit-autofill:active {
 .topbar-search-input::placeholder {
   color: var(--text-muted);
 }
-
-.topbar-search-shortcut {
-  font-family: var(--font-mono);
-  font-size: 0.625rem;
-  color: var(--text-muted);
-  background: var(--bg-elevated);
-  padding: 2px 6px;
-  border-radius: 4px;
-  border: 1px solid var(--border-default);
-  flex-shrink: 0;
-}
-
 @media (max-width: 640px) {
-  .topbar-search-shortcut { display: none; }
   .topbar-search { max-width: none; }
 }
 

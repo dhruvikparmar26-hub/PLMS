@@ -83,7 +83,8 @@ const getCompletionRateByCategory = async (userId) => {
   const categoryData = {};
 
   enrollments.forEach((enrollment) => {
-    const category = enrollment.course.category;
+    if (!enrollment.course) return;
+    const category = enrollment.course.category || 'General';
     if (!categoryData[category]) {
       categoryData[category] = {
         total: 0,
@@ -120,8 +121,8 @@ const getQuizScoreTrend = async (userId) => {
     .map((attempt, index) => ({
       attempt: index + 1,
       score: attempt.score,
-      date: attempt.attemptedAt.toISOString().split('T')[0],
-      quizTitle: attempt.quiz.title,
+      date: attempt.attemptedAt ? attempt.attemptedAt.toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+      quizTitle: attempt.quiz ? attempt.quiz.title : 'Quiz Assessment',
     }));
 
   return result;

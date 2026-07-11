@@ -4,6 +4,7 @@ const User = require('../models/User');
 const logActivity = require('../utils/activityLogger');
 const { checkAndAwardAchievements } = require('./achievementController');
 const { issueCertificate } = require('./certificateController');
+const { createNotification } = require('./notificationController');
 
 /**
  * @desc    Mark a lesson as complete for the current user
@@ -87,6 +88,20 @@ const completeLesson = async (req, res, next) => {
       if (enrollment.progressPercent === 100) {
         logActivity(userId, 'course_completed', { courseId });
         await issueCertificate(userId, courseId, enrollment._id);
+
+        await createNotification(
+          userId,
+          'course_completed',
+          `Congratulations! You completed the course: "${lesson.course?.title || 'Course'}"`,
+          `/courses/${courseId}`
+        );
+      } else {
+        await createNotification(
+          userId,
+          'lesson_completed',
+          `Completed lesson: "${lesson.title}"`,
+          `/lessons/${lessonId}`
+        );
       }
     }
 

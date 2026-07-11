@@ -83,7 +83,7 @@ export default function LessonQASection({ lessonId, courseId }) {
   return (
     <section style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
       <h2 className="font-mono" style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', margin: 0, borderBottom: '1px solid var(--border-default)', paddingBottom: '8px' }}>
-        // Q&amp;A &amp; DISCUSSION
+        Q&amp;A &amp; DISCUSSION
       </h2>
 
       {/* Post composer */}

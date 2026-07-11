@@ -58,11 +58,7 @@ const DashboardPage = () => {
     }
   }, [user, navigate]);
 
-  // Time-based greeting
-  const hour = new Date().getHours();
-  const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
-
-  const greetingTitle = user ? `${greeting}, ${user.name?.split(' ')[0]}! 👋` : 'Welcome to Momentum';
+  const greetingTitle = user ? `Welcome, ${user.name}! 👋` : 'Welcome to Momentum';
   const greetingSub = user ? 'Ready to continue your learning journey?' : 'Explore your customized technical learning lab and skill calibration board.';
 
   return (

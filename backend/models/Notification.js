@@ -10,7 +10,7 @@ const notificationSchema = new mongoose.Schema(
     type: {
       type: String,
       required: [true, 'Notification type is required'],
-      enum: ['course_match', 'streak_warning', 'announcement'],
+      enum: ['course_match', 'streak_warning', 'announcement', 'enrollment', 'quiz_completed', 'lesson_completed', 'bookmark_added', 'course_completed', 'rating_submitted', 'achievement_earned'],
     },
     message: {
       type: String,

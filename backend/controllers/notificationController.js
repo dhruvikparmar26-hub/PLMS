@@ -4,6 +4,18 @@ const Course = require('../models/Course');
 const ActivityLog = require('../models/ActivityLog');
 
 /**
+ * Reusable helper to create a notification for any user activity.
+ * Can be imported and called from any controller.
+ */
+const createNotification = async (userId, type, message, link = null) => {
+  try {
+    await Notification.create({ user: userId, type, message, link });
+  } catch (error) {
+    console.error('Error creating notification:', error.message);
+  }
+};
+
+/**
  * Get user's notifications
  */
 exports.getUserNotifications = async (req, res) => {
@@ -185,5 +197,34 @@ exports.createAnnouncementNotification = async (courseId, message) => {
     }
   } catch (error) {
     console.error('Error creating announcement notification:', error);
+  }
+};
+
+// Export the reusable helper
+exports.createNotification = createNotification;
+
+/**
+ * @desc    Create a custom notification for a client-side action
+ * @route   POST /api/notifications
+ * @access  Protected
+ */
+exports.createCustomNotification = async (req, res, next) => {
+  try {
+    const userId = req.user._id || req.user.id;
+    const { type, message, link } = req.body;
+
+    const notification = await Notification.create({
+      user: userId,
+      type: type || 'announcement',
+      message: message || 'Custom Notification',
+      link: link || null,
+    });
+
+    res.status(201).json({
+      success: true,
+      data: notification,
+    });
+  } catch (error) {
+    next(error);
   }
 };

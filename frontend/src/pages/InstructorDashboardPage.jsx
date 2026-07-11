@@ -177,7 +177,7 @@ const InstructorDashboardPage = () => {
             {/* Course Breakdown Table */}
             <section style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <h2 className="font-mono" style={{ fontSize: '0.8125rem', letterSpacing: '0.05em', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
-                // {getLabel('COURSE_REGISTRY_METRICS')}
+                {getLabel('COURSE_REGISTRY_METRICS')}
               </h2>
 
               {courseBreakdown.length === 0 ? (
@@ -253,7 +253,7 @@ const InstructorDashboardPage = () => {
             {/* Recent Student Activities */}
             <section style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <h2 className="font-mono" style={{ fontSize: '0.8125rem', letterSpacing: '0.05em', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
-                // {getLabel('TELEMETRY_STREAM_LOG')}
+                {getLabel('TELEMETRY_STREAM_LOG')}
               </h2>
 
               {recentActivities.length === 0 ? (

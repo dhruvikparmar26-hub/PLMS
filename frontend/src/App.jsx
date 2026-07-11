@@ -34,6 +34,7 @@ import NotesPage from './pages/NotesPage';
 import BookmarksPage from './pages/BookmarksPage';
 import SettingsPage from './pages/SettingsPage';
 import LeaderboardPage from './pages/LeaderboardPage';
+import NotificationsPage from './pages/NotificationsPage';
 
 /**
  * App — Root component.
@@ -223,6 +224,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <BookmarksPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/notifications"
+            element={
+              <ProtectedRoute>
+                <NotificationsPage />
               </ProtectedRoute>
             }
           />

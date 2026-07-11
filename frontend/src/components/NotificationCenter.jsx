@@ -1,16 +1,36 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import api from '../api';
 
 export default function NotificationCenter() {
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   useEffect(() => {
     fetchNotifications();
-    const interval = setInterval(fetchNotifications, 30000);
-    return () => clearInterval(interval);
+    const interval = setInterval(fetchNotifications, 15000); // Poll every 15s for more responsiveness
+    
+    window.addEventListener('refreshNotifications', fetchNotifications);
+    
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('refreshNotifications', fetchNotifications);
+    };
   }, []);
+
+  useEffect(() => {
+    // Click outside handler to close dropdown
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    }
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isOpen]);
 
   const fetchNotifications = async () => {
     try {
@@ -48,19 +68,46 @@ export default function NotificationCenter() {
         return '⚠️';
       case 'announcement':
         return '📢';
+      case 'enrollment':
+        return '🎓';
+      case 'quiz_completed':
+        return '🎯';
+      case 'lesson_completed':
+        return '📖';
+      case 'bookmark_added':
+        return '🔖';
+      case 'course_completed':
+        return '🏆';
+      case 'rating_submitted':
+        return '⭐';
+      case 'achievement_earned':
+        return '🥇';
       default:
         return '🔔';
     }
   };
 
   return (
-    <div className="relative">
+    <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="relative p-2 text-gray-600 hover:text-gray-800"
+        style={{
+          background: 'none',
+          border: 'none',
+          padding: '8px',
+          cursor: 'pointer',
+          color: isOpen ? 'var(--accent-primary)' : 'var(--text-secondary)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          transition: 'color 0.2s',
+          position: 'relative',
+        }}
+        onMouseEnter={(e) => { if (!isOpen) e.currentTarget.style.color = 'var(--text-primary)'; }}
+        onMouseLeave={(e) => { if (!isOpen) e.currentTarget.style.color = 'var(--text-secondary)'; }}
       >
         <svg
-          className="w-6 h-6"
+          style={{ width: '20px', height: '20px' }}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -73,67 +120,182 @@ export default function NotificationCenter() {
           />
         </svg>
         {unreadCount > 0 && (
-          <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+          <span style={{
+            position: 'absolute',
+            top: '4px',
+            right: '4px',
+            background: 'var(--danger)',
+            color: '#fff',
+            fontSize: '0.625rem',
+            fontWeight: 800,
+            borderRadius: '50%',
+            width: '15px',
+            height: '15px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 0 6px var(--danger)',
+            animation: 'pulse-glow 2s ease-in-out infinite',
+          }}>
             {unreadCount > 9 ? '9+' : unreadCount}
           </span>
         )}
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-200 z-50">
-          <div className="p-4 border-b border-gray-200 flex justify-between items-center">
-            <h3 className="font-semibold text-gray-800">Notifications</h3>
+        <div style={{
+          position: 'absolute',
+          right: 0,
+          marginTop: '10px',
+          width: '320px',
+          background: 'var(--bg-elevated)',
+          borderRadius: 'var(--radius-md)',
+          boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5), 0 0 1px 1px var(--border-default)',
+          zIndex: 1000,
+          display: 'flex',
+          flexDirection: 'column',
+          overflow: 'hidden',
+        }}>
+          {/* Header */}
+          <div style={{
+            padding: '14px 16px',
+            borderBottom: '1px solid var(--border-default)',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            background: 'rgba(255,255,255,0.01)',
+          }}>
+            <span style={{ fontSize: '0.8125rem', fontWeight: 700, color: 'var(--text-primary)', fontFamily: 'var(--font-display)' }}>
+              Notifications
+            </span>
             {unreadCount > 0 && (
               <button
                 onClick={markAllAsRead}
-                className="text-sm text-blue-600 hover:text-blue-800"
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: 'var(--accent-primary)',
+                  fontSize: '0.6875rem',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  padding: 0,
+                  fontFamily: 'var(--font-mono)',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.04em',
+                }}
               >
-                Mark all as read
+                Mark all read
               </button>
             )}
           </div>
-          <div className="max-h-96 overflow-y-auto">
+
+          {/* List */}
+          <div style={{
+            maxHeight: '340px',
+            overflowY: 'auto',
+            display: 'flex',
+            flexDirection: 'column',
+          }}>
             {notifications.length === 0 ? (
-              <div className="p-4 text-gray-500 text-center">
-                No notifications
+              <div style={{
+                padding: '30px 20px',
+                color: 'var(--text-muted)',
+                textAlign: 'center',
+                fontSize: '0.8125rem',
+                fontFamily: 'var(--font-mono)',
+              }}>
+                ALL_SYSTEMS_CLEAR
               </div>
             ) : (
               notifications.map((notification) => (
                 <div
                   key={notification._id}
-                  className={`p-4 border-b border-gray-100 hover:bg-gray-50 ${
-                    !notification.read ? 'bg-blue-50' : ''
-                  }`}
+                  style={{
+                    padding: '12px 16px',
+                    borderBottom: '1px solid var(--border-default)',
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    gap: '12px',
+                    background: !notification.read ? 'rgba(0, 240, 255, 0.03)' : 'transparent',
+                    transition: 'background 0.2s',
+                    position: 'relative',
+                  }}
                 >
-                  <div className="flex items-start gap-3">
-                    <span className="text-2xl">
-                      {getNotificationIcon(notification.type)}
-                    </span>
-                    <div className="flex-1">
-                      <p className="text-sm text-gray-800">
-                        {notification.message}
-                      </p>
-                      <p className="text-xs text-gray-500 mt-1">
+                  {/* Left indicator line for unread */}
+                  {!notification.read && (
+                    <div style={{
+                      position: 'absolute',
+                      left: 0,
+                      top: 0,
+                      bottom: 0,
+                      width: '3px',
+                      background: 'var(--accent-primary)',
+                    }} />
+                  )}
+
+                  <span style={{ fontSize: '1.25rem', lineHeight: 1, marginTop: '2px' }}>
+                    {getNotificationIcon(notification.type)}
+                  </span>
+                  
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <p style={{
+                      color: 'var(--text-primary)',
+                      fontSize: '0.78125rem',
+                      lineHeight: 1.4,
+                      margin: '0 0 4px',
+                      fontWeight: !notification.read ? 600 : 400,
+                    }}>
+                      {notification.message}
+                    </p>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <span className="font-mono" style={{ fontSize: '0.625rem', color: 'var(--text-muted)' }}>
                         {new Date(notification.createdAt).toLocaleDateString()}
-                      </p>
+                      </span>
                       {notification.link && (
                         <a
                           href={notification.link}
-                          className="text-sm text-blue-600 hover:text-blue-800 mt-1 inline-block"
+                          onClick={() => {
+                            setIsOpen(false);
+                            if (!notification.read) {
+                              markAsRead(notification._id);
+                            }
+                          }}
+                          style={{
+                            fontSize: '0.6875rem',
+                            color: 'var(--accent-primary)',
+                            textDecoration: 'none',
+                            fontWeight: 700,
+                          }}
                         >
                           View →
                         </a>
                       )}
                     </div>
-                    {!notification.read && (
-                      <button
-                        onClick={() => markAsRead(notification._id)}
-                        className="text-blue-600 hover:text-blue-800 text-sm"
-                      >
-                        Mark read
-                      </button>
-                    )}
                   </div>
+
+                  {!notification.read && (
+                    <button
+                      onClick={() => markAsRead(notification._id)}
+                      style={{
+                        background: 'none',
+                        border: 'none',
+                        color: 'var(--text-muted)',
+                        cursor: 'pointer',
+                        fontSize: '0.75rem',
+                        padding: '4px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        borderRadius: '4px',
+                        transition: 'color 0.2s',
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.color = 'var(--text-primary)'}
+                      onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-muted)'}
+                      title="Mark as read"
+                    >
+                      ✓
+                    </button>
+                  )}
                 </div>
               ))
             )}

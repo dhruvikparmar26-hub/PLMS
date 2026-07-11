@@ -40,6 +40,17 @@ exports.submitRating = async (req, res) => {
     enrollment.review = review || '';
     await enrollment.save();
 
+    // Create notification
+    const course = await Course.findById(courseId);
+    const courseTitle = course ? course.title : 'Course';
+    const { createNotification } = require('./notificationController');
+    await createNotification(
+      userId,
+      'rating_submitted',
+      `You rated "${courseTitle}" ${rating} stars`,
+      `/courses/${courseId}`
+    );
+
     res.json({
       success: true,
       data: enrollment,

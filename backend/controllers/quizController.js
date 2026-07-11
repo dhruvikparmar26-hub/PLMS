@@ -2,6 +2,7 @@ const Quiz = require('../models/Quiz');
 const QuizAttempt = require('../models/QuizAttempt');
 const User = require('../models/User');
 const logActivity = require('../utils/activityLogger');
+const { createNotification } = require('./notificationController');
 
 /**
  * @desc    Get a quiz by ID — strips isCorrect from options so clients can't cheat
@@ -160,6 +161,13 @@ const attemptQuiz = async (req, res, next) => {
       score: scorePercent,
       extra: { passed, adaptiveMode },
     });
+
+    await createNotification(
+      userId,
+      'quiz_completed',
+      `Completed quiz: "${quiz.title}" with a score of ${scorePercent}% (${passed ? 'PASSED' : 'FAILED'})`,
+      `/quizzes/${quizId}`
+    );
 
     // Award XP for quiz attempt (5 XP base + bonus for passing)
     const xpAwarded = 5 + (passed ? 10 : 0);
@@ -391,10 +399,34 @@ const getAdaptiveNextQuestion = async (req, res, next) => {
   }
 };
 
+/**
+ * @desc    Get all quizzes
+ * @route   GET /api/quizzes
+ * @access  Protected
+ */
+const getAllQuizzes = async (req, res, next) => {
+  try {
+    const quizzes = await Quiz.find({}).populate('course', 'title category');
+    res.status(200).json({
+      success: true,
+      quizzes: quizzes.map((q) => ({
+        _id: q._id,
+        title: q.title,
+        category: q.course?.category || 'General',
+        difficulty: q.questions && q.questions.length > 0 ? q.questions[0].difficulty : 'medium',
+        questionsCount: q.questions ? q.questions.length : 0,
+      })),
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = { 
   getQuiz, 
   attemptQuiz, 
   getQuizzesByCourse, 
   getMyQuizAttempts,
-  getAdaptiveNextQuestion
+  getAdaptiveNextQuestion,
+  getAllQuizzes
 };

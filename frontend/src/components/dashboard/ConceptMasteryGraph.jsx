@@ -90,7 +90,6 @@ const ConceptMasteryGraph = () => {
           <h3 className="widget-title">Concept Mastery Graph</h3>
           <p className="widget-subtitle">Interactive visualization of your concept understanding</p>
         </div>
-        <a href="/mastery-graph" className="widget-link">View full map →</a>
       </div>
 
       <div className="concept-graph-container">

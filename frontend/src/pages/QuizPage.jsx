@@ -101,6 +101,7 @@ const QuizPage = () => {
       });
 
       setAttemptResult(res.data.attempt);
+      window.dispatchEvent(new Event('refreshNotifications'));
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to submit quiz attempt.');
       console.error(err);
@@ -210,6 +211,7 @@ const QuizPage = () => {
       });
 
       setAttemptResult(res.data.attempt);
+      window.dispatchEvent(new Event('refreshNotifications'));
     } catch (err) {
       setError('Failed to submit final adaptive evaluation score.');
       console.error(err);

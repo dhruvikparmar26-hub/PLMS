@@ -12,15 +12,12 @@ const TopBar = ({ onMenuToggle }) => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [showProfile, setShowProfile] = useState(false);
-  const [showNotifs, setShowNotifs] = useState(false);
   const profileRef = useRef(null);
-  const notifRef = useRef(null);
 
   // Close dropdowns on outside click
   useEffect(() => {
     const handleClick = (e) => {
       if (profileRef.current && !profileRef.current.contains(e.target)) setShowProfile(false);
-      if (notifRef.current && !notifRef.current.contains(e.target)) setShowNotifs(false);
     };
     document.addEventListener('mousedown', handleClick);
     return () => document.removeEventListener('mousedown', handleClick);
@@ -70,7 +67,6 @@ const TopBar = ({ onMenuToggle }) => {
           onChange={(e) => setSearchQuery(e.target.value)}
           className="topbar-search-input"
         />
-        <kbd className="topbar-search-shortcut">Ctrl+K</kbd>
       </form>
 
       {/* Right section */}
@@ -96,21 +92,7 @@ const TopBar = ({ onMenuToggle }) => {
             </div>
 
             {/* Notifications */}
-            <div className="topbar-notif-wrapper" ref={notifRef}>
-              <button
-                className="topbar-notif-btn"
-                onClick={() => setShowNotifs(!showNotifs)}
-                aria-label="Notifications"
-              >
-                🔔
-                <span className="topbar-notif-dot"></span>
-              </button>
-              {showNotifs && (
-                <div className="topbar-notif-dropdown">
-                  <NotificationCenter />
-                </div>
-              )}
-            </div>
+            <NotificationCenter />
 
             {/* Username */}
             <span className="topbar-profile-name" style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', fontWeight: 700 }}>

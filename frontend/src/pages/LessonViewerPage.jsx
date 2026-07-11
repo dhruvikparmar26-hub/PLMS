@@ -47,7 +47,7 @@ const LessonViewerPage = () => {
         // 3. Fetch user's enrollment for this course
         const enrollmentsRes = await api.get('/enrollments/me');
         const match = enrollmentsRes.data.enrollments?.find(
-          (enr) => enr.course._id === courseId || enr.course === courseId
+          (enr) => enr.course?._id === courseId || enr.course === courseId
         );
         
         if (!match) {
@@ -84,6 +84,7 @@ const LessonViewerPage = () => {
 
       const res = await api.post(`/lessons/${id}/complete`);
       setSuccessMsg(res.data.courseCompleted ? '🎓 Course completed! Certificate issued.' : (res.data.message || 'Lesson completed!'));
+      window.dispatchEvent(new Event('refreshNotifications'));
       
       // Update enrollment local state
       if (enrollment) {
@@ -115,6 +116,7 @@ const LessonViewerPage = () => {
         courseId: course._id,
       });
       setBookmarked(res.data.bookmarked);
+      window.dispatchEvent(new Event('refreshNotifications'));
     } catch (err) {
       console.error(err);
     } finally {
@@ -179,27 +181,55 @@ const LessonViewerPage = () => {
   return (
     <div className="min-h-screen flex flex-col md:flex-row" style={{ background: 'var(--bg-canvas)' }}>
       {/* Course Sidebar Navigation */}
-      <aside className="w-full md:w-72 bg-slate-900/60 border-b md:border-b-0 md:border-r border-slate-800/80 backdrop-blur-xl flex flex-col p-6 shrink-0 sidebar-spine"
-             style={{ background: 'var(--bg-surface)' }}>
-        <div className="space-y-6 flex-1 overflow-y-auto" style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+      <aside style={{
+        width: '280px',
+        minWidth: '280px',
+        background: 'var(--bg-surface)',
+        borderRight: '1px solid var(--border-default)',
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100vh',
+        position: 'sticky',
+        top: 0,
+        overflow: 'hidden',
+        flexShrink: 0,
+      }}>
+        {/* Scrollable content area */}
+        <div style={{
+          flex: 1,
+          overflowY: 'auto',
+          padding: '20px 16px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0',
+        }}>
           {/* Back link */}
           <Link
             to={course ? `/courses/${course._id}` : '/dashboard'}
             className="font-mono"
             style={{
-              fontSize: '0.6875rem', color: 'var(--text-muted)',
-              textDecoration: 'none', fontWeight: 700
+              fontSize: '0.75rem', color: 'var(--text-muted)',
+              textDecoration: 'none', fontWeight: 700,
+              padding: '4px 0',
+              marginBottom: '16px',
+              transition: 'color 0.2s',
             }}
           >
             &lt; {getLabel('RETURN_TO_SPEC')}
           </Link>
 
+          {/* Course Title & Instructor */}
           {course && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              <h2 className="font-display" style={{ fontSize: '0.9375rem', fontWeight: 700, margin: 0 }}>
+            <div style={{
+              display: 'flex', flexDirection: 'column', gap: '4px',
+              paddingBottom: '16px',
+              borderBottom: '1px solid var(--border-default)',
+              marginBottom: '16px',
+            }}>
+              <h2 className="font-display" style={{ fontSize: '1.0625rem', fontWeight: 700, margin: 0, lineHeight: 1.3 }}>
                 {course.title}
               </h2>
-              <span className="font-mono" style={{ fontSize: '0.5625rem', color: 'var(--text-muted)' }}>
+              <span className="font-mono" style={{ fontSize: '0.625rem', color: 'var(--text-muted)' }}>
                 {getLabel('INSTRUCTOR_REF')}: {course.instructor?.name || 'System'}
               </span>
             </div>
@@ -207,8 +237,14 @@ const LessonViewerPage = () => {
 
           {/* Progress Section */}
           {enrollment && (
-            <div className="blueprint-card" style={{ padding: '12px 16px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.6875rem', fontFamily: 'var(--font-mono)', marginBottom: '4px' }}>
+            <div style={{
+              padding: '12px 14px',
+              background: 'rgba(255,255,255,0.02)',
+              border: '1px solid var(--border-default)',
+              borderRadius: 'var(--radius-md)',
+              marginBottom: '20px',
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', fontFamily: 'var(--font-mono)', marginBottom: '8px' }}>
                 <span style={{ color: 'var(--text-secondary)' }}>{getLabel('MODULE_PROGRESS')}</span>
                 <span style={{ color: 'var(--accent-primary)', fontWeight: 700 }}>{enrollment.progressPercent}%</span>
               </div>
@@ -220,12 +256,20 @@ const LessonViewerPage = () => {
 
           {/* Syllabus modules */}
           {course && course.modules && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               {course.modules.map((mod, mIdx) => (
                 <div key={mod._id || mIdx} style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                  <span className="font-mono" style={{ fontSize: '0.5625rem', fontWeight: 700, color: 'var(--text-muted)', letterSpacing: '0.05em' }}>
+                  {/* Module label */}
+                  <span className="font-mono" style={{
+                    fontSize: '0.625rem', fontWeight: 700,
+                    color: 'var(--text-muted)', letterSpacing: '0.08em',
+                    padding: '0 4px 6px',
+                    borderBottom: '1px solid rgba(255,255,255,0.04)',
+                    marginBottom: '2px',
+                  }}>
                     {mod.title?.toUpperCase()}
                   </span>
+                  {/* Lesson links */}
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
                     {mod.lessons?.map((les) => {
                       const isActive = les._id === lesson._id;
@@ -237,21 +281,21 @@ const LessonViewerPage = () => {
                           style={{
                             display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px',
                             padding: '8px 10px', borderRadius: 'var(--radius-sm)',
-                            fontSize: '0.75rem', fontWeight: 600,
+                            fontSize: '0.8125rem', fontWeight: isActive ? 600 : 500,
                             fontFamily: 'var(--font-display)',
                             background: isActive ? 'rgba(0,240,255,0.06)' : 'transparent',
                             color: isActive ? 'var(--accent-primary)' : 'var(--text-secondary)',
                             border: isActive ? '1px solid rgba(0,240,255,0.15)' : '1px solid transparent',
-                            textDecoration: 'none', transition: 'all var(--transition-fast)'
+                            textDecoration: 'none', transition: 'all 0.15s ease',
                           }}
                         >
-                          <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '170px' }}>
+                          <span style={{ flex: 1, lineHeight: '1.4' }}>
                             {les.title}
                           </span>
                           {isCompleted ? (
-                            <span className="font-mono" style={{ color: 'var(--success)', fontWeight: 700 }}>[✓]</span>
+                            <span className="font-mono" style={{ color: 'var(--success)', fontWeight: 700, fontSize: '0.75rem', flexShrink: 0 }}>[✓]</span>
                           ) : (
-                            <span className="font-mono" style={{ color: 'var(--text-muted)' }}>[ ]</span>
+                            <span className="font-mono" style={{ color: 'var(--text-muted)', fontSize: '0.75rem', flexShrink: 0 }}>[ ]</span>
                           )}
                         </Link>
                       );
@@ -264,11 +308,20 @@ const LessonViewerPage = () => {
 
           {/* Quizzes section in Sidebar */}
           {quizzes.length > 0 && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', paddingTop: '16px', borderTop: '1px solid var(--border-default)' }}>
-              <span className="font-mono" style={{ fontSize: '0.5625rem', fontWeight: 700, color: 'var(--accent-secondary)' }}>
+            <div style={{
+              display: 'flex', flexDirection: 'column', gap: '8px',
+              paddingTop: '20px', marginTop: '20px',
+              borderTop: '1px solid var(--border-default)',
+            }}>
+              <span className="font-mono" style={{
+                fontSize: '0.625rem', fontWeight: 700,
+                color: 'var(--accent-secondary)',
+                letterSpacing: '0.08em',
+                padding: '0 4px',
+              }}>
                 {getLabel('EVALUATION_BATTERIES')}
               </span>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                 {quizzes.map((quiz) => (
                   <Link
                     key={quiz._id}
@@ -276,11 +329,12 @@ const LessonViewerPage = () => {
                     style={{
                       display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px',
                       padding: '8px 10px', borderRadius: 'var(--radius-sm)',
-                      fontSize: '0.75rem', fontWeight: 650,
-                      background: 'rgba(255,160,58,0.02)',
+                      fontSize: '0.75rem', fontWeight: 600,
+                      background: 'rgba(255,160,58,0.03)',
                       color: 'var(--accent-secondary)',
                       border: '1px solid rgba(255,160,58,0.1)',
-                      textDecoration: 'none'
+                      textDecoration: 'none',
+                      transition: 'all 0.15s ease',
                     }}
                   >
                     <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{quiz.title}</span>
@@ -292,23 +346,31 @@ const LessonViewerPage = () => {
           )}
         </div>
 
-        {/* User Card */}
+        {/* User Card - pinned at bottom */}
         <div style={{
-          padding: '12px', border: '1px solid var(--border-default)',
-          borderRadius: 'var(--radius-md)', display: 'flex', alignItems: 'center', gap: '10px',
-          marginTop: '24px'
+          padding: '12px 16px',
+          borderTop: '1px solid var(--border-default)',
+          flexShrink: 0,
         }}>
           <div style={{
-            width: '32px', height: '32px', borderRadius: '50%',
-            background: 'var(--accent-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center',
-            color: 'var(--bg-canvas)', fontWeight: 700, fontSize: '0.8125rem',
-            fontFamily: 'var(--font-display)',
+            padding: '10px 12px',
+            border: '1px solid var(--border-default)',
+            borderRadius: 'var(--radius-md)',
+            display: 'flex', alignItems: 'center', gap: '10px',
+            background: 'rgba(255,255,255,0.02)',
           }}>
-            {user?.name?.charAt(0).toUpperCase()}
-          </div>
-          <div style={{ minWidth: 0, flex: 1 }}>
-            <p style={{ fontSize: '0.8125rem', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user?.name}</p>
-            <p className="font-mono" style={{ fontSize: '0.625rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>{user?.role}</p>
+            <div style={{
+              width: '32px', height: '32px', borderRadius: '50%',
+              background: 'var(--accent-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+              color: 'var(--bg-canvas)', fontWeight: 700, fontSize: '0.8125rem',
+              fontFamily: 'var(--font-display)', flexShrink: 0,
+            }}>
+              {user?.name?.charAt(0).toUpperCase()}
+            </div>
+            <div style={{ minWidth: 0, flex: 1 }}>
+              <p style={{ fontSize: '0.8125rem', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', margin: 0 }}>{user?.name}</p>
+              <p className="font-mono" style={{ fontSize: '0.625rem', color: 'var(--text-muted)', textTransform: 'uppercase', margin: 0 }}>{user?.role}</p>
+            </div>
           </div>
         </div>
       </aside>
@@ -418,7 +480,7 @@ const LessonViewerPage = () => {
                 {/* Transcript panel */}
                 {showTranscript && lesson.transcript && (
                   <div className="blueprint-card" style={{ padding: '16px', maxHeight: '220px', overflowY: 'auto' }}>
-                    <h4 className="font-mono" style={{ fontSize: '0.65rem', color: 'var(--text-muted)', margin: '0 0 8px' }}>// TRANSCRIPT</h4>
+                    <h4 className="font-mono" style={{ fontSize: '0.65rem', color: 'var(--text-muted)', margin: '0 0 8px' }}>TRANSCRIPT</h4>
                     <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.7, whiteSpace: 'pre-line', margin: 0 }}>
                       {lesson.transcript}
                     </p>
@@ -426,23 +488,38 @@ const LessonViewerPage = () => {
                 )}
               </div>
             ) : (
-              <div className="blueprint-card" style={{
-                width: '100%', aspectRatio: '16/9', display: 'flex',
-                alignItems: 'center', justifyContent: 'center', background: 'var(--bg-surface)'
+              <div style={{
+                width: '100%', aspectRatio: '16/9', borderRadius: 'var(--radius-lg)',
+                border: '1px solid var(--border-default)', overflow: 'hidden',
+                position: 'relative', boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
+                background: course?.thumbnail ? `url(${course.thumbnail}) center/cover no-repeat` : 'var(--bg-surface)'
               }}>
-                <p className="font-mono text-muted" style={{ fontSize: '0.75rem' }}>
-                  No video content available
-                </p>
+                {/* Dark overlay */}
+                <div style={{
+                  position: 'absolute', inset: 0,
+                  background: 'linear-gradient(to top, rgba(8,10,20,0.95) 0%, rgba(8,10,20,0.4) 60%, rgba(8,10,20,0.2) 100%)',
+                  display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '32px'
+                }}>
+                  <span className="font-mono" style={{ fontSize: '0.6875rem', color: 'var(--accent-primary)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+                    Interactive Lesson Guide
+                  </span>
+                  <h2 style={{ fontSize: '1.375rem', fontWeight: 800, margin: '6px 0 10px', color: '#fff', textShadow: '0 2px 10px rgba(0,0,0,0.4)' }}>
+                    {lesson.title}
+                  </h2>
+                  <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                    {lesson.content}
+                  </p>
+                </div>
               </div>
             )}
 
             {/* Title and Complete Button bar */}
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: '16px' }}>
               <div>
-                <span className="font-mono text-muted" style={{ fontSize: '0.625rem', display: 'block' }}>
+                <span className="font-mono text-muted" style={{ fontSize: '0.6875rem', display: 'block' }}>
                   {getLabel('ORDER_INDEX')}: {lesson.order}
                 </span>
-                <h1 style={{ fontSize: '1.5rem', fontWeight: 700, margin: '2px 0 0 0' }}>
+                <h1 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '4px 0 0 0', color: 'var(--text-primary)' }}>
                   {lesson.title}
                 </h1>
               </div>
@@ -457,7 +534,7 @@ const LessonViewerPage = () => {
                     onClick={handleMarkComplete}
                     disabled={completeLoading}
                     className="btn-primary"
-                    style={{ padding: '8px 20px', fontSize: '0.8125rem' }}
+                    style={{ padding: '10px 24px', fontSize: '0.875rem', fontWeight: 700 }}
                   >
                     {completeLoading ? getLabel('COMPLETING') : getLabel('MARK_AS_COMPLETE')}
                   </button>
@@ -467,10 +544,10 @@ const LessonViewerPage = () => {
 
             {/* Lesson Content Text */}
             <section className="blueprint-card" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <h2 className="font-mono" style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', borderBottom: '1px solid var(--border-default)', paddingBottom: '8px', margin: 0 }}>
-                // {getLabel('LESSON_NOTES')}
+              <h2 className="font-mono" style={{ fontSize: '0.8125rem', color: 'var(--text-muted)', textTransform: 'uppercase', borderBottom: '1px solid var(--border-default)', paddingBottom: '8px', margin: 0 }}>
+                {getLabel('LESSON_NOTES')}
               </h2>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', lineHeight: '1.6', whiteSpace: 'pre-line', margin: 0 }}>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '0.9375rem', lineHeight: '1.7', whiteSpace: 'pre-line', margin: 0 }}>
                 {lesson.content || 'No text materials provided for this lesson.'}
               </p>
             </section>

@@ -395,7 +395,7 @@ const HomePage = () => {
       {/* Footer tagline rewritten for clarity and contrast */}
       <footer className="flex flex-col sm:flex-row justify-between items-center gap-4 z-10 border-t border-[rgba(255,255,255,0.05)] pt-4 w-full">
         <p style={{ color: '#cbd5e1', fontSize: '11px', fontFamily: 'var(--font-mono)', letterSpacing: '0.04em' }}>
-          Curriculum Alignment Platform // Version 2.0.4-LTS
+          Curriculum Alignment Platform · Version 2.0.4-LTS
         </p>
         <p style={{ color: '#cbd5e1', fontSize: '11px', fontFamily: 'var(--font-mono)' }}>
           &copy; {new Date().getFullYear()} LEARNING LAB. ALL RIGHTS RESERVED.

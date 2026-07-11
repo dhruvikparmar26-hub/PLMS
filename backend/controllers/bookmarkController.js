@@ -22,12 +22,24 @@ const toggleBookmark = async (req, res, next) => {
       return res.status(200).json({ success: true, bookmarked: false, message: 'Bookmark removed.' });
     }
 
+    const Lesson = require('../models/Lesson');
+    const lesson = await Lesson.findById(lessonId);
+    const lessonTitle = lesson ? lesson.title : 'Lesson';
+
     const bookmark = await Bookmark.create({
       user: userId,
       lesson: lessonId,
       course: courseId,
       note: note || '',
     });
+
+    const { createNotification } = require('./notificationController');
+    await createNotification(
+      userId,
+      'bookmark_added',
+      `Bookmarked lesson: "${lessonTitle}"`,
+      `/lessons/${lessonId}`
+    );
 
     res.status(201).json({ success: true, bookmarked: true, bookmark });
   } catch (error) {

@@ -8,6 +8,14 @@ const errorHandler = require('./middleware/errorHandler');
 const app = express();
 app.set('trust proxy', 1); // Trust first proxy for rate limiting and secure cookies
 
+// --------------- CORS ---------------
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL || ['http://localhost:5173', 'http://localhost:5174'],
+    credentials: true, // allow cookies to be sent cross-origin
+  })
+);
+
 // --------------- Security Middleware ---------------
 app.use(helmet());
 
@@ -23,14 +31,6 @@ const globalLimiter = rateLimit({
   legacyHeaders: false,
 });
 app.use('/api/', globalLimiter);
-
-// --------------- CORS ---------------
-app.use(
-  cors({
-    origin: process.env.CLIENT_URL || ['http://localhost:5173', 'http://localhost:5174'],
-    credentials: true, // allow cookies to be sent cross-origin
-  })
-);
 
 // --------------- Body Parsers ---------------
 app.use(express.json({ limit: '10mb' }));

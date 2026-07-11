@@ -49,6 +49,18 @@ const courseSchema = new mongoose.Schema(
       type: String,
       default: '',
     },
+    briefIntro: {
+      type: String,
+      default: '',
+      maxlength: [1000, 'Brief intro cannot exceed 1000 characters'],
+    },
+    syllabus: [
+      {
+        moduleTitle: { type: String, required: true },
+        level: { type: String, enum: ['beginner', 'intermediate', 'advanced'], default: 'beginner' },
+        topics: [String],
+      },
+    ],
   },
   {
     timestamps: true,

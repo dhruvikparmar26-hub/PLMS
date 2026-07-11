@@ -146,7 +146,7 @@ const getCourses = async (req, res, next) => {
     if (category) filter.category = category;
     if (difficulty) filter.difficulty = difficulty;
     if (search) {
-      filter.$text = { $search: search };
+      filter.title = { $regex: search, $options: 'i' };
     }
 
     const skip = (parseInt(page) - 1) * parseInt(limit);
@@ -261,6 +261,15 @@ const enrollInCourse = async (req, res, next) => {
     logActivity(userId, 'course_enrolled', {
       courseId: courseId,
     });
+
+    // Create enrollment notification
+    const { createNotification } = require('./notificationController');
+    await createNotification(
+      userId,
+      'enrollment',
+      `You enrolled in the course: "${course.title}"`,
+      `/courses/${course._id}`
+    );
 
     res.status(201).json({
       success: true,

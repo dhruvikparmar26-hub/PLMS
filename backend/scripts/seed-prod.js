@@ -17,7 +17,7 @@ const seedProduction = async () => {
 
     // Check if database already has courses
     const existingCourses = await Course.countDocuments();
-    if (existingCourses >= 15) {
+    if (existingCourses >= 100) {
       console.log(`⚠ Database already has ${existingCourses} courses. Skipping seeding.`);
       return { seeded: false, existingCourses };
     }
@@ -43,7 +43,7 @@ const seedProduction = async () => {
     const coursesData = [
       // Web Development (4 courses)
       {
-        title: 'React for Beginners: Build Modern Web Apps',
+        title: 'React for Beginners: Build Dynamic Web Apps',
         description: 'Master React fundamentals including components, hooks, state management, and routing. Build real-world applications from scratch while learning best practices and modern patterns.',
         category: 'Web Development',
         difficulty: 'beginner',
@@ -69,7 +69,7 @@ const seedProduction = async () => {
         hasQuiz: true
       },
       {
-        title: 'Full-Stack Web Development with Node.js',
+        title: 'Advanced Node.js and Microservices Architecture',
         description: 'Build complete web applications from frontend to backend. Learn Express.js, REST APIs, MongoDB integration, authentication, and deployment strategies for modern web applications.',
         category: 'Web Development',
         difficulty: 'intermediate',
@@ -96,7 +96,7 @@ const seedProduction = async () => {
       },
       // Data Science & AI (3 courses)
       {
-        title: 'Python for Data Science Fundamentals',
+        title: 'Introduction to Python and Data Science',
         description: 'Start your data science journey with Python. Learn NumPy for numerical computing, Pandas for data manipulation, and Matplotlib for visualization. Build a solid foundation for machine learning.',
         category: 'Data Science',
         difficulty: 'beginner',
@@ -136,7 +136,7 @@ const seedProduction = async () => {
       },
       // UI/UX Design (2 courses)
       {
-        title: 'Modern UI/UX Design Principles',
+        title: 'Modern UI/UX Design Fundamentals',
         description: 'Master the fundamentals of user interface and experience design. Learn user research, wireframing, prototyping, and design systems. Create beautiful, functional interfaces using Figma.',
         category: 'Design',
         difficulty: 'beginner',
@@ -163,7 +163,7 @@ const seedProduction = async () => {
       },
       // Growth Marketing (2 courses)
       {
-        title: 'Digital Marketing Fundamentals',
+        title: 'Growth Marketing and SEO Strategy',
         description: 'Learn the core principles of digital marketing including SEO, content marketing, social media strategy, and email marketing. Build comprehensive marketing campaigns that drive growth.',
         category: 'Marketing',
         difficulty: 'beginner',

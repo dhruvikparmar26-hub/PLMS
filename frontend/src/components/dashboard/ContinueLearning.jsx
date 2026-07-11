@@ -12,9 +12,9 @@ const ContinueLearning = ({ enrollments = [] }) => {
     { _id: '2', course: { _id: '2', title: 'Advanced Algorithms' }, lessonsCompleted: 8, totalLessons: 20, progressPercent: 40 },
     { _id: '3', course: { _id: '3', title: 'Database Management' }, lessonsCompleted: 15, totalLessons: 30, progressPercent: 50 },
     { _id: '4', course: { _id: '4', title: 'Machine Learning Basics' }, lessonsCompleted: 5, totalLessons: 18, progressPercent: 28 },
-  ] : (enrollments.filter(e => e.progressPercent < 100 && e.progressPercent > 0).length > 0
-    ? enrollments.filter(e => e.progressPercent < 100 && e.progressPercent > 0)
-    : enrollments.slice(0, 4));
+  ] : (enrollments.filter(e => e.course && e.progressPercent < 100 && e.progressPercent > 0).length > 0
+    ? enrollments.filter(e => e.course && e.progressPercent < 100 && e.progressPercent > 0)
+    : enrollments.filter(e => e.course).slice(0, 4));
 
   const courseColors = [
     { bg: 'linear-gradient(135deg, #7B68EE 0%, #5A4FCF 100%)', accent: '#7B68EE' },

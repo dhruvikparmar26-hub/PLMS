@@ -43,24 +43,50 @@ export default function NoteEditor({ lessonId, courseId }) {
   };
 
   if (loading) {
-    return <div className="text-gray-500">Loading notes...</div>;
+    return <div style={{ color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', fontSize: '0.75rem' }}>Loading notes...</div>;
   }
 
   return (
-    <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mt-4">
-      <h3 className="font-semibold text-gray-800 mb-2">📝 Your Notes</h3>
+    <div className="blueprint-card" style={{ padding: '20px', marginTop: '16px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+      <h3 className="font-display" style={{ fontSize: '0.875rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>
+        📝 Notes
+      </h3>
       <textarea
         value={note}
         onChange={(e) => setNote(e.target.value)}
-        placeholder="Write your private notes for this lesson..."
-        className="w-full h-32 p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+        placeholder="Write your private notes for this lesson here..."
+        className="input-field"
+        style={{
+          width: '100%',
+          height: '120px',
+          padding: '12px',
+          background: 'var(--bg-canvas)',
+          border: '1px solid var(--border-default)',
+          color: 'var(--text-primary)',
+          borderRadius: 'var(--radius-sm)',
+          fontFamily: 'var(--font-body)',
+          fontSize: '0.875rem',
+          resize: 'vertical',
+        }}
       />
-      <div className="flex justify-between items-center mt-2">
-        {saved && <span className="text-green-600 text-sm">Saved!</span>}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        {saved ? (
+          <span className="font-mono" style={{ color: 'var(--success)', fontSize: '0.75rem', fontWeight: 700 }}>
+            [✓] SAVED SUCCESSFULLY
+          </span>
+        ) : (
+          <span />
+        )}
         <button
           onClick={handleSave}
           disabled={saving}
-          className="ml-auto bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="btn-primary"
+          style={{
+            fontSize: '0.75rem',
+            padding: '8px 20px',
+            cursor: 'pointer',
+            opacity: saving ? 0.6 : 1,
+          }}
         >
           {saving ? 'Saving...' : 'Save Note'}
         </button>

@@ -30,7 +30,7 @@ class ErrorBoundary extends React.Component {
           }}>
             <div>
               <span className="font-mono text-danger" style={{ fontSize: '0.6875rem', fontWeight: 700 }}>
-                {getLabel('CRITICAL_SYSTEM_ERROR')} // {getLabel('CRASH_DETECTED')}
+                {getLabel('CRITICAL_SYSTEM_ERROR')} | {getLabel('CRASH_DETECTED')}
               </span>
               <h1 style={{ fontSize: '1.5rem', fontWeight: 700, marginTop: '8px' }}>
                 Application Crash

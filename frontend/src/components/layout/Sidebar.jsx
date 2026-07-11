@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import api from '../../api';
 
 /**
  * Sidebar — Grouped navigation matching the Learnova dashboard design.
@@ -8,17 +9,57 @@ import { useAuth } from '../../contexts/AuthContext';
 const Sidebar = ({ mobileOpen, onClose, onOpenAI }) => {
   const location = useLocation();
   const { user } = useAuth();
+  const [unreadCount, setUnreadCount] = useState(0);
+
+  const sidebarDesktopRef = useRef(null);
+  const sidebarMobileRef = useRef(null);
 
   const isActive = (path) => location.pathname === path;
+
+  // Restore sidebar scroll position across route re-mounts
+  useEffect(() => {
+    const savedScroll = sessionStorage.getItem('sidebar-scroll');
+    if (savedScroll) {
+      const parsed = parseInt(savedScroll, 10);
+      setTimeout(() => {
+        if (sidebarDesktopRef.current) sidebarDesktopRef.current.scrollTop = parsed;
+        if (sidebarMobileRef.current) sidebarMobileRef.current.scrollTop = parsed;
+      }, 0);
+    }
+  }, []);
+
+  const handleScroll = (e) => {
+    sessionStorage.setItem('sidebar-scroll', e.target.scrollTop);
+  };
+
+  useEffect(() => {
+    if (!user) return;
+    const fetchUnreadCount = async () => {
+      try {
+        const response = await api.get('/notifications');
+        setUnreadCount(response.data.data.unreadCount || 0);
+      } catch (error) {
+        console.error('Error fetching unread count for sidebar:', error);
+      }
+    };
+    fetchUnreadCount();
+    const interval = setInterval(fetchUnreadCount, 15000);
+    
+    window.addEventListener('refreshNotifications', fetchUnreadCount);
+    
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('refreshNotifications', fetchUnreadCount);
+    };
+  }, [user]);
 
   const navGroups = [
     {
       label: 'LEARN',
       items: [
         { label: 'Courses', path: '/courses', icon: '▦' },
-        { label: 'My Learning', path: '/learning-log', icon: '▤' },
         { label: 'Flashcards', path: '/flashcards', icon: '🎴' },
-        { label: 'Spaced Repetition', path: '/review-queue', icon: '🔁' },
+        { label: 'Review Queue', path: '/review-queue', icon: '🔁' },
         { label: 'Quizzes', path: '/quizzes', icon: '📝' },
         { label: 'Concept Map', path: '/mastery-graph', icon: '🕸️' },
       ],
@@ -46,7 +87,7 @@ const Sidebar = ({ mobileOpen, onClose, onOpenAI }) => {
       items: [
         { label: 'Notes', path: '/notes', icon: '📒' },
         { label: 'Bookmarks', path: '/bookmarks', icon: '🔖' },
-        { label: 'Notifications', path: '/notifications', icon: '🔔', badgeCount: 12 },
+        { label: 'Notifications', path: '/notifications', icon: '🔔', badgeCount: unreadCount },
         { label: 'Settings', path: '/settings', icon: '⚙️' },
       ],
     },
@@ -173,12 +214,20 @@ const Sidebar = ({ mobileOpen, onClose, onOpenAI }) => {
       {mobileOpen && <div className="sidebar-overlay" onClick={onClose} />}
 
       {/* Mobile Sidebar */}
-      <aside className={`sidebar sidebar--mobile ${mobileOpen ? 'sidebar--open' : ''}`}>
+      <aside 
+        ref={sidebarMobileRef} 
+        onScroll={handleScroll} 
+        className={`sidebar sidebar--mobile ${mobileOpen ? 'sidebar--open' : ''}`}
+      >
         {sidebarContent}
       </aside>
 
       {/* Desktop Sidebar */}
-      <aside className="sidebar sidebar--desktop">
+      <aside 
+        ref={sidebarDesktopRef} 
+        onScroll={handleScroll} 
+        className="sidebar sidebar--desktop"
+      >
         {sidebarContent}
       </aside>
     </>

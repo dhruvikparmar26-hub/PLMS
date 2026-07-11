@@ -1,7 +1,14 @@
 const express = require('express');
 const { body } = require('express-validator');
 const validate = require('../middleware/validate');
-const { getQuiz, attemptQuiz, getQuizzesByCourse, getMyQuizAttempts, getAdaptiveNextQuestion } = require('../controllers/quizController');
+const { 
+  getQuiz, 
+  attemptQuiz, 
+  getQuizzesByCourse, 
+  getMyQuizAttempts, 
+  getAdaptiveNextQuestion,
+  getAllQuizzes
+} = require('../controllers/quizController');
 const { protect } = require('../middleware/auth');
 
 const router = express.Router();
@@ -18,6 +25,20 @@ const attemptQuizValidator = [
     .withMessage('Selected option index must be a non-negative integer'),
   validate,
 ];
+
+/**
+ * @route   GET /api/quizzes
+ * @desc    Get all quizzes
+ * @access  Protected
+ */
+router.get('/', protect, getAllQuizzes);
+
+/**
+ * @route   GET /api/quizzes/my-attempts
+ * @desc    Get current user's quiz attempts
+ * @access  Protected
+ */
+router.get('/my-attempts', protect, getMyQuizAttempts);
 
 /**
  * @route   GET /api/quizzes/course/:courseId
@@ -46,12 +67,5 @@ router.get('/:id', protect, getQuiz);
  * @access  Protected
  */
 router.post('/:id/attempt', protect, attemptQuizValidator, attemptQuiz);
-
-/**
- * @route   GET /api/quizzes/my-attempts
- * @desc    Get current user's quiz attempts
- * @access  Protected
- */
-router.get('/my-attempts', protect, getMyQuizAttempts);
 
 module.exports = router;
