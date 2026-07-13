@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import api from '../../api';
 import { useAuth } from '../../contexts/AuthContext';
+import { Link } from 'react-router-dom';
 
 /**
  * LearningSchedule — Mini calendar + today's schedule matching the image.
@@ -75,7 +76,7 @@ const LearningSchedule = () => {
     <div className="widget-card schedule-card">
       <div className="widget-header">
         <h3 className="widget-title">Learning Schedule</h3>
-        <a href="/schedule" className="widget-link">View full calendar →</a>
+        <Link to="/schedule" className="widget-link">View full calendar →</Link>
       </div>
 
       {/* Mini Calendar */}

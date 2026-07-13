@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 /**
  * ProgressOverview — Donut chart showing completion stats.
  */
@@ -31,7 +33,7 @@ const ProgressOverview = ({ enrollments = [] }) => {
     <div className="widget-card progress-overview-card">
       <div className="widget-header">
         <h3 className="widget-title">Progress Overview</h3>
-        <a href="/analytics" className="widget-link">View analytics →</a>
+        <Link to="/analytics" className="widget-link">View analytics →</Link>
       </div>
 
       <div className="progress-donut-container">

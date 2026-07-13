@@ -36,6 +36,8 @@ import SettingsPage from './pages/SettingsPage';
 import LeaderboardPage from './pages/LeaderboardPage';
 import NotificationsPage from './pages/NotificationsPage';
 
+import DashboardLayout from './components/layout/DashboardLayout';
+
 /**
  * App — Root component.
  * AuthProvider wraps everything so all pages can access auth state.
@@ -46,11 +48,9 @@ function App() {
     <Router>
       <AuthProvider>
         <Routes>
-          <Route path="/" element={<DashboardPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
           
-          <Route path="/dashboard" element={<DashboardPage />} />
           <Route
             path="/onboarding"
             element={
@@ -59,206 +59,44 @@ function App() {
               </ProtectedRoute>
             }
           />
+          
+          {/* Protected Dashboard Layout Routes - Persistent Sidebar & Navbar */}
           <Route
-            path="/courses"
             element={
               <ProtectedRoute>
-                <CourseCatalogPage />
+                <DashboardLayout />
               </ProtectedRoute>
             }
-          />
-          <Route
-            path="/courses/:id"
-            element={
-              <ProtectedRoute>
-                <CourseDetailPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/lessons/:id"
-            element={
-              <ProtectedRoute>
-                <LessonViewerPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/quizzes/:id"
-            element={
-              <ProtectedRoute>
-                <QuizPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/instructor"
-            element={
-              <ProtectedRoute>
-                <InstructorDashboardPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/instructor/courses/:id/edit"
-            element={
-              <ProtectedRoute>
-                <CourseEditorPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/analytics"
-            element={
-              <ProtectedRoute>
-                <AnalyticsPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/schedule"
-            element={
-              <ProtectedRoute>
-                <SchedulePage />
-              </ProtectedRoute>
-            }
-          />
-           <Route
-            path="/learning-log"
-            element={
-              <ProtectedRoute>
-                <LearningLogPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/mastery-graph"
-            element={
-              <ProtectedRoute>
-                <MasteryGraphPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/review-queue"
-            element={
-              <ProtectedRoute>
-                <ReviewQueuePage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/adaptive-path"
-            element={
-              <ProtectedRoute>
-                <AdaptivePathPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/flashcards"
-            element={
-              <ProtectedRoute>
-                <FlashcardsPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/quizzes"
-            element={
-              <ProtectedRoute>
-                <QuizzesPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/community"
-            element={
-              <ProtectedRoute>
-                <CommunityPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/live-sessions"
-            element={
-              <ProtectedRoute>
-                <LiveSessionsPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/study-groups"
-            element={
-              <ProtectedRoute>
-                <StudyGroupsPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/mentor-match"
-            element={
-              <ProtectedRoute>
-                <MentorMatchPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/achievements"
-            element={
-              <ProtectedRoute>
-                <AchievementsPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/notes"
-            element={
-              <ProtectedRoute>
-                <NotesPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/bookmarks"
-            element={
-              <ProtectedRoute>
-                <BookmarksPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/notifications"
-            element={
-              <ProtectedRoute>
-                <NotificationsPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/settings"
-            element={
-              <ProtectedRoute>
-                <SettingsPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/leaderboard"
-            element={
-              <ProtectedRoute>
-                <LeaderboardPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/certificates/:id"
-            element={
-              <ProtectedRoute>
-                <CertificatePage />
-              </ProtectedRoute>
-            }
-          />
+          >
+            <Route path="/" element={<DashboardPage />} />
+            <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/courses" element={<CourseCatalogPage />} />
+            <Route path="/courses/:id" element={<CourseDetailPage />} />
+            <Route path="/lessons/:id" element={<LessonViewerPage />} />
+            <Route path="/quizzes/:id" element={<QuizPage />} />
+            <Route path="/instructor" element={<InstructorDashboardPage />} />
+            <Route path="/instructor/courses/:id/edit" element={<CourseEditorPage />} />
+            <Route path="/analytics" element={<AnalyticsPage />} />
+            <Route path="/schedule" element={<SchedulePage />} />
+            <Route path="/learning-log" element={<LearningLogPage />} />
+            <Route path="/mastery-graph" element={<MasteryGraphPage />} />
+            <Route path="/review-queue" element={<ReviewQueuePage />} />
+            <Route path="/adaptive-path" element={<AdaptivePathPage />} />
+            <Route path="/flashcards" element={<FlashcardsPage />} />
+            <Route path="/quizzes" element={<QuizzesPage />} />
+            <Route path="/community" element={<CommunityPage />} />
+            <Route path="/live-sessions" element={<LiveSessionsPage />} />
+            <Route path="/study-groups" element={<StudyGroupsPage />} />
+            <Route path="/mentor-match" element={<MentorMatchPage />} />
+            <Route path="/achievements" element={<AchievementsPage />} />
+            <Route path="/notes" element={<NotesPage />} />
+            <Route path="/bookmarks" element={<BookmarksPage />} />
+            <Route path="/notifications" element={<NotificationsPage />} />
+            <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/leaderboard" element={<LeaderboardPage />} />
+            <Route path="/certificates/:id" element={<CertificatePage />} />
+          </Route>
+
           {/* Public certificate verification - no auth needed */}
           <Route path="/verify/:code" element={<VerifyCertificatePage />} />
         </Routes>

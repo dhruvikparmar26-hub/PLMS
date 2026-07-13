@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import DashboardLayout from '../components/layout/DashboardLayout';
 import api from '../api';
 
@@ -139,8 +140,8 @@ export default function NotificationsPage() {
                       {new Date(notification.createdAt).toLocaleString()}
                     </span>
                     {notification.link && (
-                      <a
-                        href={notification.link}
+                      <Link
+                        to={notification.link}
                         onClick={() => {
                           if (!notification.read) markAsRead(notification._id);
                         }}
@@ -152,7 +153,7 @@ export default function NotificationsPage() {
                         }}
                       >
                         View Details →
-                      </a>
+                      </Link>
                     )}
                   </div>
                 </div>

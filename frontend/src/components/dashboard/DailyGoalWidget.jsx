@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import api from '../../api';
 import { useAuth } from '../../contexts/AuthContext';
+import { Link } from 'react-router-dom';
 
 export default function DailyGoalWidget() {
   const [goal, setGoal] = useState(null);
@@ -53,7 +54,7 @@ export default function DailyGoalWidget() {
           <h3 className="widget-title">Daily Study Goal</h3>
           <p className="widget-subtitle">Stay consistent to lock in your daily streak coefficients.</p>
         </div>
-        <a href="/settings" className="widget-link">Configure →</a>
+        <Link to="/settings" className="widget-link">Configure →</Link>
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginTop: '12px' }}>

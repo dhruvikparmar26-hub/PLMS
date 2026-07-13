@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import api from '../api';
 
@@ -129,7 +129,7 @@ const DashboardPage = () => {
                   <span className="smart-review-stat-label" style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>Next review</span>
                 </div>
               </div>
-              <a href="/review-queue" className="smart-review-cta" style={{
+              <Link to="/review-queue" className="smart-review-cta" style={{
                 display: 'block',
                 textAlign: 'center',
                 background: 'var(--bg-canvas)',
@@ -143,7 +143,7 @@ const DashboardPage = () => {
                 transition: 'all 0.2s'
               }}>
                 Start Smart Review →
-              </a>
+              </Link>
             </div>
           </div>
         </div>

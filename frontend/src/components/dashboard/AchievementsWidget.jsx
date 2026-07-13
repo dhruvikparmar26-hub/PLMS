@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import api from '../../api';
 import { useAuth } from '../../contexts/AuthContext';
+import { Link } from 'react-router-dom';
 
 /**
  * AchievementsWidget — Row of achievement badges with earned/locked states.
@@ -68,7 +69,7 @@ const AchievementsWidget = () => {
     <div className="widget-card achievements-card">
       <div className="widget-header">
         <h3 className="widget-title">Achievements</h3>
-        <a href="/achievements" className="widget-link">View all →</a>
+        <Link to="/achievements" className="widget-link">View all →</Link>
       </div>
 
       <div className="achievements-grid">

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import api from '../../api';
 import { useAuth } from '../../contexts/AuthContext';
+import { Link } from 'react-router-dom';
 
 /**
  * RecentActivity — XP-tagged activity feed showing latest learning events.
@@ -63,7 +64,7 @@ const RecentActivity = () => {
     <div className="widget-card activity-card">
       <div className="widget-header">
         <h3 className="widget-title">Recent Activity</h3>
-        <a href="/learning-log" className="widget-link">View all →</a>
+        <Link to="/learning-log" className="widget-link">View all →</Link>
       </div>
 
       <div className="activity-list">

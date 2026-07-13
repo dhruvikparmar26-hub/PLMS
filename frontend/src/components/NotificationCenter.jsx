@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import api from '../api';
 
 export default function NotificationCenter() {
@@ -252,8 +253,8 @@ export default function NotificationCenter() {
                         {new Date(notification.createdAt).toLocaleDateString()}
                       </span>
                       {notification.link && (
-                        <a
-                          href={notification.link}
+                        <Link
+                          to={notification.link}
                           onClick={() => {
                             setIsOpen(false);
                             if (!notification.read) {
@@ -268,7 +269,7 @@ export default function NotificationCenter() {
                           }}
                         >
                           View →
-                        </a>
+                        </Link>
                       )}
                     </div>
                   </div>
