@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 import { AuthProvider } from './contexts/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import AccessibilityBar from './components/AccessibilityBar';
@@ -101,6 +102,7 @@ function App() {
           <Route path="/verify/:code" element={<VerifyCertificatePage />} />
         </Routes>
         <AccessibilityBar />
+        <Analytics />
       </AuthProvider>
     </Router>
   );
