@@ -127,18 +127,18 @@ const HomePage = () => {
             <path d="M50 12L83 31V69L50 88L17 69V31L50 12Z" stroke="url(#logoGrad)" strokeWidth="6" strokeLinejoin="round" fill="none" />
             
             {/* Inner Cube - Top Face */}
-            <path d="M50 34L68 44L50 54L32 44Z" fill="#F7B05B" />
+            <path d="M50 34L68 44L50 54L32 44Z" fill="#14B8A6" />
             
             {/* Inner Cube - Left Face */}
-            <path d="M32 44L50 54V72L32 62Z" fill="#313B64" />
+            <path d="M32 44L50 54V72L32 62Z" fill="#0EA5A4" />
             
             {/* Inner Cube - Right Face */}
-            <path d="M50 54L68 44V62L50 72Z" fill="#E27429" />
+            <path d="M50 54L68 44V62L50 72Z" fill="#3B82F6" />
             
             <defs>
               <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#F2B056" />
-                <stop offset="100%" stop-color="#E27429" />
+                <stop offset="0%" stop-color="#0EA5A4" />
+                <stop offset="100%" stop-color="#3B82F6" />
               </linearGradient>
             </defs>
           </svg>
@@ -211,15 +211,15 @@ const HomePage = () => {
             {/* Left Column: Hero Content */}
             <div className="lg:col-span-5 space-y-6 text-left">
               <div>
-                <h1 style={{ fontSize: 'clamp(2.2rem, 4vw, 3.2rem)', lineHeight: 1.1, letterSpacing: '-0.02em', fontWeight: 800, color: '#fff' }}>
+                <h1 style={{ fontSize: 'clamp(2.2rem, 4vw, 3.2rem)', lineHeight: 1.1, letterSpacing: '-0.02em', fontWeight: 800, color: 'var(--text-primary)' }}>
                   Your Personal <br />
-                  <span style={{ background: 'linear-gradient(120deg, #f2b056 0%, #ffc473 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+                  <span style={{ background: 'linear-gradient(120deg, #0EA5A4 0%, #3B82F6 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
                     Learning Lab
                   </span>
                 </h1>
               </div>
 
-              <p style={{ color: '#cbd5e1', fontSize: '0.92rem', lineHeight: 1.7, maxWidth: '480px' }}>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', lineHeight: 1.7, maxWidth: '480px' }}>
                 Verify your skills with secure OTP authentication and map your academic progression. Manage and balance your technical and non-technical subjects inside a custom workspace built for college students.
               </p>
 
@@ -288,9 +288,9 @@ const HomePage = () => {
                 <div className="orbit-ring orbit-ring-outer" />
 
                 <div className="orbit-center-node">
-                  <span style={{ fontSize: '0.6rem', opacity: 0.8, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#ffc473', fontWeight: 600 }}>Average</span>
-                  <span style={{ fontSize: '1.6rem', fontWeight: 800, color: '#fff', margin: '1px 0' }}>{averageProgress}%</span>
-                  <span style={{ fontSize: '0.625rem', fontWeight: 700, letterSpacing: '0.08em', color: '#ffc473' }}>BALANCE</span>
+                  <span style={{ fontSize: '0.6rem', opacity: 0.8, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--accent-secondary)', fontWeight: 600 }}>Average</span>
+                  <span style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--text-primary)', margin: '1px 0' }}>{averageProgress}%</span>
+                  <span style={{ fontSize: '0.625rem', fontWeight: 700, letterSpacing: '0.08em', color: 'var(--accent-primary)' }}>BALANCE</span>
                 </div>
                 <div className="orbit-center-glow" />
 
@@ -347,7 +347,7 @@ const HomePage = () => {
                       </div>
                       <div className="journey-meta">
                         <span className="journey-label">Weekly Gain</span>
-                        <span className="journey-value" style={{ color: '#10b981' }}>+4.2%</span>
+                        <span className="journey-value" style={{ color: 'var(--success)' }}>+4.2%</span>
                       </div>
                     </div>
 
@@ -379,8 +379,8 @@ const HomePage = () => {
 
                 {/* Milestone nudge replacing the orphaned quote block */}
                 <div className="journey-quote-box">
-                  <span className="journey-label" style={{ fontWeight: 600, color: '#f2b056', letterSpacing: '0.05em' }}>NEXT MILESTONE</span>
-                  <p className="quote-text" style={{ fontStyle: 'normal', color: '#cbd5e1', fontSize: '0.8rem', lineHeight: '1.4' }}>
+                  <span className="journey-label" style={{ fontWeight: 600, color: 'var(--accent-primary)', letterSpacing: '0.05em' }}>NEXT MILESTONE</span>
+                  <p className="quote-text" style={{ fontStyle: 'normal', color: 'var(--text-secondary)', fontSize: '0.8rem', lineHeight: '1.4' }}>
                     Reach 70% average progress to unlock your DBMS Certification Exam.
                   </p>
                 </div>
@@ -393,11 +393,11 @@ const HomePage = () => {
       </div>
 
       {/* Footer tagline rewritten for clarity and contrast */}
-      <footer className="flex flex-col sm:flex-row justify-between items-center gap-4 z-10 border-t border-[rgba(255,255,255,0.05)] pt-4 w-full">
-        <p style={{ color: '#cbd5e1', fontSize: '11px', fontFamily: 'var(--font-mono)', letterSpacing: '0.04em' }}>
+      <footer className="flex flex-col sm:flex-row justify-between items-center gap-4 z-10 border-t border-[var(--border-default)] pt-4 w-full">
+        <p style={{ color: 'var(--text-muted)', fontSize: '11px', fontFamily: 'var(--font-mono)', letterSpacing: '0.04em' }}>
           Curriculum Alignment Platform · Version 2.0.4-LTS
         </p>
-        <p style={{ color: '#cbd5e1', fontSize: '11px', fontFamily: 'var(--font-mono)' }}>
+        <p style={{ color: 'var(--text-muted)', fontSize: '11px', fontFamily: 'var(--font-mono)' }}>
           &copy; {new Date().getFullYear()} LEARNING LAB. ALL RIGHTS RESERVED.
         </p>
       </footer>

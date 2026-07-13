@@ -44,11 +44,11 @@ const RecentActivity = () => {
   ];
 
   const typeConfig = {
-    lesson_completed: { icon: '✅', color: '#6FCF97', bg: 'rgba(111, 207, 151, 0.12)' },
-    quiz_attempted: { icon: '📝', color: '#7B68EE', bg: 'rgba(123, 104, 238, 0.12)' },
-    flashcard_review: { icon: '🧠', color: '#F2B056', bg: 'rgba(242, 176, 86, 0.12)' },
+    lesson_completed: { icon: '✅', color: 'var(--success)', bg: 'rgba(34, 197, 94, 0.12)' },
+    quiz_attempted: { icon: '📝', color: 'var(--accent-secondary)', bg: 'rgba(59, 130, 246, 0.12)' },
+    flashcard_review: { icon: '🧠', color: 'var(--accent-primary)', bg: 'rgba(14, 165, 164, 0.12)' },
     achievement_unlocked: { icon: '🏆', color: '#E8745C', bg: 'rgba(232, 116, 92, 0.12)' },
-    note_created: { icon: '📄', color: '#A8ADB9', bg: 'rgba(168, 173, 185, 0.12)' },
+    note_created: { icon: '📄', color: 'var(--text-secondary)', bg: 'rgba(75, 85, 99, 0.12)' },
   };
 
   if (loading) {

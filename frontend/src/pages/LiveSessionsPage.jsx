@@ -137,7 +137,7 @@ export default function LiveSessionsPage() {
                     gap: '20px', 
                     alignItems: 'center',
                     borderLeft: session.active ? '3px solid var(--accent-primary)' : '1px solid var(--border-default)',
-                    background: session.active ? 'rgba(0, 240, 255, 0.01)' : 'var(--bg-surface)'
+                    background: session.active ? 'rgba(14, 165, 164, 0.02)' : 'var(--bg-surface)'
                   }}
                 >
                   {/* Professor Image */}
@@ -165,7 +165,7 @@ export default function LiveSessionsPage() {
                         {session.instructor}
                       </span>
                       {session.active && (
-                        <span className="live-badge" style={{ animation: 'pulse-glow 2s ease infinite', fontSize: '0.625rem', padding: '2px 6px', background: 'rgba(232, 116, 92, 0.15)', color: '#E8745C', borderRadius: '4px', fontWeight: 800 }}>
+                        <span className="live-badge" style={{ animation: 'pulse-glow 2s ease infinite', fontSize: '0.625rem', padding: '2px 6px', background: 'rgba(239, 68, 68, 0.15)', color: 'var(--danger)', borderRadius: '4px', fontWeight: 800 }}>
                           🔴 LIVE
                         </span>
                       )}

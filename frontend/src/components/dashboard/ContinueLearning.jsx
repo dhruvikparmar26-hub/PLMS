@@ -17,10 +17,10 @@ const ContinueLearning = ({ enrollments = [] }) => {
     : enrollments.filter(e => e.course).slice(0, 4));
 
   const courseColors = [
-    { bg: 'linear-gradient(135deg, #7B68EE 0%, #5A4FCF 100%)', accent: '#7B68EE' },
-    { bg: 'linear-gradient(135deg, #F2B056 0%, #E89B3E 100%)', accent: '#F2B056' },
-    { bg: 'linear-gradient(135deg, #6FCF97 0%, #4CAF6E 100%)', accent: '#6FCF97' },
-    { bg: 'linear-gradient(135deg, #E8745C 0%, #D05A42 100%)', accent: '#E8745C' },
+    { bg: 'linear-gradient(135deg, #0EA5A4 0%, #14B8A6 100%)', accent: '#0EA5A4' },
+    { bg: 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)', accent: '#3B82F6' },
+    { bg: 'linear-gradient(135deg, #22C55E 0%, #16A34A 100%)', accent: '#22C55E' },
+    { bg: 'linear-gradient(135deg, #4B5563 0%, #374151 100%)', accent: '#4B5563' },
   ];
 
   const getTotalLessons = (c) => {
@@ -40,7 +40,7 @@ const ContinueLearning = ({ enrollments = [] }) => {
           const course = enrollment.course || {};
           const color = courseColors[i % courseColors.length];
           const totalLessons = isPreview ? enrollment.totalLessons : getTotalLessons(course);
-          const completedLessons = enrollment.lessonsCompleted || 0;
+          const completedLessons = isPreview ? (enrollment.lessonsCompleted || 0) : (enrollment.completedLessons?.length || 0);
           const progress = enrollment.progressPercent || 0;
 
           return (

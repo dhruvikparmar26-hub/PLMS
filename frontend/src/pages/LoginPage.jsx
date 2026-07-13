@@ -76,7 +76,7 @@ export default function LoginPage() {
         padding: '40px',
         zIndex: 1,
         position: 'relative',
-        boxShadow: '0 8px 32px rgba(12, 16, 32, 0.5)',
+        boxShadow: 'var(--shadow-card)',
         borderRadius: 'var(--radius-lg)',
         border: '1px solid var(--border-default)',
         background: 'var(--bg-surface)'
@@ -89,7 +89,7 @@ export default function LoginPage() {
           left: 0,
           right: 0,
           height: '4px',
-          background: 'linear-gradient(90deg, #2563EB 0%, #7C3AED 100%)',
+          background: 'var(--gradient-primary)',
           borderRadius: 'var(--radius-lg) var(--radius-lg) 0 0'
         }} />
 
@@ -100,7 +100,7 @@ export default function LoginPage() {
               width: '36px',
               height: '36px',
               borderRadius: '8px',
-              background: 'linear-gradient(135deg, #7C3AED, #2563EB)',
+              background: 'var(--gradient-primary)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -110,9 +110,9 @@ export default function LoginPage() {
             }}>
               ★
             </div>
-            <span style={{ fontSize: '1.5rem', fontWeight: 800, color: '#fff', letterSpacing: '-0.02em' }}>Momentum</span>
+            <span style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>Momentum</span>
           </div>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#fff', margin: '0 0 6px 0' }}>Welcome back</h2>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)', margin: '0 0 6px 0' }}>Welcome back</h2>
           <p style={{ color: 'var(--text-secondary)', fontSize: '0.8125rem' }}>Login to access your personalized course catalog.</p>
         </div>
 
@@ -125,7 +125,7 @@ export default function LoginPage() {
             marginBottom: '24px',
             fontSize: '0.8125rem',
             fontFamily: 'var(--font-mono)',
-            background: 'rgba(16, 185, 129, 0.05)'
+            background: 'rgba(34, 197, 94, 0.05)'
           }}>
             INFO: {successMessage}
           </div>
@@ -212,7 +212,7 @@ export default function LoginPage() {
               padding: '12px',
               fontSize: '0.875rem',
               fontWeight: 700,
-              background: 'linear-gradient(90deg, #2563EB 0%, #7C3AED 100%)',
+              background: 'var(--gradient-primary)',
               border: 'none',
               marginTop: '10px',
               cursor: isSubmitting ? 'not-allowed' : 'pointer'

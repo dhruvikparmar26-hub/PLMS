@@ -64,7 +64,7 @@ export default function DailyGoalWidget() {
               cx="45"
               cy="45"
               r={radius}
-              stroke="rgba(255, 255, 255, 0.04)"
+              stroke="var(--border-default)"
               strokeWidth="6"
               fill="transparent"
             />

@@ -57,8 +57,8 @@ export default function StreakTracker({ compact = false }) {
           {/* Streak pill */}
           <div style={{
             display: 'flex', alignItems: 'center', gap: 'var(--space-sm)',
-            background: 'linear-gradient(135deg, rgba(255, 160, 58, 0.15) 0%, rgba(255, 77, 106, 0.05) 100%)',
-            border: '1px solid var(--accent-secondary)',
+            background: 'linear-gradient(135deg, rgba(14, 165, 164, 0.1) 0%, rgba(59, 130, 246, 0.03) 100%)',
+            border: '1px solid var(--accent-primary)',
             borderRadius: 'var(--radius-md)',
             padding: '10px 16px',
             flex: '1 1 auto',
@@ -66,7 +66,7 @@ export default function StreakTracker({ compact = false }) {
           }}>
             <span style={{ fontSize: '1.5rem' }}>🔥</span>
             <div>
-              <span className="font-mono" style={{ fontSize: '0.625rem', color: 'var(--accent-secondary)', fontWeight: 700, display: 'block', letterSpacing: '0.08em' }}>
+              <span className="font-mono" style={{ fontSize: '0.625rem', color: 'var(--accent-primary)', fontWeight: 700, display: 'block', letterSpacing: '0.08em' }}>
                 Activity Streak
               </span>
               <span style={{ fontFamily: 'var(--font-display)', fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)' }}>
@@ -77,7 +77,7 @@ export default function StreakTracker({ compact = false }) {
               </span>
             </div>
           </div>
-
+          
           {/* Daily goal pill */}
           <div style={{
             display: 'flex', alignItems: 'center', gap: 'var(--space-sm)',
@@ -136,18 +136,18 @@ export default function StreakTracker({ compact = false }) {
       {/* Streak Section */}
       <div 
         style={{
-          background: 'linear-gradient(135deg, rgba(255, 160, 58, 0.15) 0%, rgba(255, 77, 106, 0.05) 100%)',
-          border: '1px solid var(--accent-secondary)',
+          background: 'linear-gradient(135deg, rgba(14, 165, 164, 0.1) 0%, rgba(59, 130, 246, 0.03) 100%)',
+          border: '1px solid var(--accent-primary)',
           borderRadius: 'var(--radius-md)',
           padding: 'var(--space-md)',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          boxShadow: '0 4px 15px rgba(255, 160, 58, 0.05)'
+          boxShadow: 'var(--shadow-card)'
         }}
       >
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-xs)' }}>
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--accent-secondary)', fontWeight: 'bold' }}>
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--accent-primary)', fontWeight: 'bold' }}>
             🔥 Activity Streak
           </span>
           <p style={{ fontFamily: 'var(--font-display)', color: 'var(--text-primary)', fontSize: '1.75rem', fontWeight: 700, margin: 0 }}>
@@ -161,12 +161,12 @@ export default function StreakTracker({ compact = false }) {
           width: '48px',
           height: '48px',
           borderRadius: '50%',
-          backgroundColor: 'rgba(255, 160, 58, 0.15)',
+          backgroundColor: 'rgba(14, 165, 164, 0.1)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           fontSize: '1.5rem',
-          border: '1px solid var(--accent-secondary)'
+          border: '1px solid var(--accent-primary)'
         }}>
           🔥
         </div>

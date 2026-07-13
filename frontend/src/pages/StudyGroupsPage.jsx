@@ -333,28 +333,28 @@ export default function StudyGroupsPage() {
               <button
                 onClick={() => setActiveTab('notes')}
                 className={`sidebar-link ${activeTab === 'notes' ? 'sidebar-link--active' : ''}`}
-                style={{ background: activeTab === 'notes' ? 'rgba(0, 240, 255, 0.05)' : 'transparent', border: 'none', textAlign: 'left', cursor: 'pointer' }}
+                style={{ background: activeTab === 'notes' ? 'rgba(14, 165, 164, 0.05)' : 'transparent', border: 'none', textAlign: 'left', cursor: 'pointer' }}
               >
                 📖 Architecture Notes
               </button>
               <button
                 onClick={() => setActiveTab('qa')}
                 className={`sidebar-link ${activeTab === 'qa' ? 'sidebar-link--active' : ''}`}
-                style={{ background: activeTab === 'qa' ? 'rgba(0, 240, 255, 0.05)' : 'transparent', border: 'none', textAlign: 'left', cursor: 'pointer' }}
+                style={{ background: activeTab === 'qa' ? 'rgba(14, 165, 164, 0.05)' : 'transparent', border: 'none', textAlign: 'left', cursor: 'pointer' }}
               >
                 💬 Collaborative Q&A
               </button>
               <button
                 onClick={() => setActiveTab('quiz')}
                 className={`sidebar-link ${activeTab === 'quiz' ? 'sidebar-link--active' : ''}`}
-                style={{ background: activeTab === 'quiz' ? 'rgba(0, 240, 255, 0.05)' : 'transparent', border: 'none', textAlign: 'left', cursor: 'pointer' }}
+                style={{ background: activeTab === 'quiz' ? 'rgba(14, 165, 164, 0.05)' : 'transparent', border: 'none', textAlign: 'left', cursor: 'pointer' }}
               >
                 📝 Interactive Quiz
               </button>
               <button
                 onClick={() => setActiveTab('reviews')}
                 className={`sidebar-link ${activeTab === 'reviews' ? 'sidebar-link--active' : ''}`}
-                style={{ background: activeTab === 'reviews' ? 'rgba(0, 240, 255, 0.05)' : 'transparent', border: 'none', textAlign: 'left', cursor: 'pointer' }}
+                style={{ background: activeTab === 'reviews' ? 'rgba(14, 165, 164, 0.05)' : 'transparent', border: 'none', textAlign: 'left', cursor: 'pointer' }}
               >
                 ⭐ Room Reviews
               </button>
@@ -478,7 +478,7 @@ export default function StudyGroupsPage() {
                         {/* Answers */}
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '14px' }}>
                           {q.answers.map((ans, aIdx) => (
-                            <div key={aIdx} style={{ background: 'rgba(255,255,255,0.01)', border: '1px solid var(--border-default)', padding: '10px 12px', borderRadius: 'var(--radius-sm)', fontSize: '0.8125rem', color: 'var(--text-secondary)' }}>
+                            <div key={aIdx} style={{ background: 'var(--bg-canvas)', border: '1px solid var(--border-default)', padding: '10px 12px', borderRadius: 'var(--radius-sm)', fontSize: '0.8125rem', color: 'var(--text-secondary)' }}>
                               💬 {ans}
                             </div>
                           ))}
@@ -554,9 +554,9 @@ export default function StudyGroupsPage() {
                                       ? 'var(--success)' 
                                       : 'var(--border-default)',
                                   background: isSelected 
-                                    ? 'rgba(0, 240, 255, 0.03)' 
+                                    ? 'rgba(14, 165, 164, 0.03)' 
                                     : showResult && isCorrect 
-                                      ? 'rgba(52, 211, 153, 0.05)' 
+                                      ? 'rgba(34, 197, 94, 0.05)' 
                                       : 'transparent',
                                   color: showResult && isCorrect 
                                     ? 'var(--success)' 

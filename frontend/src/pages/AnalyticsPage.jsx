@@ -87,7 +87,7 @@ export default function AnalyticsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-950 text-white flex items-center justify-center flex-col gap-3">
+      <div className="min-h-screen bg-[var(--bg-canvas)] text-[var(--text-primary)] flex items-center justify-center flex-col gap-3">
         <div style={{
           width: '32px', height: '32px', border: '3px solid var(--accent-primary)',
           borderTopColor: 'transparent', borderRadius: '50%',
@@ -98,7 +98,7 @@ export default function AnalyticsPage() {
     );
   }
 
-  const COLORS = ['#00F0FF', '#FFA03A', '#34D399', '#FF4D6A', '#a78bfa'];
+  const COLORS = ['#0EA5A4', '#3B82F6', '#22C55E', '#EF4444', '#a78bfa'];
 
   return (
     <DashboardLayout>
@@ -113,7 +113,7 @@ export default function AnalyticsPage() {
                 style={{
                   fontFamily: 'var(--font-mono)', fontSize: '0.7rem', fontWeight: 700,
                   padding: '4px 12px', borderRadius: 'var(--radius-sm)', cursor: 'pointer',
-                  background: activeTab === 'student' ? 'rgba(0,240,255,0.08)' : 'transparent',
+                  background: activeTab === 'student' ? 'rgba(14,165,164,0.08)' : 'transparent',
                   border: `1px solid ${activeTab === 'student' ? 'var(--accent-primary)' : 'var(--border-default)'}`,
                   color: activeTab === 'student' ? 'var(--accent-primary)' : 'var(--text-muted)',
                 }}
@@ -125,7 +125,7 @@ export default function AnalyticsPage() {
                 style={{
                   fontFamily: 'var(--font-mono)', fontSize: '0.7rem', fontWeight: 700,
                   padding: '4px 12px', borderRadius: 'var(--radius-sm)', cursor: 'pointer',
-                  background: activeTab === 'instructor' ? 'rgba(255,160,58,0.08)' : 'transparent',
+                  background: activeTab === 'instructor' ? 'rgba(59,130,246,0.08)' : 'transparent',
                   border: `1px solid ${activeTab === 'instructor' ? 'var(--accent-secondary)' : 'var(--border-default)'}`,
                   color: activeTab === 'instructor' ? 'var(--accent-secondary)' : 'var(--text-muted)',
                 }}
@@ -246,7 +246,7 @@ export default function AnalyticsPage() {
                 ) : (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                     {enrollments.map((e) => (
-                      <div key={e._id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(255,255,255,0.01)', border: '1px solid var(--border-default)', padding: '12px 16px', borderRadius: '4px' }}>
+                      <div key={e._id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--bg-elevated)', border: '1px solid var(--border-default)', padding: '12px 16px', borderRadius: '4px' }}>
                         <div>
                           <p style={{ margin: 0, fontWeight: 700, fontSize: '0.875rem' }}>{e.course?.title}</p>
                           <span className="font-mono" style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>
@@ -290,7 +290,7 @@ export default function AnalyticsPage() {
                             <td className="font-mono" style={{ padding: '10px 8px', color: 'var(--text-secondary)' }}>{new Date(attempt.attemptedAt).toLocaleDateString()}</td>
                             <td className="font-mono" style={{ padding: '10px 8px', fontWeight: 700, color: 'var(--accent-secondary)' }}>{attempt.score}%</td>
                             <td style={{ padding: '10px 8px' }}>
-                              <span className="font-mono" style={{ fontSize: '0.7rem', fontWeight: 800, padding: '2px 6px', borderRadius: '3px', background: attempt.passed ? 'rgba(52, 211, 153, 0.12)' : 'rgba(239, 68, 68, 0.12)', color: attempt.passed ? 'var(--success)' : 'var(--danger)' }}>
+                              <span className="font-mono" style={{ fontSize: '0.7rem', fontWeight: 800, padding: '2px 6px', borderRadius: '3px', background: attempt.passed ? 'rgba(34, 197, 94, 0.12)' : 'rgba(239, 68, 68, 0.12)', color: attempt.passed ? 'var(--success)' : 'var(--danger)' }}>
                                 {attempt.passed ? 'PASSED ✓' : 'FAILED ✗'}
                               </span>
                             </td>
@@ -383,10 +383,10 @@ export default function AnalyticsPage() {
                         <YAxis stroke="var(--text-muted)" fontSize={11} fontFamily="Space Mono" />
                         <Tooltip contentStyle={{ background: 'var(--bg-surface)', borderColor: 'var(--border-default)', color: 'var(--text-primary)' }} />
                         <Legend />
-                        <Bar dataKey="buckets.0-25" fill="#FF4D6A" name="0-25% progress" />
-                        <Bar dataKey="buckets.25-50" fill="#FFA03A" name="25-50% progress" />
-                        <Bar dataKey="buckets.50-75" fill="#00F0FF" name="50-75% progress" />
-                        <Bar dataKey="buckets.75-100" fill="#34D399" name="75-100% progress" />
+                        <Bar dataKey="buckets.0-25" fill="var(--danger)" name="0-25% progress" />
+                        <Bar dataKey="buckets.25-50" fill="var(--accent-secondary)" name="25-50% progress" />
+                        <Bar dataKey="buckets.50-75" fill="var(--accent-primary)" name="50-75% progress" />
+                        <Bar dataKey="buckets.75-100" fill="var(--success)" name="75-100% progress" />
                       </BarChart>
                     </ResponsiveContainer>
                   </div>

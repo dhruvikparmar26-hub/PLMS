@@ -96,11 +96,11 @@ const CourseCatalogPage = () => {
   const getDifficultyColor = (diff) => {
     switch (diff) {
       case 'beginner':
-        return { color: 'var(--success)', border: 'rgba(52, 213, 153, 0.2)' };
+        return { color: 'var(--success)', border: 'rgba(34, 197, 94, 0.2)' };
       case 'intermediate':
-        return { color: 'var(--accent-secondary)', border: 'rgba(255, 160, 58, 0.2)' };
+        return { color: 'var(--accent-secondary)', border: 'rgba(59, 130, 246, 0.2)' };
       case 'advanced':
-        return { color: 'var(--danger)', border: 'rgba(255, 77, 106, 0.2)' };
+        return { color: 'var(--danger)', border: 'rgba(239, 68, 68, 0.2)' };
       default:
         return { color: 'var(--text-muted)', border: 'var(--border-default)' };
     }
@@ -201,8 +201,8 @@ const CourseCatalogPage = () => {
 
             {error && (
               <div style={{
-                padding: '12px 16px', background: 'rgba(255,77,106,0.08)',
-                border: '1px solid rgba(255,77,106,0.25)', borderRadius: 'var(--radius-md)',
+                padding: '12px 16px', background: 'rgba(239,68,68,0.08)',
+                border: '1px solid rgba(239,68,68,0.25)', borderRadius: 'var(--radius-md)',
                 color: 'var(--danger)', fontSize: '0.8125rem', fontFamily: 'var(--font-mono)',
               }}>
                 {error}
@@ -256,7 +256,7 @@ const CourseCatalogPage = () => {
                            }}
                            onMouseEnter={(e) => {
                              e.currentTarget.style.transform = 'translateY(-4px)';
-                             e.currentTarget.style.boxShadow = '0 8px 32px rgba(0,0,0,0.3)';
+                             e.currentTarget.style.boxShadow = 'var(--shadow-card-hover)';
                            }}
                            onMouseLeave={(e) => {
                              e.currentTarget.style.transform = 'translateY(0)';
@@ -285,7 +285,7 @@ const CourseCatalogPage = () => {
                             {/* Category badge */}
                             <div style={{
                               position: 'absolute', top: '10px', left: '10px',
-                              background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(4px)',
+                              background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(4px)',
                               padding: '3px 8px', borderRadius: 'var(--radius-sm)',
                               fontSize: '0.5625rem', fontFamily: 'var(--font-mono)', fontWeight: 700,
                               color: 'var(--accent-primary)', letterSpacing: '0.05em',
@@ -327,7 +327,7 @@ const CourseCatalogPage = () => {
                         {/* Footer */}
                         <div style={{
                           padding: '12px 16px', borderTop: '1px solid var(--border-default)',
-                          background: 'rgba(0,0,0,0.1)', display: 'flex', flexDirection: 'column', gap: '8px',
+                          background: 'var(--bg-canvas)', display: 'flex', flexDirection: 'column', gap: '8px',
                         }}>
                           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px' }}>
                             <div style={{ minWidth: 0 }}>

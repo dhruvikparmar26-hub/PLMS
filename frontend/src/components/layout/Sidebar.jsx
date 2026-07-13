@@ -106,11 +106,11 @@ const Sidebar = ({ mobileOpen, onClose, onOpenAI }) => {
     <>
       {/* Logo */}
       <div className="sidebar-logo">
-        <div className="sidebar-logo-mark" style={{ background: 'linear-gradient(135deg, #7C3AED, #2563EB)' }}>
+        <div className="sidebar-logo-mark" style={{ background: 'var(--gradient-primary)' }}>
           <span style={{ fontSize: '1.25rem' }}>★</span>
         </div>
         <div>
-          <div className="sidebar-brand" style={{ color: '#fff', fontSize: '1.05rem', fontWeight: 800 }}>Momentum</div>
+          <div className="sidebar-brand" style={{ color: 'var(--text-primary)', fontSize: '1.05rem', fontWeight: 800 }}>Momentum</div>
           <div className="sidebar-tagline" style={{ color: 'var(--text-muted)', fontSize: '0.65rem' }}>Learn. Master. Progress.</div>
         </div>
         {mobileOpen && (
@@ -125,9 +125,9 @@ const Sidebar = ({ mobileOpen, onClose, onOpenAI }) => {
           onClick={onClose}
           className={`sidebar-link ${isActive('/dashboard') ? 'sidebar-link--active' : ''}`}
           style={isActive('/dashboard') ? {
-            background: 'linear-gradient(90deg, #2563EB 0%, #7C3AED 100%)',
+            background: 'var(--gradient-primary)',
             color: '#fff',
-            boxShadow: '0 4px 14px rgba(124, 58, 237, 0.3)'
+            boxShadow: '0 4px 14px rgba(14, 165, 164, 0.3)'
           } : {}}
         >
           <span className="sidebar-link-icon">◫</span>
@@ -149,16 +149,16 @@ const Sidebar = ({ mobileOpen, onClose, onOpenAI }) => {
                 onClick={onClose}
                 className={`sidebar-link ${isActive(item.path) ? 'sidebar-link--active' : ''}`}
                 style={isActive(item.path) ? {
-                  background: 'linear-gradient(90deg, #2563EB 0%, #7C3AED 100%)',
+                  background: 'var(--gradient-primary)',
                   color: '#fff',
-                  boxShadow: '0 4px 14px rgba(124, 58, 237, 0.3)'
+                  boxShadow: '0 4px 14px rgba(14, 165, 164, 0.3)'
                 } : {}}
               >
                 <span className="sidebar-link-icon" style={{ fontSize: '0.95rem' }}>{item.icon}</span>
                 <span className="sidebar-link-label">{item.label}</span>
                 {item.badge && (
-                  <span className="sidebar-badge-live" style={{ background: 'rgba(124, 58, 237, 0.15)', color: '#a78bfa', fontSize: '0.55rem', fontWeight: 800 }}>
-                    <span className="sidebar-badge-dot" style={{ backgroundColor: '#a78bfa' }}></span>
+                  <span className="sidebar-badge-live" style={{ background: 'rgba(14, 165, 164, 0.15)', color: 'var(--accent-primary)', fontSize: '0.55rem', fontWeight: 800 }}>
+                    <span className="sidebar-badge-dot" style={{ backgroundColor: 'var(--accent-primary)' }}></span>
                     {item.badge}
                   </span>
                 )}
@@ -186,8 +186,8 @@ const Sidebar = ({ mobileOpen, onClose, onOpenAI }) => {
         onClick={onOpenAI} 
         className="sidebar-ai-btn"
         style={{
-          background: 'linear-gradient(135deg, #2563EB, #7C3AED)',
-          boxShadow: '0 4px 14px rgba(124, 58, 237, 0.35)',
+          background: 'var(--gradient-primary)',
+          boxShadow: '0 4px 14px rgba(14, 165, 164, 0.35)',
           color: '#fff',
           fontWeight: 700,
           border: 'none',

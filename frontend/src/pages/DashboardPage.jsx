@@ -132,8 +132,8 @@ const DashboardPage = () => {
               <a href="/review-queue" className="smart-review-cta" style={{
                 display: 'block',
                 textAlign: 'center',
-                background: 'rgba(255, 255, 255, 0.05)',
-                color: '#fff',
+                background: 'var(--bg-canvas)',
+                color: 'var(--text-primary)',
                 padding: '10px',
                 borderRadius: 'var(--radius-sm)',
                 textDecoration: 'none',

@@ -226,7 +226,7 @@ export default function CommunityPage() {
                     {post.answers?.length || 0} Replies
                   </span>
                   {post.answers?.slice(0, 3).map((ans, idx) => (
-                    <div key={idx} style={{ marginTop: '8px', background: 'rgba(255,255,255,0.01)', border: '1px solid var(--border-default)', padding: '10px 14px', borderRadius: '4px' }}>
+                    <div key={idx} style={{ marginTop: '8px', background: 'var(--bg-canvas)', border: '1px solid var(--border-default)', padding: '10px 14px', borderRadius: '4px' }}>
                       <span className="font-mono" style={{ fontSize: '0.625rem', color: 'var(--success)' }}>
                         Replied by {ans.author?.name || 'User'}
                       </span>

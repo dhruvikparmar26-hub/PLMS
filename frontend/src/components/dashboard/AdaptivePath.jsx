@@ -61,9 +61,9 @@ const AdaptivePath = () => {
   const courses = pathData?.courses || [];
 
   const levelColors = {
-    beginner: { bg: 'rgba(111, 207, 151, 0.15)', color: '#6FCF97', label: 'Beginner' },
-    intermediate: { bg: 'rgba(242, 176, 86, 0.15)', color: '#F2B056', label: 'Intermediate' },
-    advanced: { bg: 'rgba(232, 116, 92, 0.15)', color: '#E8745C', label: 'Advanced' },
+    beginner: { bg: 'rgba(34, 197, 94, 0.15)', color: 'var(--success)', label: 'Beginner' },
+    intermediate: { bg: 'rgba(14, 165, 164, 0.15)', color: 'var(--accent-primary)', label: 'Intermediate' },
+    advanced: { bg: 'rgba(59, 130, 246, 0.15)', color: 'var(--accent-secondary)', label: 'Advanced' },
   };
 
   const lc = levelColors[level] || levelColors.beginner;

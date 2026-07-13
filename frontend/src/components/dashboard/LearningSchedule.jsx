@@ -48,10 +48,10 @@ const LearningSchedule = () => {
   const firstDayOfWeek = new Date(now.getFullYear(), now.getMonth(), 1).getDay();
 
   const typeIcons = {
-    live: { icon: '🎥', color: '#E8745C' },
-    quiz: { icon: '📝', color: '#7B68EE' },
-    group: { icon: '👥', color: '#6FCF97' },
-    review: { icon: '🧠', color: '#F2B056' },
+    live: { icon: '🎥', color: 'var(--danger)' },
+    quiz: { icon: '📝', color: 'var(--accent-secondary)' },
+    group: { icon: '👥', color: 'var(--success)' },
+    review: { icon: '🧠', color: 'var(--accent-primary)' },
   };
 
   // Generate calendar grid

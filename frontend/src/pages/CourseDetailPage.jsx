@@ -79,11 +79,11 @@ const CourseDetailPage = () => {
   const getDifficultyColor = (diff) => {
     switch (diff) {
       case 'beginner':
-        return { color: 'var(--success)', border: 'rgba(52, 213, 153, 0.2)', bg: 'rgba(52, 213, 153, 0.08)' };
+        return { color: 'var(--success)', border: 'rgba(34, 197, 94, 0.2)', bg: 'rgba(34, 197, 94, 0.08)' };
       case 'intermediate':
-        return { color: 'var(--accent-secondary)', border: 'rgba(255, 160, 58, 0.2)', bg: 'rgba(255, 160, 58, 0.08)' };
+        return { color: 'var(--accent-secondary)', border: 'rgba(59, 130, 246, 0.2)', bg: 'rgba(59, 130, 246, 0.08)' };
       case 'advanced':
-        return { color: 'var(--danger)', border: 'rgba(255, 77, 106, 0.2)', bg: 'rgba(255, 77, 106, 0.08)' };
+        return { color: 'var(--danger)', border: 'rgba(239, 68, 68, 0.2)', bg: 'rgba(239, 68, 68, 0.08)' };
       default:
         return { color: 'var(--text-muted)', border: 'var(--border-default)', bg: 'transparent' };
     }
@@ -172,8 +172,8 @@ const CourseDetailPage = () => {
         
         {error && (
           <div style={{
-            padding: '12px 16px', background: 'rgba(255,77,106,0.08)',
-            border: '1px solid rgba(255,77,106,0.25)', borderRadius: 'var(--radius-md)',
+            padding: '12px 16px', background: 'rgba(239, 68, 68, 0.08)',
+            border: '1px solid rgba(239, 68, 68, 0.25)', borderRadius: 'var(--radius-md)',
             color: 'var(--danger)', fontSize: '0.8125rem', fontFamily: 'var(--font-mono)',
           }}>
             {error}
@@ -182,8 +182,8 @@ const CourseDetailPage = () => {
 
         {successMsg && (
           <div style={{
-            padding: '12px 16px', background: 'rgba(52,211,153,0.08)',
-            border: '1px solid rgba(52,211,153,0.25)', borderRadius: 'var(--radius-md)',
+            padding: '12px 16px', background: 'rgba(34, 197, 94, 0.08)',
+            border: '1px solid rgba(34, 197, 94, 0.25)', borderRadius: 'var(--radius-md)',
             color: 'var(--success)', fontSize: '0.8125rem', fontFamily: 'var(--font-mono)',
           }}>
             ✅ {successMsg}
@@ -242,7 +242,7 @@ const CourseDetailPage = () => {
         {/* ═══════════ ENROLL / PROGRESS BAR ═══════════ */}
         <div className="blueprint-card" style={{
           padding: '20px 24px',
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px',
+          display: 'flex', alignItems: 'center', justifycontent: 'space-between', gap: '20px',
           flexWrap: 'wrap',
         }}>
           {enrollment ? (
@@ -280,7 +280,7 @@ const CourseDetailPage = () => {
                 className="btn-primary"
                 style={{
                   fontSize: '0.9375rem', padding: '12px 32px', fontWeight: 700,
-                  boxShadow: '0 4px 16px rgba(242, 176, 86, 0.25)',
+                  boxShadow: 'var(--shadow-card)',
                   whiteSpace: 'nowrap',
                 }}
               >
@@ -330,7 +330,7 @@ const CourseDetailPage = () => {
                     <button
                       onClick={() => toggleModule(idx)}
                       style={{
-                        width: '100%', background: 'rgba(0,0,0,0.12)', padding: '14px 20px',
+                        width: '100%', background: 'var(--bg-elevated)', padding: '14px 20px',
                         borderBottom: isOpen ? '1px solid var(--border-default)' : 'none',
                         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
                         border: 'none', cursor: 'pointer', color: 'var(--text-primary)',
@@ -499,7 +499,7 @@ const CourseDetailPage = () => {
               {course.modules.map((mod, modIdx) => (
                 <div key={mod._id || modIdx} className="blueprint-card" style={{ overflow: 'hidden' }}>
                   <div style={{
-                    background: 'rgba(0,0,0,0.15)', padding: '12px 20px',
+                    background: 'var(--bg-canvas)', padding: '12px 20px',
                     borderBottom: '1px solid var(--border-default)', display: 'flex',
                     justifyContent: 'space-between', alignItems: 'center'
                   }}>
@@ -519,7 +519,7 @@ const CourseDetailPage = () => {
                           style={{
                             padding: '12px 20px', display: 'flex', alignItems: 'center',
                             justifyContent: 'space-between', gap: '16px',
-                            borderBottom: index < mod.lessons.length - 1 ? '1px solid rgba(30,46,49,0.4)' : 'none',
+                            borderBottom: index < mod.lessons.length - 1 ? '1px solid var(--border-default)' : 'none',
                             background: 'transparent'
                           }}
                         >
@@ -590,7 +590,7 @@ const CourseDetailPage = () => {
                   <div
                     key={quiz._id}
                     className="blueprint-card"
-                    style={{ padding: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '16px' }}
+                    style={{ padding: '20px', display: 'flex', flexDirection: 'column', justifycontent: 'space-between', gap: '16px' }}
                   >
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                       <h4 className="font-display" style={{ fontSize: '0.875rem', fontWeight: 700, margin: 0 }}>
@@ -627,8 +627,8 @@ const CourseDetailPage = () => {
         {!enrollment && (
           <div className="blueprint-card" style={{
             padding: '28px', textAlign: 'center',
-            background: 'rgba(242, 176, 86, 0.04)',
-            border: '1px solid rgba(242, 176, 86, 0.15)',
+            background: 'rgba(14, 165, 164, 0.04)',
+            border: '1px solid rgba(14, 165, 164, 0.15)',
             display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px',
           }}>
             <h3 style={{ fontSize: '1.125rem', fontWeight: 700, margin: 0 }}>
@@ -643,7 +643,7 @@ const CourseDetailPage = () => {
               className="btn-primary"
               style={{
                 fontSize: '1rem', padding: '14px 40px', fontWeight: 700,
-                boxShadow: '0 4px 20px rgba(242, 176, 86, 0.3)',
+                boxShadow: 'var(--shadow-card)',
               }}
             >
               {enrollLoading ? '⏳ Enrolling...' : '🚀 Enroll Now — Free'}

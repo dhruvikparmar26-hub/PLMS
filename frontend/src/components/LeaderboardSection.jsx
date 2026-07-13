@@ -199,7 +199,7 @@ export default function LeaderboardSection({ user, onOptInChange }) {
                 <div
                   key={entry._id}
                   style={{
-                    backgroundColor: isSelf ? 'rgba(0, 240, 255, 0.05)' : 'var(--bg-elevated)',
+                    backgroundColor: isSelf ? 'rgba(14, 165, 164, 0.05)' : 'var(--bg-elevated)',
                     border: isSelf ? '1px solid var(--accent-primary)' : '1px solid var(--border-default)',
                     borderRadius: 'var(--radius-sm)',
                     padding: '8px 12px',

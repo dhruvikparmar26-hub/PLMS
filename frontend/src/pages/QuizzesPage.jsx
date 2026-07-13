@@ -32,9 +32,9 @@ export default function QuizzesPage() {
 
   const getDifficultyColor = (diff) => {
     switch (diff) {
-      case 'beginner': return { color: 'var(--success)', bg: 'rgba(111,207,151,0.12)' };
-      case 'intermediate': return { color: 'var(--accent-primary)', bg: 'rgba(242,176,86,0.12)' };
-      default: return { color: 'var(--danger)', bg: 'rgba(232,116,92,0.12)' };
+      case 'beginner': return { color: 'var(--success)', bg: 'rgba(34, 197, 94, 0.12)' };
+      case 'intermediate': return { color: 'var(--accent-primary)', bg: 'rgba(14, 165, 164, 0.12)' };
+      default: return { color: 'var(--danger)', bg: 'rgba(239, 68, 68, 0.12)' };
     }
   };
 

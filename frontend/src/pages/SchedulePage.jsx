@@ -316,7 +316,7 @@ const SchedulePage = () => {
                           daySessions.map(session => (
                             <div key={session._id} className="blueprint-card" style={{
                               padding: '8px',
-                              background: session.status === 'completed' ? 'rgba(52,211,153,0.08)' : 'rgba(0,240,255,0.05)',
+                              background: session.status === 'completed' ? 'rgba(34, 197, 94, 0.08)' : 'rgba(14, 165, 164, 0.08)',
                               border: session.status === 'completed' ? '1px solid var(--success)' : '1px solid var(--border-default)',
                               cursor: 'pointer',
                             }}>
@@ -405,7 +405,7 @@ const SchedulePage = () => {
                       getSessionsForDay(selectedDay).map(session => (
                         <div key={session._id} className="blueprint-card" style={{
                           padding: '12px',
-                          background: session.status === 'completed' ? 'rgba(52,211,153,0.08)' : 'rgba(0,240,255,0.05)',
+                          background: session.status === 'completed' ? 'rgba(34, 197, 94, 0.08)' : 'rgba(14, 165, 164, 0.08)',
                           border: session.status === 'completed' ? '1px solid var(--success)' : '1px solid var(--border-default)',
                         }}>
                           <div style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '6px' }}>
@@ -472,7 +472,7 @@ const SchedulePage = () => {
       {showModal && (
         <div style={{
           position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
-          background: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+          background: 'rgba(15, 23, 42, 0.4)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center',
           zIndex: 1000,
         }}>
           <div className="blueprint-card" style={{

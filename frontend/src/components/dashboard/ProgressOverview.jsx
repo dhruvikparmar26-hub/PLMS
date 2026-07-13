@@ -20,9 +20,9 @@ const ProgressOverview = ({ enrollments = [] }) => {
   const circumference = 2 * Math.PI * r;
 
   const segments = [
-    { pct: pctCompleted, color: '#6FCF97', label: 'Completed', count: isPreview ? '42%' : completed },
-    { pct: pctInProgress, color: '#7B68EE', label: 'In Progress', count: isPreview ? '34%' : inProgress },
-    { pct: pctNotStarted, color: '#636979', label: 'Not Started', count: isPreview ? '24%' : notStarted },
+    { pct: pctCompleted, color: 'var(--success)', label: 'Completed', count: isPreview ? '42%' : completed },
+    { pct: pctInProgress, color: 'var(--accent-primary)', label: 'In Progress', count: isPreview ? '34%' : inProgress },
+    { pct: pctNotStarted, color: 'var(--text-muted)', label: 'Not Started', count: isPreview ? '24%' : notStarted },
   ];
 
   let offset = 0;
@@ -37,7 +37,7 @@ const ProgressOverview = ({ enrollments = [] }) => {
       <div className="progress-donut-container">
         <svg viewBox="0 0 160 160" className="progress-donut-svg">
           {/* Background circle */}
-          <circle cx={cx} cy={cy} r={r} fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="16" />
+          <circle cx={cx} cy={cy} r={r} fill="none" stroke="rgba(0,0,0,0.05)" strokeWidth="16" />
 
           {/* Segments */}
           {segments.map((seg, i) => {

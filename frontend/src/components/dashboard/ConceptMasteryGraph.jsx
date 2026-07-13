@@ -49,17 +49,17 @@ const ConceptMasteryGraph = () => {
   ];
 
   const getMasteryColor = (score) => {
-    if (score >= 0.8) return '#6FCF97';
-    if (score >= 0.6) return '#7B68EE';
-    if (score >= 0.4) return '#F2B056';
-    return '#E8745C';
+    if (score >= 0.8) return '#22C55E';
+    if (score >= 0.6) return '#3B82F6';
+    if (score >= 0.4) return '#0EA5A4';
+    return '#EF4444';
   };
 
   const getMasteryBg = (score) => {
-    if (score >= 0.8) return 'rgba(111, 207, 151, 0.15)';
-    if (score >= 0.6) return 'rgba(123, 104, 238, 0.15)';
-    if (score >= 0.4) return 'rgba(242, 176, 86, 0.15)';
-    return 'rgba(232, 116, 92, 0.15)';
+    if (score >= 0.8) return 'rgba(34, 197, 94, 0.15)';
+    if (score >= 0.6) return 'rgba(59, 130, 246, 0.15)';
+    if (score >= 0.4) return 'rgba(14, 165, 164, 0.15)';
+    return 'rgba(239, 68, 68, 0.15)';
   };
 
   if (loading) {
@@ -119,12 +119,12 @@ const ConceptMasteryGraph = () => {
           })}
 
           {/* Center hub */}
-          <circle cx={centerX} cy={centerY} r={44} fill="rgba(242, 176, 86, 0.1)" stroke="#F2B056" strokeWidth="2" />
+          <circle cx={centerX} cy={centerY} r={44} fill="rgba(14, 165, 164, 0.1)" stroke="var(--accent-primary)" strokeWidth="2" />
           <circle cx={centerX} cy={centerY} r={38} fill="var(--bg-elevated)" />
           <text x={centerX} y={centerY - 8} textAnchor="middle" fill="var(--text-primary)" fontSize="10" fontWeight="700" fontFamily="var(--font-display)">
             {mainTopic}
           </text>
-          <text x={centerX} y={centerY + 8} textAnchor="middle" fill="#F2B056" fontSize="16" fontWeight="800" fontFamily="var(--font-display)">
+          <text x={centerX} y={centerY + 8} textAnchor="middle" fill="var(--accent-primary)" fontSize="16" fontWeight="800" fontFamily="var(--font-display)">
             {avgMastery}%
           </text>
           <text x={centerX} y={centerY + 22} textAnchor="middle" fill="var(--text-muted)" fontSize="8" fontFamily="var(--font-mono)">
@@ -160,10 +160,10 @@ const ConceptMasteryGraph = () => {
 
       {/* Legend */}
       <div className="concept-graph-legend">
-        <span className="legend-item"><span className="legend-dot" style={{ background: '#6FCF97' }}></span> Mastered (80-100%)</span>
-        <span className="legend-item"><span className="legend-dot" style={{ background: '#7B68EE' }}></span> Learning (60-79%)</span>
-        <span className="legend-item"><span className="legend-dot" style={{ background: '#F2B056' }}></span> Developing (40-59%)</span>
-        <span className="legend-item"><span className="legend-dot" style={{ background: '#E8745C' }}></span> Weak (&lt;40%)</span>
+        <span className="legend-item"><span className="legend-dot" style={{ background: '#22C55E' }}></span> Mastered (80-100%)</span>
+        <span className="legend-item"><span className="legend-dot" style={{ background: '#3B82F6' }}></span> Learning (60-79%)</span>
+        <span className="legend-item"><span className="legend-dot" style={{ background: '#0EA5A4' }}></span> Developing (40-59%)</span>
+        <span className="legend-item"><span className="legend-dot" style={{ background: '#EF4444' }}></span> Weak (&lt;40%)</span>
       </div>
 
       {/* Decay warning */}

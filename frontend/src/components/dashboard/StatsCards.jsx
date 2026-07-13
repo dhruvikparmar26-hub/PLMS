@@ -30,7 +30,7 @@ const StatsCards = ({ enrollments, user }) => {
     fetchMastery();
   }, [user]);
 
-  const completedLessons = user ? enrollments.reduce((sum, e) => sum + (e.lessonsCompleted || 0), 0) : 42;
+  const completedLessons = user ? enrollments.reduce((sum, e) => sum + (e.completedLessons?.length || 0), 0) : 42;
   const xp = user ? (user.xp || 0) : 2450;
   const activeCount = user ? enrollments.filter(e => e.progressPercent < 100).length : 8;
 
@@ -40,32 +40,32 @@ const StatsCards = ({ enrollments, user }) => {
       label: 'Courses Enrolled',
       value: activeCount,
       sub: user ? `${enrollments.length} total enrolled` : '↑ 2 this month',
-      color: '#7B68EE',
-      bg: 'rgba(123, 104, 238, 0.12)',
+      color: 'var(--accent-primary)',
+      bg: 'rgba(14, 165, 164, 0.12)',
     },
     {
       icon: '✅',
       label: 'Lessons Completed',
       value: completedLessons,
       sub: '↑ 18% this week',
-      color: '#6FCF97',
-      bg: 'rgba(111, 207, 151, 0.12)',
+      color: 'var(--success)',
+      bg: 'rgba(34, 197, 94, 0.12)',
     },
     {
       icon: '🎯',
       label: 'Mastery Score',
       value: user ? `${mastery.average}%` : '76%',
       sub: user ? (mastery.decayCount > 0 ? `⚠ ${mastery.decayCount} concepts decaying` : '↑ Improving') : '↑ 6% improvement',
-      color: '#F2B056',
-      bg: 'rgba(242, 176, 86, 0.12)',
+      color: 'var(--accent-secondary)',
+      bg: 'rgba(59, 130, 246, 0.12)',
     },
     {
       icon: '⭐',
       label: 'XP Earned',
       value: xp.toLocaleString(),
       sub: user ? `Level ${Math.floor(xp / 500) + 1}` : 'Level 12',
-      color: '#E8745C',
-      bg: 'rgba(232, 116, 92, 0.12)',
+      color: 'var(--accent-primary)',
+      bg: 'rgba(14, 165, 164, 0.12)',
     },
   ];
 

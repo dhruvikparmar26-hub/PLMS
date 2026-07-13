@@ -96,6 +96,7 @@ const getConceptMastery = async (req, res, next) => {
 
     // Map into an easily digestible concept id keyed object
     const scoresMap = {};
+    const masteryList = [];
     masteryScores.forEach((m) => {
       if (m.conceptId) {
         scoresMap[m.conceptId._id] = {
@@ -105,6 +106,14 @@ const getConceptMastery = async (req, res, next) => {
           lastAssessed: m.lastAssessed,
           decayRate: m.decayRate,
         };
+        masteryList.push({
+          _id: m._id,
+          name: m.conceptId.name,
+          category: m.conceptId.category,
+          score: m.score,
+          lastAssessed: m.lastAssessed,
+          decayRate: m.decayRate,
+        });
       }
     });
 
@@ -112,6 +121,7 @@ const getConceptMastery = async (req, res, next) => {
       success: true,
       userId: targetUserId,
       data: scoresMap,
+      mastery: masteryList,
     });
   } catch (error) {
     next(error);

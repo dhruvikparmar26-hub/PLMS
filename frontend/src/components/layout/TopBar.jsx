@@ -84,7 +84,7 @@ const TopBar = ({ onMenuToggle }) => {
 
             {/* XP */}
             <div className="topbar-stat" title={`${xp} XP — Level ${level}`} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span className="topbar-stat-icon topbar-stat-icon--xp" style={{ color: '#F2B056', fontSize: '1.25rem' }}>🔶</span>
+              <span className="topbar-stat-icon topbar-stat-icon--xp" style={{ color: 'var(--accent-primary)', fontSize: '1.25rem' }}>🔶</span>
               <div>
                 <span className="topbar-stat-value" style={{ display: 'block', fontWeight: 800 }}>{xp.toLocaleString()} XP</span>
                 <span className="topbar-stat-label" style={{ display: 'block', fontSize: '0.625rem', color: 'var(--text-muted)' }}>Level {level}</span>
@@ -106,7 +106,7 @@ const TopBar = ({ onMenuToggle }) => {
                 onClick={() => setShowProfile(!showProfile)}
                 style={{ display: 'flex', alignItems: 'center', background: 'none', border: 'none', padding: 0 }}
               >
-                <div className="topbar-avatar" style={{ margin: 0, width: '34px', height: '34px', borderRadius: '50%', background: 'linear-gradient(135deg, #7C3AED, #2563EB)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '0.875rem', fontWeight: 700 }}>
+                <div className="topbar-avatar" style={{ margin: 0, width: '34px', height: '34px', borderRadius: '50%', background: 'var(--gradient-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '0.875rem', fontWeight: 700 }}>
                   {user.name?.charAt(0).toUpperCase()}
                 </div>
               </button>
@@ -148,7 +148,7 @@ const TopBar = ({ onMenuToggle }) => {
             <Link to="/login" className="btn-secondary" style={{ padding: '8px 16px', fontSize: '0.8125rem', textDecoration: 'none', minHeight: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               Login
             </Link>
-            <Link to="/signup" className="btn-primary" style={{ padding: '8px 16px', fontSize: '0.8125rem', textDecoration: 'none', minHeight: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(90deg, #2563EB 0%, #7C3AED 100%)', border: 'none' }}>
+            <Link to="/signup" className="btn-primary" style={{ padding: '8px 16px', fontSize: '0.8125rem', textDecoration: 'none', minHeight: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--gradient-primary)', border: 'none' }}>
               Sign Up
             </Link>
           </div>

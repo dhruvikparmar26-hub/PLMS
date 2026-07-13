@@ -240,7 +240,7 @@ const QuizPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-950 text-white flex items-center justify-center flex-col gap-3">
+      <div className="min-h-screen bg-[var(--bg-canvas)] text-[var(--text-primary)] flex items-center justify-center flex-col gap-3">
         <div style={{
           width: '32px', height: '32px', border: '3px solid var(--accent-primary)',
           borderTopColor: 'transparent', borderRadius: '50%',
@@ -253,7 +253,7 @@ const QuizPage = () => {
 
   if (error && !quiz) {
     return (
-      <div className="min-h-screen bg-slate-950 text-white flex items-center justify-center flex-col gap-4 p-4 text-center">
+      <div className="min-h-screen bg-[var(--bg-canvas)] text-[var(--text-primary)] flex items-center justify-center flex-col gap-4 p-4 text-center">
         <p className="font-mono text-sm" style={{ color: 'var(--danger)' }}>ERROR: {error.toUpperCase()}</p>
         <Link to="/courses" className="btn-secondary" style={{ textDecoration: 'none' }}>
           &lt; Return to Course Catalog
@@ -314,7 +314,7 @@ const QuizPage = () => {
               fontSize: '0.8125rem',
               padding: '10px 16px',
               fontWeight: 700,
-              boxShadow: '0 4px 12px rgba(242, 176, 86, 0.15)'
+              boxShadow: 'var(--shadow-card)'
             }}
           >
             + New Study Session
@@ -373,8 +373,8 @@ const QuizPage = () => {
             
             {error && (
               <div style={{
-                padding: '12px 16px', background: 'rgba(255,77,106,0.08)',
-                border: '1px solid rgba(255,77,106,0.25)', borderRadius: 'var(--radius-md)',
+                padding: '12px 16px', background: 'rgba(239,68,68,0.08)',
+                border: '1px solid rgba(239,68,68,0.25)', borderRadius: 'var(--radius-md)',
                 color: 'var(--danger)', fontSize: '0.8125rem', fontFamily: 'var(--font-mono)',
               }}>
                 {error}
@@ -396,7 +396,7 @@ const QuizPage = () => {
                 style={{
                   padding: '24px',
                   borderColor: attemptResult.passed ? 'var(--success)' : 'var(--danger)',
-                  background: attemptResult.passed ? 'rgba(52,211,153,0.03)' : 'rgba(255,77,106,0.03)',
+                  background: attemptResult.passed ? 'rgba(34,197,94,0.03)' : 'rgba(239,68,68,0.03)',
                   display: 'flex', flexDirection: 'column', gap: '16px'
                 }}
               >
@@ -479,7 +479,7 @@ const QuizPage = () => {
             {isAdaptive && quizStarted && !attemptResult && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
                 {/* Adaptive Status HUD */}
-                <div className="blueprint-card" style={{ padding: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(0,0,0,0.15)' }}>
+                <div className="blueprint-card" style={{ padding: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--bg-elevated)' }}>
                   <div>
                     <span className="font-mono" style={{ fontSize: '0.625rem', color: 'var(--text-muted)' }}>{getLabel('CURRENT_DIFFICULTY')}</span>
                     <p className="font-mono" style={{
@@ -513,7 +513,7 @@ const QuizPage = () => {
                       <span className="font-mono" style={{ fontSize: '0.6875rem', color: 'var(--text-muted)', fontWeight: 700 }}>
                         {getLabel('ADAPTIVE_TARGET')} {String(answeredQuestions.length + 1).padStart(2, '0')}
                       </span>
-                      <span className="font-mono" style={{ fontSize: '0.625rem', color: 'var(--text-secondary)', background: 'rgba(0,0,0,0.2)', padding: '2px 8px', borderRadius: 'var(--radius-sm)' }}>
+                      <span className="font-mono" style={{ fontSize: '0.625rem', color: 'var(--text-secondary)', background: 'var(--bg-canvas)', padding: '2px 8px', borderRadius: 'var(--radius-sm)' }}>
                         {getLabel('WEIGHT')}: {currentAdaptiveQuestion.points || 10} pts
                       </span>
                     </div>
@@ -536,21 +536,21 @@ const QuizPage = () => {
                           if (wasSelected) {
                             if (gradedResult.isCorrect) {
                               borderStyle = '1px solid var(--success)';
-                              bgStyle = 'rgba(52,211,153,0.08)';
+                              bgStyle = 'rgba(34, 197, 94, 0.08)';
                               textColor = 'var(--success)';
                             } else {
                               borderStyle = '1px solid var(--danger)';
-                              bgStyle = 'rgba(255,77,106,0.08)';
+                              bgStyle = 'rgba(239, 68, 68, 0.08)';
                               textColor = 'var(--danger)';
                             }
                           } else {
-                            borderStyle = '1px solid rgba(30,46,49,0.3)';
-                            bgStyle = 'rgba(0,0,0,0.1)';
+                            borderStyle = '1px solid rgba(0,0,0,0.05)';
+                            bgStyle = 'rgba(0,0,0,0.02)';
                             textColor = 'var(--text-muted)';
                           }
                         } else if (isSelected) {
                           borderStyle = '1px solid var(--accent-primary)';
-                          bgStyle = 'rgba(0,240,255,0.08)';
+                          bgStyle = 'rgba(14, 165, 164, 0.08)';
                           textColor = 'var(--accent-primary)';
                         }
 
@@ -599,7 +599,7 @@ const QuizPage = () => {
                       <div style={{
                         padding: '12px 16px',
                         borderRadius: 'var(--radius-md)',
-                        backgroundColor: gradedResult.isCorrect ? 'rgba(52,211,153,0.08)' : 'rgba(255,77,106,0.08)',
+                        backgroundColor: gradedResult.isCorrect ? 'rgba(34, 197, 94, 0.08)' : 'rgba(239, 68, 68, 0.08)',
                         border: gradedResult.isCorrect ? '1px solid var(--success)' : '1px solid var(--danger)',
                         fontSize: '0.8125rem',
                         color: gradedResult.isCorrect ? 'var(--success)' : 'var(--danger)',
@@ -676,7 +676,7 @@ const QuizPage = () => {
                         <span className="font-mono" style={{ fontSize: '0.6875rem', color: 'var(--text-muted)', fontWeight: 700 }}>
                           QUESTION_{String(qIdx + 1).padStart(2, '0')}
                         </span>
-                        <span className="font-mono" style={{ fontSize: '0.625rem', color: 'var(--text-secondary)', background: 'rgba(0,0,0,0.2)', padding: '2px 8px', borderRadius: 'var(--radius-sm)' }}>
+                        <span className="font-mono" style={{ fontSize: '0.625rem', color: 'var(--text-secondary)', background: 'var(--bg-canvas)', padding: '2px 8px', borderRadius: 'var(--radius-sm)' }}>
                           WEIGHT: {question.points || 10} PTS
                         </span>
                       </div>
@@ -695,7 +695,7 @@ const QuizPage = () => {
                           
                           if (isSelected) {
                             borderStyle = '1px solid var(--accent-primary)';
-                            bgStyle = 'rgba(0,240,255,0.08)';
+                            bgStyle = 'rgba(14, 165, 164, 0.08)';
                             textColor = 'var(--accent-primary)';
                           }
 
@@ -735,7 +735,7 @@ const QuizPage = () => {
                     type="submit"
                     disabled={submitLoading}
                     className="btn-primary"
-                    style={{ width: '100%', py: '14px', fontSize: '0.875rem' }}
+                    style={{ width: '100%', padding: '14px', fontSize: '0.875rem' }}
                   >
                     {submitLoading ? 'SUBMITTING_TEST_DATA...' : 'SUBMIT_EVALUATION'}
                   </button>
